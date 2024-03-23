@@ -1,3 +1,9 @@
+import Navbar from "./components/Navbar";
+
 export default function App() {
-  return <h1 className="text-[42px]">Hello world!</h1>;
+  return (
+    <div className="flex flex-col items-center mx-auto w-[800px]">
+      <Navbar />
+    </div>
+  );
 }
