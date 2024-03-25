@@ -7,7 +7,7 @@ export default function Navbar() {
       <Header />
       <nav className="flex w-full bg-primary">
         <div className="flex justify-between mx-auto w-[1150px] font-poppins text-white">
-          <div className="flex">
+          <div className="flex hover:cursor-pointer">
             {navLinks.slice(0, -1).map((link, index) => (
               <div
                 key={link.id}

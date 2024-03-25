@@ -8,7 +8,7 @@ export default function Header() {
         <img
           src={logo}
           alt="logo"
-          className="w-[50px] h-[50px] object-contain"
+          className="w-[50px] h-[50px] object-contain hover:cursor-pointer"
         />
         <SearchBar />
       </div>
