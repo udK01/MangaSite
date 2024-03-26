@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Separator from "./Separator";
 
 export default function Popular() {
   const [current, setCurrent] = useState(0);
@@ -10,26 +11,26 @@ export default function Popular() {
         <p className="font-poppins">Popular</p>
       </div>
       {/* Separator */}
-      <div className="p-3" />
+      <Separator />
       {/* Button Container */}
-      <div className="flex justify-between">
+      <div className="flex justify-between bg-quinary p-2 rounded-md">
         <div
           className={`${
-            current === 0 ? "bg-primary" : ""
+            current === 0 ? "bg-primary transition-all duration-300" : ""
           } flex-1 rounded-md flex justify-center items-center`}
         >
           <button onClick={() => setCurrent(0)}>Weekly</button>
         </div>
         <div
           className={`${
-            current === 1 ? "bg-primary" : ""
+            current === 1 ? "bg-primary transition-all duration-300" : ""
           } flex-1 rounded-md flex justify-center items-center`}
         >
           <button onClick={() => setCurrent(1)}>Monthly</button>
         </div>
         <div
           className={`${
-            current === 2 ? "bg-primary" : ""
+            current === 2 ? "bg-primary transition-all duration-300" : ""
           } flex-1 rounded-md flex justify-center items-center`}
         >
           <button onClick={() => setCurrent(2)}>All</button>

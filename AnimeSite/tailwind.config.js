@@ -9,6 +9,7 @@ module.exports = {
         secondary: "#18141c",
         tertiary: "#100c0c",
         quaternary: "#222222",
+        quinary: "#383434",
         dimWhite: "rgba(255, 255, 255, 0.7)",
         dimBlue: "rgba(9, 151, 124, 0.1)",
       },
