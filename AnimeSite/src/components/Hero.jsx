@@ -4,8 +4,8 @@ import Popular from "./Popular";
 
 export default function Hero() {
   return (
-    <>
-      <div id="body" className="flex mt-11">
+    <section>
+      <div id="body" className="flex mt-11 ">
         <div className="flex justify-between">
           <Carousel />
           <Trending />
@@ -14,6 +14,6 @@ export default function Hero() {
           <Popular />
         </div>
       </div>
-    </>
+    </section>
   );
 }

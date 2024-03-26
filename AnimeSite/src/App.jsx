@@ -2,13 +2,11 @@ import { Navbar, Hero } from "./components";
 
 export default function App() {
   return (
-    <>
-      <div>
-        <Navbar />
-      </div>
-      <div className="flex flex-col items-center mx-auto w-[800px]">
+    <section className="h-screen bg-secondary flex flex-col items-center">
+      <Navbar />
+      <div className="w-[800px]">
         <Hero />
       </div>
-    </>
+    </section>
   );
 }
