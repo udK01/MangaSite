@@ -18,28 +18,30 @@ export default function Carousel() {
   };
 
   return (
-    <div className="overflow-hidden relative">
-      <div
-        className={`flex transition ease-out duration-40`}
-        style={{
-          transform: `translateX(-${current * 100}%)`,
-        }}
-      >
-        {slides.map((s) => {
-          return <img key={s.src} src={s.src} alt="carousel-img" />;
-        })}
-      </div>
+    <div className="w-[620px]">
+      <div className="h-[280px] overflow-hidden relative">
+        <div
+          className={`flex transition ease-out duration-40`}
+          style={{
+            transform: `translateX(-${current * 100}%)`,
+          }}
+        >
+          {slides.map((s) => {
+            return <img key={s.src} src={s.src} alt="carousel-img" />;
+          })}
+        </div>
 
-      <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full">
-        {slides.map((s, index) => (
-          <div
-            key={"circle" + index}
-            className={`rounded-full w-3 h-3 ${
-              index === current ? "bg-yellow-400" : "bg-gray-400"
-            } `}
-            onClick={() => setCurrent(index)}
-          />
-        ))}
+        <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full">
+          {slides.map((s, index) => (
+            <div
+              key={"circle" + index}
+              className={`rounded-full w-3 h-3 ${
+                index === current ? "bg-yellow-400" : "bg-gray-400"
+              } `}
+              onClick={() => setCurrent(index)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
