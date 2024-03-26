@@ -4,7 +4,7 @@ export default function App() {
   return (
     <section className="h-screen bg-secondary flex flex-col items-center">
       <Navbar />
-      <div className="w-[800px]">
+      <div>
         <Hero />
       </div>
     </section>

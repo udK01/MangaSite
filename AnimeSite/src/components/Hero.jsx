@@ -5,7 +5,7 @@ import Popular from "./Popular";
 export default function Hero() {
   return (
     <section>
-      <div id="body" className="flex mt-11 ">
+      <div id="body" className="flex mt-16 ">
         <div className="flex justify-between">
           <Carousel />
           <Trending />
