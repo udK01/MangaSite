@@ -1,4 +1,4 @@
-import { Navbar, Hero } from "./components";
+import { Navbar, Hero, PopularToday } from "./components";
 
 export default function App() {
   return (
@@ -6,6 +6,7 @@ export default function App() {
       <Navbar />
       <div>
         <Hero />
+        <PopularToday />
       </div>
     </section>
   );
