@@ -2,6 +2,7 @@ import Carousel from "./Carousel";
 import Trending from "./Trending";
 import Popular from "./Popular";
 import PopularToday from "./PopularToday";
+import LatestUpdate from "./LatestUpdate";
 
 export default function Hero() {
   return (
@@ -12,6 +13,7 @@ export default function Hero() {
           <Trending />
         </div>
         <PopularToday />
+        <LatestUpdate />
       </div>
       <div id="sidebar">
         <Popular />
