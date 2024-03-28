@@ -36,3 +36,18 @@ export const slides = [
 ];
 
 export const slide_timer = 10000;
+
+export const footer_text = [
+  {
+    id: "policy",
+    title: "Privacy Policy",
+  },
+  {
+    id: "copyright",
+    title: "Digital Millennium Copyright Act",
+  },
+  {
+    id: "terms-of-service",
+    title: "Terms of Service",
+  },
+];

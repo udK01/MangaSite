@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
 import Hero from "./Hero";
-import PopularToday from "./PopularToday";
+import Footer from "./Footer";
 
-export { Navbar, Hero, PopularToday };
+export { Navbar, Hero, Footer };
