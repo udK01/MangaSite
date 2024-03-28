@@ -13,7 +13,7 @@ export default function Navbar() {
                 key={link.id}
                 className={`${
                   index !== navLinks.length - 2 ? "mr-5" : "mr-0"
-                } hover:bg-secondary p-2`}
+                } hover:bg-secondary p-2 transition-all duration-300`}
               >
                 {link.title}
               </div>
@@ -21,7 +21,7 @@ export default function Navbar() {
           </div>
           {navLinks.length > 0 && (
             <div>
-              <div className="mr-0 hover:bg-secondary p-2">
+              <div className="mr-0 hover:bg-secondary p-2 transition-all duration-300">
                 {navLinks[navLinks.length - 1].title}
               </div>
             </div>

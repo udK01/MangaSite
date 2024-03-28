@@ -4,11 +4,13 @@ import { logo } from "../assets";
 export default function Footer() {
   return (
     <section className="flex flex-col w-full mt-10 text-white">
-      <div className="flex w-full justify-center items-center p-2 font-poppins bg-primary">
+      <div className="flex w-full justify-center items-center font-poppins bg-primary">
         {footer_text.map((footT, i) => (
           <p
             key={footT.id}
-            className={`${i !== footT.length - 1 ? "ml-5" : ""}`}
+            className={`${
+              i !== footT.length - 1 ? "ml-5" : ""
+            } hover:bg-secondary hover:cursor-pointer p-2 transition-all duration-300`}
           >
             {footT.title}
           </p>
