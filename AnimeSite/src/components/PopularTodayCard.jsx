@@ -11,8 +11,8 @@ export default function PopularTodayCard() {
         className="w-full h-[90%] mt-2"
       />
       <h4 className="text-white text-[16px] mt-1">Example Title</h4>
-      <p className="text-dimWhite text-[12px] mt-2">Chapter 73</p>
-      <StarRating rating={2.3} />
+      <p className="text-dimWhite text-[12px] mt-1">Chapter 73</p>
+      <StarRating rating={4.6} />
       {/* <div className="flex items-center text-yellow-400">
         <FaStar />
         <FaStar />
