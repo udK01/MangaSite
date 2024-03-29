@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Bookmarks from "./routes/Bookmarks";
+import Comics from "./routes/Comics";
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
+        <Route path="/comics" element={<Comics />} />
       </Routes>
     </Router>
   );

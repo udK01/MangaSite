@@ -7,11 +7,11 @@ export default function PopularTodayCard() {
       <img
         src={slides[0].src}
         alt="popular_today_img"
-        className="w-full h-[75%]"
+        className="w-full h-[90%] mt-2"
       />
       <h4 className="text-white text-[16px] mt-1">Example Title</h4>
       <p className="text-dimWhite text-[12px] mt-2">Chapter 73</p>
-      <div className="flex items-center">
+      <div className="flex items-center text-yellow-400">
         <FaStar />
         <FaStar />
         <FaStar />
