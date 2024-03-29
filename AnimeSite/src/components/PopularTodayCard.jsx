@@ -5,7 +5,7 @@ export default function PopularTodayCard() {
   return (
     <div className="w-[147px] h-[260px] font-poppins rounded-md">
       <img
-        src={slides[0].src}
+        src={slides[2].src}
         alt="popular_today_img"
         className="w-full h-[90%] mt-2"
       />

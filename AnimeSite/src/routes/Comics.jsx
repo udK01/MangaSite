@@ -1,3 +1,10 @@
+import { Navbar, Footer } from "../components";
+
 export default function Comics() {
-  return <div>Hello!</div>;
+  return (
+    <section className="h-full bg-secondary">
+      <Navbar />
+      <Footer />
+    </section>
+  );
 }
