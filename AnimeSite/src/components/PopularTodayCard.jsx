@@ -1,6 +1,5 @@
 import { slides } from "../constants";
 import StarRating from "./StarRating";
-import { FaStar } from "react-icons/fa";
 
 export default function PopularTodayCard() {
   return (
@@ -12,15 +11,7 @@ export default function PopularTodayCard() {
       />
       <h4 className="text-white text-[16px] mt-1">Example Title</h4>
       <p className="text-dimWhite text-[12px] mt-1">Chapter 73</p>
-      <StarRating rating={4.6} />
-      {/* <div className="flex items-center text-yellow-400">
-        <FaStar />
-        <FaStar />
-        <FaStar />
-        <FaStar />
-        <FaStar />
-        <p className="text-dimWhite ml-1.5">0.0</p>
-      </div> */}
+      <StarRating rating={3.6} />
     </div>
   );
 }

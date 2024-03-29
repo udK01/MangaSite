@@ -2,32 +2,38 @@ export default function StarRating({ rating }) {
   const renderStar = (index) => {
     const integerPart = Math.floor(rating);
     const fractionalPart = rating - integerPart;
-    let fillPercentage;
+
     let partialFill = null;
+    let remainingFill = null;
 
     if (index <= integerPart) {
-      fillPercentage = 100;
+      partialFill = 100;
     } else if (index === integerPart + 1 && fractionalPart > 0) {
-      fillPercentage = Math.round(fractionalPart * 100);
       partialFill = 100 * fractionalPart;
-    } else {
-      fillPercentage = 0;
+      remainingFill = 100 - partialFill;
     }
 
-    const starClass = "text-yellow-400";
-
-    console.log(partialFill);
-
     return (
-      <svg
-        key={index}
-        className={`h-5 fill-current ${starClass}`}
-        viewBox={`0 0 ${
-          partialFill !== null ? (partialFill / 100) * 24 : 24
-        } 24`}
-      >
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
+      <div key={index} className="flex items-center">
+        <svg
+          className={`h-5 fill-current ${
+            partialFill === null ? "text-gray-400" : "text-yellow-400"
+          }`}
+          viewBox={`0 0 ${
+            partialFill !== null ? (partialFill / 100) * 24 : 24
+          } 24`}
+        >
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        {remainingFill !== null && (
+          <svg
+            className="h-5 fill-current text-gray-400 scale-x-[-1]"
+            viewBox={`0 0 ${(remainingFill / 100) * 24} 24`}
+          >
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        )}
+      </div>
     );
   };
 
