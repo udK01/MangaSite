@@ -1,9 +1,9 @@
 import { slides } from "../constants";
-import { FaStar } from "react-icons/fa";
+import StarRating from "./StarRating";
 
 export default function PopularCard() {
   return (
-    <li className="flex items-center justify-evenly w-full h-[120px]">
+    <div className="flex items-center justify-evenly w-full h-[120px]">
       <div className="h-[30%] flex items-center border border-solid border-gray-500 px-2 ml-2 rounded-md text-gray-500">
         1
       </div>
@@ -14,26 +14,19 @@ export default function PopularCard() {
       />
       <div className="flex flex-col">
         <h2 className="font-poppins hover:text-primary">Example Title</h2>
-        <span class="flex flex-wrap text-[12px]">
+        <span className="flex flex-wrap text-[12px]">
           <b>Genres:</b>
-          <a class="ml-1">Action</a>
-          <span class="text-gray-500">,</span>
-          <a class="ml-1">Fantasy</a>
-          <span class="text-gray-500">,</span>
-          <a class="ml-1">Supernatural</a>
-          <span class="text-gray-500">,</span>
-          <a class="ml-1">Mystery</a>
-          <span class="text-gray-500">,</span>
+          <a className="ml-1">Action</a>
+          <span className="text-gray-500">,</span>
+          <a className="ml-1">Fantasy</a>
+          <span className="text-gray-500">,</span>
+          <a className="ml-1">Supernatural</a>
+          <span className="text-gray-500">,</span>
+          <a className="ml-1">Mystery</a>
+          <span className="text-gray-500">,</span>
         </span>
-        <div className="flex items-center mt-1 text-yellow-400">
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <p className="text-dimWhite ml-1">0.0</p>
-        </div>
+        <StarRating rating={(Math.random() * 4 + 1).toFixed(2)} />
       </div>
-    </li>
+    </div>
   );
 }
