@@ -548,49 +548,6 @@ export async function deleteGenre(genre) {
 
 /**
  *
- * Removes the genre from the specified manga.
- *
- * Example Usage.
- *
- * await removeGenre(2,1);
- *
- * @param {int} mangaID The manga's unique identifier.
- * @param {int} genreID The genre's unique identifier.
- */
-export async function removeGenre(mangaID, genreID) {
-  try {
-    await db.query(
-      `DELETE FROM manga_genres WHERE mangaID = ? AND genreID = ?`,
-      [mangaID, genreID]
-    );
-  } catch (error) {
-    console.error(`Failed to delete genre:`, error);
-  }
-}
-
-/**
- *
- * Finds and returns the name of the genre.
- *
- * Example Usage.
- *
- * await getGenreName(1);
- *
- * @param {int} genreID The genre's unique identifier.
- * @returns The name of the genre.
- */
-export async function getGenreName(genreID) {
-  try {
-    return (
-      await db.query(`SELECT genreTag FROM genres WHERE genreID = ?`, [genreID])
-    )[0][0].genreTag;
-  } catch (error) {
-    console.error(`Failed to fetch tag:`, error);
-  }
-}
-
-/**
- *
  * Takes both the Manga's and Genre's ID and adds them
  * to a many-to-many relationship table.
  *
@@ -636,5 +593,48 @@ export async function getGenres(mangaID) {
     return result;
   } catch (error) {
     console.error(`Failed to get genres:`, error);
+  }
+}
+
+/**
+ *
+ * Finds and returns the name of the genre.
+ *
+ * Example Usage.
+ *
+ * await getGenreName(1);
+ *
+ * @param {int} genreID The genre's unique identifier.
+ * @returns The name of the genre.
+ */
+export async function getGenreName(genreID) {
+  try {
+    return (
+      await db.query(`SELECT genreTag FROM genres WHERE genreID = ?`, [genreID])
+    )[0][0].genreTag;
+  } catch (error) {
+    console.error(`Failed to fetch tag:`, error);
+  }
+}
+
+/**
+ *
+ * Removes the genre from the specified manga.
+ *
+ * Example Usage.
+ *
+ * await removeGenre(2,1);
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} genreID The genre's unique identifier.
+ */
+export async function removeGenre(mangaID, genreID) {
+  try {
+    await db.query(
+      `DELETE FROM manga_genres WHERE mangaID = ? AND genreID = ?`,
+      [mangaID, genreID]
+    );
+  } catch (error) {
+    console.error(`Failed to delete genre:`, error);
   }
 }
