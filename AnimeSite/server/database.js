@@ -340,3 +340,61 @@ export async function createChapter(
     }
   }
 }
+
+//////////
+//Genres//
+//////////
+
+/**
+ *
+ * Creates a new genre if it doesn't exist already.
+ *
+ * @param {string} genre The new genre to create.
+ */
+export async function addGenre(genre) {
+  try {
+    await db.query(`INSERT INTO genres (genreTag) VALUES (?)`, [genre]);
+  } catch (error) {
+    if (error.code === "ER_DUP_ENTRY") {
+      console.error(`"${genre}" genre already exists.`);
+    } else {
+      console.error(`Failed adding genre:`, error);
+    }
+  }
+}
+
+/**
+ *
+ * Finds and returns the name of the genre.
+ *
+ * @param {int} genreID The genre's unique identifier.
+ * @returns The name of the genre.
+ */
+export async function getGenreTags(genreID) {
+  try {
+    return (
+      await db.query(`SELECT genreTag FROM genres WHERE genreID = ?`, [genreID])
+    )[0][0].genreTag;
+  } catch (error) {
+    console.error(`Failed to fetch tag:`, error);
+  }
+}
+
+/**
+ *
+ * Takes both the Manga's and Genre's ID and adds them
+ * to a many-to-many relationship table.
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} genreID The genre's unique identifier.
+ */
+export async function addGenreToManga(mangaID, genreID) {
+  try {
+    await db.query(
+      `INSERT INTO manga_genres (mangaID, genreID) VALUES (?, ?)`,
+      [mangaID, genreID]
+    );
+  } catch (error) {
+    console.error(`Failed to add genre:`, error);
+  }
+}
