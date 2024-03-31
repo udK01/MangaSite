@@ -279,6 +279,12 @@ export async function createManga(
   }
 }
 
+/**
+ *
+ * Simply returns all of our stored data.
+ *
+ * @returns Every manga from our database.
+ */
 export async function getMangas() {
   try {
     return (await db.query(`SELECT * FROM mangas`))[0];
@@ -287,6 +293,14 @@ export async function getMangas() {
   }
 }
 
+/**
+ *
+ * Counts and returns the total number of chapters
+ * for the specified manga.
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @returns The total number of chapters.
+ */
 export async function getTotalChapters(mangaID) {
   try {
     return (
@@ -341,6 +355,24 @@ export async function createChapter(
   }
 }
 
+/**
+ *
+ * Finds the chapter for the specified manga and removes it.
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} chapterNumber The chapter's number.
+ */
+export async function deleteChapter(mangaID, chapterNumber) {
+  try {
+    await db.query(
+      `DELETE FROM chapters WHERE mangaID = ? AND chapterNumber = ?`,
+      [mangaID, chapterNumber]
+    );
+  } catch (error) {
+    console.error(`Failed to delete chapter:`, error);
+  }
+}
+
 //////////
 //Genres//
 //////////
@@ -351,7 +383,7 @@ export async function createChapter(
  *
  * @param {string} genre The new genre to create.
  */
-export async function addGenre(genre) {
+export async function createGenre(genre) {
   try {
     await db.query(`INSERT INTO genres (genreTag) VALUES (?)`, [genre]);
   } catch (error) {
@@ -365,12 +397,30 @@ export async function addGenre(genre) {
 
 /**
  *
+ * Removes the genre from the specified manga.
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} genreID The genre's unique identifier.
+ */
+export async function removeGenre(mangaID, genreID) {
+  try {
+    await db.query(
+      `DELETE FROM manga_genres WHERE mangaID = ? AND genreID = ?`,
+      [mangaID, genreID]
+    );
+  } catch (error) {
+    console.error(`Failed to delete genre:`, error);
+  }
+}
+
+/**
+ *
  * Finds and returns the name of the genre.
  *
  * @param {int} genreID The genre's unique identifier.
  * @returns The name of the genre.
  */
-export async function getGenreTags(genreID) {
+export async function getGenreName(genreID) {
   try {
     return (
       await db.query(`SELECT genreTag FROM genres WHERE genreID = ?`, [genreID])
@@ -388,7 +438,7 @@ export async function getGenreTags(genreID) {
  * @param {int} mangaID The manga's unique identifier.
  * @param {int} genreID The genre's unique identifier.
  */
-export async function addGenreToManga(mangaID, genreID) {
+export async function addGenre(mangaID, genreID) {
   try {
     await db.query(
       `INSERT INTO manga_genres (mangaID, genreID) VALUES (?, ?)`,
@@ -396,5 +446,28 @@ export async function addGenreToManga(mangaID, genreID) {
     );
   } catch (error) {
     console.error(`Failed to add genre:`, error);
+  }
+}
+
+/**
+ *
+ * Finds all genres related with the manga
+ * and returns an array of their names.
+ *
+ * @param {*} mangaID The manga's unique identifier.
+ * @returns A list of genre names.
+ */
+export async function getGenres(mangaID) {
+  try {
+    const genreIDs = (
+      await db.query(`SELECT * FROM manga_genres WHERE mangaID = ?`, [mangaID])
+    )[0];
+    const result = [];
+    for (const genre of genreIDs) {
+      result.push(await getGenreName(genre.genreID));
+    }
+    return result;
+  } catch (error) {
+    console.error(`Failed to get genres:`, error);
   }
 }
