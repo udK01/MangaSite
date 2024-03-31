@@ -159,6 +159,24 @@ export async function changeProfilePicture(userID, profilePicture) {
   }
 }
 
+/**
+ *
+ * Alters the specified user's access level.
+ *
+ * @param {string} username The name of the user.
+ * @param {int} accessLevel New access level.
+ */
+export async function changeAccessLevel(username, accessLevel) {
+  try {
+    await db.query(`UPDATE Users SET accessLevel = ? WHERE username = ?`, [
+      accessLevel,
+      username,
+    ]);
+  } catch (error) {
+    console.error(`Failed to change access level:`, error);
+  }
+}
+
 /////////////
 //Bookmarks//
 /////////////
@@ -314,7 +332,68 @@ export async function getTotalChapters(mangaID) {
   }
 }
 
-async function updateManga() {}
+/**
+ *
+ * Finds the comic based on ID and updates
+ * any changes values.
+ *
+ * Example Usage.
+ *
+ * updateManga(
+ *  1,
+ *  "Restlessness",
+ *  "Restless.png",
+ *  "4.76",
+ *  "Manhua",
+ *  "Soldiers brimming with restlessness...",
+ *  "udK",
+ *  "OnGoing"
+ * );
+ *
+ * @param {int} mangaID The comic's unique identifier.
+ * @param {string} mangaTitle The comic's title.
+ * @param {string} mangaImage The comic's image.
+ * @param {float} rating The comic's rating.
+ * @param {string} type The comic's type.
+ * @param {string} description The comic's description.
+ * @param {string} author The comic's author.
+ * @param {string} status The comic's status.
+ */
+export async function updateManga(
+  mangaID,
+  mangaTitle,
+  mangaImage,
+  rating,
+  type,
+  description,
+  author,
+  status
+) {
+  try {
+    // SQL Query.
+    const query = `
+  UPDATE Mangas 
+  SET mangaTitle = ?, mangaImage = ?, rating = ?, type = ?, description = ?, author = ?, status = ? 
+  WHERE mangaID = ?
+`;
+
+    // Values To Enter.
+    const values = [
+      mangaTitle,
+      mangaImage,
+      rating,
+      type,
+      description,
+      author,
+      status,
+      mangaID,
+    ];
+
+    await db.query(query, values);
+  } catch (error) {
+    console.error(`Failed to update manga:`, error);
+  }
+}
 
 ////////////
 //Chapters//
