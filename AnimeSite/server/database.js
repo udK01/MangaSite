@@ -141,12 +141,12 @@ export async function changePassword(userID, oldPassword, newPassword) {
  *
  * Changes the user's profile picture.
  *
- * @param {int} userID The user's unique ID.
- * @param {string} profilePicture A path to the new picture.
- *
  * Example Usage.
  *
  * await changeProfilePicture(1, "...");
+ *
+ * @param {int} userID The user's unique ID.
+ * @param {string} profilePicture A path to the new picture.
  *
  */
 export async function changeProfilePicture(userID, profilePicture) {
@@ -162,6 +162,10 @@ export async function changeProfilePicture(userID, profilePicture) {
 /**
  *
  * Alters the specified user's access level.
+ *
+ * Example Usage.
+ *
+ * await changeAccessLevel("udK", 1);
  *
  * @param {string} username The name of the user.
  * @param {int} accessLevel New access level.
@@ -219,6 +223,10 @@ export async function alterBookmarks(userID, mangaID, action) {
  *
  * Takes the userID as input and returns
  * an array of bookmark objects.
+ *
+ * Example Usage.
+ *
+ * await getBookmarks(2);
  *
  * @param {int} userID The user's unique identifier.
  * @returns An array of bookmark objects.
@@ -301,6 +309,10 @@ export async function createManga(
  *
  * Simply returns all of our stored data.
  *
+ * Example Usage.
+ *
+ * await getMangas();
+ *
  * @returns Every manga from our database.
  */
 export async function getMangas() {
@@ -315,6 +327,10 @@ export async function getMangas() {
  *
  * Counts and returns the total number of chapters
  * for the specified manga.
+ *
+ * Example Usage.
+ *
+ * await getTotalChapters(2);
  *
  * @param {int} mangaID The manga's unique identifier.
  * @returns The total number of chapters.
@@ -408,6 +424,10 @@ export async function updateManga(
  *   May change "chapterNumber" for autoincrement later.   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
+ * Example Usage.
+ *
+ * await createChapter(2, 16, "Plated Escort", "The treacherous tale of Sun-Min Woo, The Plates Escort.");
+ *
  * @param {int} mangaID The manga's unique identifier.
  * @param {int} chapterNumber The chapter's number.
  * @param {string} chapterTitle The chapter's title.
@@ -438,6 +458,10 @@ export async function createChapter(
  *
  * Finds the chapter for the specified manga and removes it.
  *
+ * Example Usage.
+ *
+ * await deleteChapter(2, 16);
+ *
  * @param {int} mangaID The manga's unique identifier.
  * @param {int} chapterNumber The chapter's number.
  */
@@ -460,6 +484,10 @@ export async function deleteChapter(mangaID, chapterNumber) {
  *
  * Creates a new genre if it doesn't exist already.
  *
+ * Example Usage.
+ *
+ * await createGenre("Fantasy");
+ *
  * @param {string} genre The new genre to create.
  */
 export async function createGenre(genre) {
@@ -477,6 +505,10 @@ export async function createGenre(genre) {
 /**
  *
  * Removes the genre from the specified manga.
+ *
+ * Example Usage.
+ *
+ * await removeGenre(2,1);
  *
  * @param {int} mangaID The manga's unique identifier.
  * @param {int} genreID The genre's unique identifier.
@@ -496,6 +528,10 @@ export async function removeGenre(mangaID, genreID) {
  *
  * Finds and returns the name of the genre.
  *
+ * Example Usage.
+ *
+ * await getGenreName(1);
+ *
  * @param {int} genreID The genre's unique identifier.
  * @returns The name of the genre.
  */
@@ -513,6 +549,10 @@ export async function getGenreName(genreID) {
  *
  * Takes both the Manga's and Genre's ID and adds them
  * to a many-to-many relationship table.
+ *
+ * Example Usage.
+ *
+ * await addGenre(1, 2);
  *
  * @param {int} mangaID The manga's unique identifier.
  * @param {int} genreID The genre's unique identifier.
@@ -532,6 +572,10 @@ export async function addGenre(mangaID, genreID) {
  *
  * Finds all genres related with the manga
  * and returns an array of their names.
+ *
+ * Example Usage.
+ *
+ * await getGenres(1);
  *
  * @param {*} mangaID The manga's unique identifier.
  * @returns A list of genre names.
