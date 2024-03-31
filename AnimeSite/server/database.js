@@ -533,6 +533,21 @@ export async function createGenre(genre) {
 
 /**
  *
+ * Deletes the genre.
+ * Changes also cascade into "manga_genres"
+ *
+ * @param {string} genre The genre's name.
+ */
+export async function deleteGenre(genre) {
+  try {
+    await db.query(`DELETE FROM genres WHERE genreTag = ?`, [genre]);
+  } catch (error) {
+    console.error(`Failed to delete genre:`, error);
+  }
+}
+
+/**
+ *
  * Removes the genre from the specified manga.
  *
  * Example Usage.
