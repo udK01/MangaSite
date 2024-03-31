@@ -176,7 +176,7 @@ export async function changeProfilePicture(userID, profilePicture) {
  * @param {string} action The action to "add/remove".
  *
  */
-async function alterBookmarks(userID, mangaID, action) {
+export async function alterBookmarks(userID, mangaID, action) {
   try {
     switch (action) {
       case "add":
@@ -194,6 +194,26 @@ async function alterBookmarks(userID, mangaID, action) {
     }
   } catch (error) {
     console.error(`Failed to add bookmark:`, error);
+  }
+}
+
+/**
+ *
+ * Takes the userID as input and returns
+ * an array of bookmark objects.
+ *
+ * @param {int} userID The user's unique identifier.
+ * @returns An array of bookmark objects.
+ */
+export async function getBookmarks(userID) {
+  try {
+    const result = await db.query(
+      `SELECT mangaID FROM user_bookmarks WHERE userID = ?`,
+      [userID]
+    );
+    return result[0];
+  } catch (error) {
+    console.error(`Couldn't get bookmarks!`);
   }
 }
 
