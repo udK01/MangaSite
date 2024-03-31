@@ -476,6 +476,35 @@ export async function deleteChapter(mangaID, chapterNumber) {
   }
 }
 
+/**
+ *
+ * Changes the chapter's title and content.
+ *
+ * Example Usage.
+ *
+ * await updateChapter(2, 2, "Fleeting Happiness", "image.png");
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} chapterNumber The chapter's number.
+ * @param {string} chapterTitle The chapter's title.
+ * @param {string} chapterContent The chapter's content.
+ */
+export async function updateChapter(
+  mangaID,
+  chapterNumber,
+  chapterTitle,
+  chapterContent
+) {
+  try {
+    await db.query(
+      `UPDATE chapters SET chapterTitle = ?, chapterContent = ? WHERE mangaID = ? AND chapterNumber = ?`,
+      [chapterTitle, chapterContent, mangaID, chapterNumber]
+    );
+  } catch (error) {
+    console.error(`Failed to update chapter:`, error);
+  }
+}
+
 //////////
 //Genres//
 //////////
