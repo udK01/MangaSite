@@ -207,11 +207,11 @@ export async function alterBookmarks(userID, mangaID, action) {
  */
 export async function getBookmarks(userID) {
   try {
-    const result = await db.query(
-      `SELECT mangaID FROM user_bookmarks WHERE userID = ?`,
-      [userID]
-    );
-    return result[0];
+    return (
+      await db.query(`SELECT mangaID FROM user_bookmarks WHERE userID = ?`, [
+        userID,
+      ])
+    )[0];
   } catch (error) {
     console.error(`Couldn't get bookmarks!`);
   }
@@ -231,7 +231,6 @@ export async function getBookmarks(userID) {
  * await createComic(
  *  `Comic 2`,
  *  `Cat or Dogs?`,
- *  `14`,
  *  `Manga`,
  *  `The sneaky cat, pushed the dull dog...`,
  *  `FoxLover`,
@@ -240,17 +239,15 @@ export async function getBookmarks(userID) {
  *
  * @param {string} mangaTitle The comic's title.
  * @param {string} mangaImage The comic's image.
- * @param {int} totalChapters The comic's cumulative chapters.
  * @param {string} type The comic's type.
  * @param {string} description The comic's description.
  * @param {string} author The comic's author.
  * @param {string} status The comic's status.
  *
  */
-async function createComic(
+export async function createManga(
   mangaTitle,
   mangaImage,
-  totalChapters,
   type,
   description,
   author,
@@ -261,15 +258,14 @@ async function createComic(
 
     // Sql Query.
     const query = `
-      INSERT INTO Mangas (mangaTitle, mangaImage, totalChapters, rating, type, description, author, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Mangas (mangaTitle, mangaImage, rating, type, description, author, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     // Values To Enter.
     const values = [
       mangaTitle,
       mangaImage,
-      totalChapters,
       defaultRating,
       type,
       description,
@@ -280,5 +276,67 @@ async function createComic(
     await db.query(query, values);
   } catch (error) {
     console.error(`Couldn't create comic:`, error);
+  }
+}
+
+export async function getMangas() {
+  try {
+    return (await db.query(`SELECT * FROM mangas`))[0];
+  } catch (error) {
+    console.error(`Failed to fetch mangas:`, error);
+  }
+}
+
+export async function getTotalChapters(mangaID) {
+  try {
+    return (
+      await db.query(
+        `SELECT COUNT(*) AS count FROM chapters WHERE mangaID = ?`,
+        [mangaID]
+      )
+    )[0][0].count;
+  } catch (error) {
+    console.error(`Couldn't get total chapters:`, error);
+  }
+}
+
+async function updateManga() {}
+
+////////////
+//Chapters//
+////////////
+
+/**
+ *
+ * Creates a new chapter for the specified manga with the
+ * inputted number, title and content.
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *   May change "chapterNumber" for autoincrement later.   *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} chapterNumber The chapter's number.
+ * @param {string} chapterTitle The chapter's title.
+ * @param {string} chapterContent The chapter's content.
+ */
+export async function createChapter(
+  mangaID,
+  chapterNumber,
+  chapterTitle,
+  chapterContent
+) {
+  try {
+    const query = `INSERT INTO chapters (mangaID, chapterNumber, chapterTitle, chapterContent) VALUES (?, ?, ?, ?)`;
+
+    const values = [mangaID, chapterNumber, chapterTitle, chapterContent];
+
+    await db.query(query, values);
+  } catch (error) {
+    if (error.code === "ER_DUP_ENTRY") {
+      console.error(`Chapter "${chapterNumber}" already exists.`);
+    } else {
+      console.error(`Failed to create chapter:`, error);
+    }
   }
 }
