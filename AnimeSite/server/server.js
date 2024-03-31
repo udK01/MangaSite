@@ -1,5 +1,5 @@
 import express from "express";
-import {} from "./database.js";
+import * as databaseFunctions from "./database.js";
 
 const PORT = 8080;
 const app = express();
