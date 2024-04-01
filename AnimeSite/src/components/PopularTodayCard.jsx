@@ -2,7 +2,7 @@ import { useState } from "react";
 import { slides } from "../constants";
 import StarRating from "./StarRating";
 
-export default function PopularTodayCard() {
+export default function PopularTodayCard({ manga }) {
   const [hover, setHover] = useState(false);
 
   const handleMouseEnter = () => {
@@ -14,7 +14,7 @@ export default function PopularTodayCard() {
   };
 
   return (
-    <div className="w-[147px] font-poppins rounded-md overflow-hidden">
+    <div className="w-[147px] font-poppins rounded-md overflow-hidden flex flex-col">
       <img
         src={slides[2].src}
         alt="popular_today_img"
@@ -22,16 +22,20 @@ export default function PopularTodayCard() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       />
-      <div>
-        <h4
-          className={`text-white text-[16px] mt-1 hover:text-primary ${
-            hover ? "text-primary" : ""
-          }`}
-        >
-          Example Title
-        </h4>
-        <p className="text-dimWhite text-[12px] mt-1">Chapter 73</p>
-        <StarRating rating={(Math.random() * 4 + 1).toFixed(2)} />
+      <div className="flex-grow">
+        <div className="flex flex-col justify-evenly h-full">
+          <h4
+            className={`text-white text-[14px] mt-1 hover:text-primary ${
+              hover ? "text-primary" : ""
+            } mb-1`}
+          >
+            {manga.mangaTitle}
+          </h4>
+          <p className="text-dimWhite text-[12px] mt-1">
+            Chapter {manga.totalChapters}
+          </p>
+          <StarRating rating={manga.rating} />
+        </div>
       </div>
     </div>
   );

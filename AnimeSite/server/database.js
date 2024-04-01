@@ -254,7 +254,7 @@ export async function getBookmarks(userID) {
  *
  * Example Usage.
  *
- * await createComic(
+ * await createManga(
  *  `Comic 2`,
  *  `Cat or Dogs?`,
  *  `Manga`,
@@ -307,7 +307,8 @@ export async function createManga(
 
 /**
  *
- * Simply returns all of our stored data.
+ * Returns all of our stored data with
+ * their existing chapter count.
  *
  * Example Usage.
  *
@@ -317,7 +318,11 @@ export async function createManga(
  */
 export async function getMangas() {
   try {
-    return (await db.query(`SELECT * FROM mangas`))[0];
+    const mangas = (await db.query(`SELECT * FROM mangas`))[0];
+    for (const manga of mangas) {
+      manga.totalChapters = await getTotalChapters(manga.mangaID);
+    }
+    return mangas;
   } catch (error) {
     console.error(`Failed to fetch mangas:`, error);
   }

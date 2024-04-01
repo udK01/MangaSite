@@ -6,6 +6,16 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/api/mangas", async (req, res) => {
+  const mangas = await databaseFunctions.getMangas();
+  res.status(200).json(mangas);
+  try {
+  } catch (error) {
+    console.error(`Couldn't send comics:`, error);
+    res.status(500).json({ error: "Error fetching mangas." });
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
