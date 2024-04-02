@@ -1,9 +1,18 @@
-import { slides } from "../constants";
-
-export default function Trending() {
+export default function Trending({ comics }) {
   return (
-    <div className="w-[200px] h-[280px] ml-3 ">
-      <img src={slides[0].src} className="h-full" alt="Trending" />
+    <div className="relative w-[200px] h-[280px] ml-3">
+      <div className="absolute flex justify-center items-center w-full h-8 bg-primary shadow-2xl shadow-red-600 z-10">
+        <h2 className="font-bold tracking-widest text-white font-poppins">
+          &lt; Trending &gt;
+        </h2>
+      </div>
+      {comics.length > 0 ? (
+        <img
+          src={comics[3].mangaImage}
+          className="h-full brightness-75 z-0"
+          alt="Trending"
+        />
+      ) : null}
     </div>
   );
 }

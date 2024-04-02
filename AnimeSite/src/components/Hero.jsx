@@ -25,7 +25,7 @@ export default function Hero() {
       <div id="body" className="flex flex-col">
         <div className="flex justify-between">
           <Carousel />
-          <Trending />
+          <Trending comics={comics} />
         </div>
         <PopularToday comics={comics} />
         <LatestUpdate />
