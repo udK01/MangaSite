@@ -39,7 +39,7 @@ export default function Popular({ comics }) {
       </div>
       {/* Cards */}
       <ul className="flex flex-col">
-        {comics.map((manga, i) => (
+        {comics.slice(0, 10).map((manga, i) => (
           <li key={manga.mangaID}>
             <PopularCard manga={manga} index={i} />
             {i !== comics.length - 1 ? <Separator /> : null}

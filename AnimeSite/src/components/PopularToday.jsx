@@ -8,11 +8,12 @@ export default function PopularToday({ comics }) {
         <p className="font-poppins text-white ml-1 mt-1">Popular Today</p>
         <Separator />
         <div className="flex w-full justify-evenly">
-          {comics
-            ? comics.map((manga) => (
+          {comics &&
+            comics
+              .slice(0, 5)
+              .map((manga) => (
                 <PopularTodayCard key={manga.mangaID} manga={manga} />
-              ))
-            : null}
+              ))}
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { slides, slide_timer } from "../constants";
 
-export default function Carousel() {
+export default function Carousel({ comics }) {
   let [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -26,13 +26,14 @@ export default function Carousel() {
             transform: `translateX(-${current * 100}%)`,
           }}
         >
-          {slides.map((s) => {
+          {comics.slice(0, 5).map((manga) => {
             return (
               <img
-                key={s.src}
-                src={s.src}
+                key={manga.mangaID}
+                src={manga.mangaImage}
                 alt="carousel-img"
-                className="w-full h-full object-contain"
+                className="h-full w-full object-cover blur-md mix-blend-darken"
+                style={{ minWidth: "100%", minHeight: "100%" }}
               />
             );
           })}
