@@ -7,9 +7,12 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/mangas", async (req, res) => {
-  const mangas = await databaseFunctions.getMangas();
-  res.status(200).json(mangas);
   try {
+    const mangas = await databaseFunctions.getMangas();
+    for (const manga of mangas) {
+      manga.genres = await databaseFunctions.getGenres(manga.mangaID);
+    }
+    res.status(200).json(mangas);
   } catch (error) {
     console.error(`Couldn't send comics:`, error);
     res.status(500).json({ error: "Error fetching mangas." });
