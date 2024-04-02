@@ -24,8 +24,8 @@ export default function PopularTodayCard({ manga }) {
       <div className="flex-grow">
         <div className="flex flex-col justify-between h-full">
           <h4
-            className={`text-white text-[14px] mt-1 hover:text-primary ${
-              hover ? "text-primary" : ""
+            className={`text-[14px] mt-1 hover:text-primary ${
+              hover ? "text-primary" : "text-white"
             } mb-1 line-clamp-2`}
           >
             {manga.mangaTitle}
