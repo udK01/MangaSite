@@ -27,7 +27,14 @@ export default function Carousel() {
           }}
         >
           {slides.map((s) => {
-            return <img key={s.src} src={s.src} alt="carousel-img" />;
+            return (
+              <img
+                key={s.src}
+                src={s.src}
+                alt="carousel-img"
+                className="w-full h-full object-contain"
+              />
+            );
           })}
         </div>
 
