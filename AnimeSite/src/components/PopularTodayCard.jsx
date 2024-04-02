@@ -22,7 +22,7 @@ export default function PopularTodayCard({ manga }) {
         onMouseLeave={handleMouseLeave}
       />
       <div className="flex-grow">
-        <div className="flex flex-col justify-evenly h-full">
+        <div className="flex flex-col justify-between h-full">
           <h4
             className={`text-white text-[14px] mt-1 hover:text-primary ${
               hover ? "text-primary" : ""
@@ -30,11 +30,12 @@ export default function PopularTodayCard({ manga }) {
           >
             {manga.mangaTitle}
           </h4>
-
-          <p className="text-dimWhite text-[12px] mt-1">
-            Chapter {manga.totalChapters}
-          </p>
-          <StarRating rating={manga.rating} />
+          <div className="flex flex-col">
+            <p className="text-dimWhite text-[12px] mt-1">
+              Chapter {manga.totalChapters}
+            </p>
+            <StarRating rating={manga.rating} />
+          </div>
         </div>
       </div>
     </div>
