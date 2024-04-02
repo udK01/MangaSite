@@ -28,7 +28,7 @@ export default function Hero() {
           <Trending comics={comics} />
         </div>
         <PopularToday comics={comics} />
-        <LatestUpdate />
+        <LatestUpdate comics={comics} />
       </div>
       <div id="sidebar">
         <Popular comics={comics} />

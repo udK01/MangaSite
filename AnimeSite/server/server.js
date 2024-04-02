@@ -11,6 +11,7 @@ app.get("/api/mangas", async (req, res) => {
     const mangas = await databaseFunctions.getMangas();
     for (const manga of mangas) {
       manga.genres = await databaseFunctions.getGenres(manga.mangaID);
+      manga.chapters = await databaseFunctions.getChapters(manga.mangaID);
     }
     res.status(200).json(mangas);
   } catch (error) {

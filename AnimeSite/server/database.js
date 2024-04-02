@@ -330,31 +330,6 @@ export async function getMangas() {
 
 /**
  *
- * Counts and returns the total number of chapters
- * for the specified manga.
- *
- * Example Usage.
- *
- * await getTotalChapters(2);
- *
- * @param {int} mangaID The manga's unique identifier.
- * @returns The total number of chapters.
- */
-export async function getTotalChapters(mangaID) {
-  try {
-    return (
-      await db.query(
-        `SELECT COUNT(*) AS count FROM chapters WHERE mangaID = ?`,
-        [mangaID]
-      )
-    )[0][0].count;
-  } catch (error) {
-    console.error(`Couldn't get total chapters:`, error);
-  }
-}
-
-/**
- *
  * Finds the comic based on ID and updates
  * any changes values.
  *
@@ -507,6 +482,48 @@ export async function updateChapter(
     );
   } catch (error) {
     console.error(`Failed to update chapter:`, error);
+  }
+}
+
+/**
+ *
+ * Counts and returns the total number of chapters
+ * for the specified manga.
+ *
+ * Example Usage.
+ *
+ * await getTotalChapters(2);
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @returns The total number of chapters.
+ */
+export async function getTotalChapters(mangaID) {
+  try {
+    return (
+      await db.query(
+        `SELECT COUNT(*) AS count FROM chapters WHERE mangaID = ?`,
+        [mangaID]
+      )
+    )[0][0].count;
+  } catch (error) {
+    console.error(`Couldn't get total chapters:`, error);
+  }
+}
+
+/**
+ *
+ * Returns all chapters related with the specified manga.
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @returns All chapter's related to the manga.
+ */
+export async function getChapters(mangaID) {
+  try {
+    return (
+      await db.query(`SELECT * FROM chapters WHERE mangaID = ?`, [mangaID])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to fetch chapters:`, error);
   }
 }
 
