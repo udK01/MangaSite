@@ -2,7 +2,7 @@ import { useState } from "react";
 import Separator from "./Separator";
 import PopularCard from "./PopularCard";
 
-export default function Popular() {
+export default function Popular({ comics }) {
   const [current, setCurrent] = useState(0);
 
   return (
@@ -39,10 +39,10 @@ export default function Popular() {
       </div>
       {/* Cards */}
       <ul className="flex flex-col">
-        {[...Array(10).keys()].map((_, i) => (
-          <li key={i}>
-            <PopularCard />
-            {i !== 9 ? <Separator /> : null}
+        {comics.map((manga, i) => (
+          <li key={manga.mangaID}>
+            <PopularCard manga={manga} index={i} />
+            {i !== comics.length - 1 ? <Separator /> : null}
           </li>
         ))}
       </ul>

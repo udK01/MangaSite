@@ -9,7 +9,7 @@ export default function Trending({ comics }) {
       {comics.length > 0 ? (
         <img
           src={comics[3].mangaImage}
-          className="h-full brightness-75 z-0"
+          className="w-full h-full brightness-75 z-0"
           alt="Trending"
         />
       ) : null}

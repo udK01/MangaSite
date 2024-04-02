@@ -31,7 +31,7 @@ export default function Hero() {
         <LatestUpdate />
       </div>
       <div id="sidebar">
-        <Popular />
+        <Popular comics={comics} />
       </div>
     </section>
   );
