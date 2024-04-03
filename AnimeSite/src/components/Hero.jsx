@@ -2,6 +2,7 @@ import LatestUpdate from "./LatestUpdate";
 import PopularToday from "./PopularToday";
 import Carousel from "./Carousel";
 import Trending from "./Trending";
+import AddComic from "./AddComic";
 import Popular from "./Popular";
 import Stored from "./Stored";
 
@@ -13,7 +14,11 @@ export default function Hero({ comics, view }) {
       bodyContent = <Stored />;
       break;
     case "comics":
-    // bodyContent = <Comics />;
+      // bodyContent = <Comics />;
+      break;
+    case "addComic":
+      bodyContent = <AddComic />;
+      break;
     default:
       bodyContent = (
         <div>

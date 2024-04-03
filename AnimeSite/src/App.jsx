@@ -36,6 +36,7 @@ export default function App() {
     { path: "/", view: "home" },
     { path: "/bookmarks", view: "bookmarks" },
     { path: "/comics", view: "comics" },
+    { path: "/addComic", view: "addComic" },
   ];
 
   return (
@@ -48,7 +49,6 @@ export default function App() {
             element={<Home {...commonProps} view={route.view} />}
           />
         ))}
-        <Route path="/addComic" />
       </Routes>
     </Router>
   );
