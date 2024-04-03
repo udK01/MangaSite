@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Separator from "./Separator";
 import { useState } from "react";
 
@@ -9,6 +9,7 @@ export default function AddComic() {
   const [status, setStatus] = useState("Status");
 
   const [type, setType] = useState("");
+  const navigate = useNavigate();
 
   const [image, setImage] = useState(null);
 
@@ -17,10 +18,13 @@ export default function AddComic() {
     // Here you can handle the image upload logic, such as sending it to the server
     // For demonstration, let's just log the title and image
     console.log("Title:", title);
-    console.log("Description:", Description);
-    console.log("Image:", image);
+    console.log("Description:", description);
+    console.log("Type:", type);
     console.log("Author:", author);
     console.log("Status:", status);
+    console.log("Image:", image);
+
+    navigate("/");
   }
 
   function handleImageChange(event) {
@@ -54,7 +58,7 @@ export default function AddComic() {
           id="dropdown"
           value={type}
           onChange={handleSelectChange}
-          className="bg-transparent w-full h-full border-quaternary focus:bg-secondary focus:outline-none focus:text-primary"
+          className="bg-transparent w-full h-full border-quaternary focus:bg-secondary focus:outline-none"
         >
           <option value="manhwa">Manhwa</option>
           <option value="manga">Manga</option>
@@ -143,13 +147,12 @@ export default function AddComic() {
           <Link to={"/"} className="bg-red-600 px-4 py-2 rounded-md">
             Cancel
           </Link>
-          <Link
-            to={"/"}
+          <button
             type="submit"
             className="bg-primary ml-5 px-4 py-2 rounded-md"
           >
             Add Comic
-          </Link>
+          </button>
         </div>
       </form>
     </section>
