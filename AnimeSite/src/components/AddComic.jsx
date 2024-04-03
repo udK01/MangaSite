@@ -45,24 +45,37 @@ export default function AddComic() {
     }
   }
 
-  function dropdown() {
-    function handleSelectChange(event) {
+  function dropdown(options, dropdownType) {
+    function handleTypeChange(event) {
+      console.log("Type");
       setType(event.target.value);
+    }
+
+    function handleStatusChange(event) {
+      console.log("Status");
+      setStatus(event.target.value);
     }
 
     return (
       <div
-        className={`w-[350px] h-[34px] px-4 mt-2 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`}
+        className={`w-[350px] h-[34px] px-3 mt-2 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`}
       >
         <select
           id="dropdown"
-          value={type}
-          onChange={handleSelectChange}
+          value={dropdownType === "type" ? type : status}
+          onChange={
+            dropdownType === "type" ? handleTypeChange : handleStatusChange
+          }
           className="bg-transparent w-full h-full border-quaternary focus:bg-secondary focus:outline-none"
         >
-          <option value="manhwa">Manhwa</option>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+          {/* <option value="manhwa">Manhwa</option>
           <option value="manga">Manga</option>
-          <option value="manhua">Manhua</option>
+          <option value="manhua">Manhua</option> */}
         </select>
       </div>
     );
@@ -117,9 +130,12 @@ export default function AddComic() {
             setDescription,
             2
           )}
-          {dropdown()}
+          {dropdown(["Manhwa", "Manga", "Manhua"], "type")}
           {customInputField("text", "Author", author, setAuthor, 2)}
-          {customInputField("text", "Status", status, setStatus, 2)}
+          {dropdown(
+            ["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"],
+            "status"
+          )}
 
           {/* Image Upload */}
           <div className="flex w-[350px] h-[34px] bg-secondary justify-center items-center mt-4">
