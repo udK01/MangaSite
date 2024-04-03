@@ -35,7 +35,7 @@ export const slides = [
   },
 ];
 
-export const slide_timer = 1000000;
+export const slide_timer = 10000;
 
 export const footer_text = [
   {

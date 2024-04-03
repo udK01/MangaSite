@@ -15,7 +15,7 @@ export default function PopularCard({ manga, index }) {
         <h2 className="font-poppins hover:text-primary hover:cursor-pointer line-clamp-2">
           {manga.mangaTitle}
         </h2>
-        <span className="flex flex-wrap text-[12px] line-clamp-2">
+        <span className="flex flex-wrap text-[12px] line-clamp-2 text-ellipsis h-[40px]">
           <b>Genres:</b>
           {manga.genres.map((genre, i) => (
             <div key={i}>
