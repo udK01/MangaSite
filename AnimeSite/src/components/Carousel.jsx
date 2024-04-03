@@ -83,7 +83,7 @@ export default function Carousel({ comics }) {
                   <img
                     src={manga.mangaImage}
                     alt="manga-img"
-                    className="w-[130px] h-full hover:cursor-pointer"
+                    className="w-[140px] h-full hover:cursor-pointer"
                   />
                   <StarRating rating={manga.rating} />
                 </div>

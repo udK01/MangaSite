@@ -20,6 +20,17 @@ app.get("/api/mangas", async (req, res) => {
   }
 });
 
+app.get("/api/user/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const userData = await databaseFunctions.getUser(username);
+    res.status(200).json(userData);
+  } catch (error) {
+    console.error(`Couldn't fetch users:`, error);
+    res.status(500).json({ error: "Error fetching users." });
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { navLinks } from "../constants";
 import Header from "./Header";
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   return (
     <>
       <Header />
@@ -21,13 +21,21 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
-          {navLinks.length > 0 && (
-            <div>
-              <Link className="flex items-center p-2 transition-all duration-300 hover:bg-secondary hover:cursor-pointer">
-                {navLinks[navLinks.length - 1].title}
+          <div className="flex items-center transition-all duration-300">
+            {navLinks.length > 0 && (
+              <div className="p-2 hover:bg-secondary hover:cursor-point">
+                <Link>{navLinks[navLinks.length - 1].title}</Link>
+              </div>
+            )}
+            {user && user.length > 0 && user[0].accessLevel > 0 && (
+              <Link
+                to={`/addComic`}
+                className="ml-2 p-2 hover:bg-secondary hover:cursor-pointer"
+              >
+                Add Comic
               </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </nav>
     </>
