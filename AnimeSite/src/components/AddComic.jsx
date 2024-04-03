@@ -1,30 +1,43 @@
 import { Link, useNavigate } from "react-router-dom";
 import Separator from "./Separator";
 import { useState } from "react";
+import axios from "axios";
 
 export default function AddComic() {
   const [title, setTitle] = useState("Title");
   const [description, setDescription] = useState("Description");
   const [author, setAuthor] = useState("Author");
-  const [status, setStatus] = useState("Status");
+  const [status, setStatus] = useState("OnGoing");
 
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Manhwa");
   const navigate = useNavigate();
 
   const [image, setImage] = useState(null);
 
   function handleAddComic(event) {
     event.preventDefault();
-    // Here you can handle the image upload logic, such as sending it to the server
-    // For demonstration, let's just log the title and image
-    console.log("Title:", title);
-    console.log("Description:", description);
-    console.log("Type:", type);
-    console.log("Author:", author);
-    console.log("Status:", status);
-    console.log("Image:", image);
 
-    navigate("/");
+    const formData = new FormData();
+    formData.append("mangaTitle", title);
+    formData.append("mangaImage", image);
+    formData.append("imagePath", `../../thumbnails/${image.name}`);
+    formData.append("type", type);
+    formData.append("description", description);
+    formData.append("author", author);
+    formData.append("status", status);
+
+    axios
+      .post("/api/createComic", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(`Failed to create comic:`, error);
+      });
   }
 
   function handleImageChange(event) {
@@ -82,31 +95,41 @@ export default function AddComic() {
   }
 
   function customInputField(type, placeholder, value, func, mt = 0) {
+    const commonProps = {
+      placeholder: placeholder,
+      value: value,
+      onChange: (e) => func(e.target.value),
+      onFocus: (e) => {
+        if (e.target.value === placeholder) {
+          func("");
+        }
+      },
+      onBlur: (e) => {
+        if (e.target.value === "") {
+          func(placeholder);
+        }
+      },
+      className: `w-[350px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
+    };
+
     return (
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => func(e.target.value)}
-        onFocus={(e) => {
-          if (e.target.value === placeholder) {
-            func("");
-          }
-        }}
-        onBlur={(e) => {
-          if (e.target.value === "") {
-            func(placeholder);
-          }
-        }}
-        className={`w-[350px] h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`}
-      />
+      <>
+        {placeholder === "Description" ? (
+          <textarea
+            {...commonProps}
+            style={{ height: "34px", maxHeight: "400px", lineHeight: "30px" }}
+          />
+        ) : (
+          <input {...commonProps} type={type} />
+        )}
+      </>
     );
   }
 
   return (
     // Container
     <section
-      className="w-[826px] h-[460px] bg-quaternary rounded-sm font-poppins"
+      className="w-[826px] h-auto bg-quaternary rounded-sm font-poppins"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >

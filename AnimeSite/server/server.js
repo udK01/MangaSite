@@ -1,11 +1,25 @@
 import express from "express";
+import multer from "multer";
+import path from "path";
 import * as databaseFunctions from "./database.js";
 
 const PORT = 8080;
 const app = express();
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../public/thumbnails/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 app.use(express.json());
 
+/**
+ * Retrieve comics.
+ */
 app.get("/api/mangas", async (req, res) => {
   try {
     const mangas = await databaseFunctions.getMangas();
@@ -20,6 +34,9 @@ app.get("/api/mangas", async (req, res) => {
   }
 });
 
+/**
+ * Retrieve users.
+ */
 app.get("/api/user/:username", async (req, res) => {
   try {
     const username = req.params.username;
@@ -28,6 +45,30 @@ app.get("/api/user/:username", async (req, res) => {
   } catch (error) {
     console.error(`Couldn't fetch users:`, error);
     res.status(500).json({ error: "Error fetching users." });
+  }
+});
+
+/**
+ * Create new comics.
+ */
+app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
+  try {
+    const { mangaTitle, imagePath, type, description, author, status } =
+      req.body;
+
+    await databaseFunctions.createManga(
+      mangaTitle,
+      imagePath,
+      type,
+      description,
+      author,
+      status
+    );
+
+    res.status(200).json(`Comic created successfully!`);
+  } catch (error) {
+    console.error(`Couldn't create comic:`, error);
+    res.status(500).json({ error: "Error creating comic." });
   }
 });
 
