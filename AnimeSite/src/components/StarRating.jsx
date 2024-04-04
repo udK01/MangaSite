@@ -1,4 +1,4 @@
-export default function StarRating({ rating }) {
+export default function StarRating({ rating, includeText = true }) {
   const renderStar = (index) => {
     const integerPart = Math.floor(rating);
     const fractionalPart = rating - integerPart;
@@ -42,7 +42,9 @@ export default function StarRating({ rating }) {
       <div className="flex items-center">
         {[...Array(5).keys()].map((index) => renderStar(index + 1))}
       </div>
-      <p className="font-poppins text-[14px] ml-2 text-dimWhite">{rating}</p>
+      {includeText ? (
+        <p className="font-poppins text-[14px] ml-2 text-dimWhite">{rating}</p>
+      ) : null}
     </div>
   );
 }

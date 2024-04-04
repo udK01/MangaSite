@@ -1,8 +1,39 @@
+import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
+import { FaRegBookmark } from "react-icons/fa";
 
 export default function Inspect({ manga }) {
+  const SideInfo = ({ label, value, isHoverable = false }) => (
+    <div className="flex justify-between w-full bg-quinary p-1 px-2 rounded-md text-dimWhite mt-2">
+      <div>{label}</div>
+      <div
+        className={
+          isHoverable
+            ? "text-white hover:text-primary hover:cursor-pointer"
+            : ""
+        }
+      >
+        {value}
+      </div>
+    </div>
+  );
+
+  const BodyInfo = ({ lLabel, lValue, rLabel, rValue }) => (
+    <div className="w-full flex text-[14px] mt-4">
+      <div className="flex flex-col flex-1 flex-grow">
+        <div>{lLabel}</div>
+        <div className="text-dimWhite">{lValue}</div>
+      </div>
+      <div className="flex flex-col flex-1 flex-grow">
+        <div>{rLabel}</div>
+        <div className="text-dimWhite">{rValue}</div>
+      </div>
+    </div>
+  );
+
   return (
     <section className="w-[826px] h-auto font-poppins">
+      {/* Route */}
       <div className="flex text-[14px] w-full bg-quaternary rounded-sm text-white p-2">
         <Link
           to={"/"}
@@ -17,6 +48,77 @@ export default function Inspect({ manga }) {
         >
           {manga.mangaTitle}
         </Link>
+      </div>
+      {/* Body */}
+      <div className="flex w-full h-auto bg-quaternary mt-10 p-4">
+        {/* Left Side */}
+        <div id="left" className="flex flex-col w-[180px] flex-shrink-0">
+          <img src={manga.mangaImage} alt={manga.mangaTitle} />
+          <button className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px]">
+            <FaRegBookmark /> Bookmark
+          </button>
+          <p className="flex justify-center text-dimWhite text-[12px] my-1">
+            Followed by {0} people
+          </p>
+          <div>
+            <div className="w-full flex justify-between items-center bg-quinary px-2 p-[2px] rounded-md text-dimWhite">
+              <div className="h-full pb-1 flex items-center">
+                <StarRating rating={manga.rating} includeText={false} />
+              </div>
+              {manga.rating}
+            </div>
+
+            <SideInfo label="Status" value={manga.status} />
+            <SideInfo label="Type" value={manga.type} isHoverable={true} />
+          </div>
+        </div>
+        {/* Right Side */}
+        <div id="right" className="ml-4 text-white w-full">
+          {/* Title - Summary - Description */}
+          <h2 className="font-bold text-[20px]">{manga.mangaTitle}</h2>
+          <h3 className="mt-3 font-semibold">Summary</h3>
+          <p className="mt-1 text-dimWhite text-[14px]">{manga.description}</p>
+          {/* Short Info Tags */}
+          <BodyInfo
+            lLabel={"Released"}
+            lValue={"-"}
+            rLabel={"Author"}
+            rValue={manga.author}
+          />
+          <BodyInfo
+            lLabel={"Artist"}
+            lValue={"Unknown"}
+            rLabel={""}
+            rValue={""}
+          />
+          <BodyInfo
+            lLabel={"Serialisation"}
+            lValue={"-"}
+            rLabel={"Posted By"}
+            rValue={"udK"}
+          />
+          <BodyInfo
+            lLabel={"Posted On"}
+            lValue={"September 19, 2023"}
+            rLabel={"Updated On"}
+            rValue={"April 2, 2024"}
+          />
+          <div className="flex flex-col">
+            <div className="text-[14px] mt-4">Genres</div>
+            <div className="flex flex-wrap text-[14px]">
+              {manga.genres.map((genre, index) => (
+                <p
+                  key={index}
+                  className={`bg-quinary rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
+                    index > 0 ? "ml-2" : "ml-0"
+                  }`}
+                >
+                  {genre}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
