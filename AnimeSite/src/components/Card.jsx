@@ -1,4 +1,5 @@
 import Chapter from "./Chapter";
+import { Link } from "react-router-dom";
 
 function sortChapters(chapters) {
   return chapters.sort((a, b) => b.chapterNumber - a.chapterNumber);
@@ -13,9 +14,12 @@ export default function Card({ manga }) {
         className="w-[100px] h-full hover:cursor-pointer"
       />
       <div className="flex flex-col w-full">
-        <h2 className="ml-3 mt-1 hover:text-primary hover:cursor-pointer">
+        <Link
+          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+          className="ml-3 mt-1 hover:text-primary hover:cursor-pointer"
+        >
           {manga.mangaTitle}
-        </h2>
+        </Link>
         {sortChapters(manga.chapters)
           .slice(0, 3)
           .map((chapter) => (
