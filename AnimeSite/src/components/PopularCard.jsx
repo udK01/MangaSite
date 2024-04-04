@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 
 export default function PopularCard({ manga, index }) {
@@ -6,15 +7,20 @@ export default function PopularCard({ manga, index }) {
       <div className="h-[30%] flex items-center border border-solid border-gray-500 px-2 ml-2 rounded-md text-gray-500">
         {index + 1}
       </div>
-      <img
-        src={manga.mangaImage}
-        alt="manga-img"
-        className="w-[60px] h-[100px] object-fit m-2 hover:cursor-pointer"
-      />
+      <Link
+        to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+        className="w-[60px] h-[100px] object-fit m-2 hover:cursor-pointer flex-shrink-0 flex-grow-0"
+      >
+        <img src={manga.mangaImage} alt="manga-img" className="w-full h-full" />
+      </Link>
+
       <div className="flex flex-col">
-        <h2 className="font-poppins hover:text-primary hover:cursor-pointer line-clamp-2">
+        <Link
+          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+          className="font-poppins hover:text-primary hover:cursor-pointer line-clamp-2"
+        >
           {manga.mangaTitle}
-        </h2>
+        </Link>
         <span className="flex flex-wrap text-[12px] line-clamp-2 text-ellipsis h-[40px]">
           <b>Genres:</b>
           {manga.genres.map((genre, i) => (

@@ -8,11 +8,16 @@ function sortChapters(chapters) {
 export default function Card({ manga }) {
   return (
     <div className="flex w-[403px] h-[172px] p-2">
-      <img
-        src={manga.mangaImage}
-        alt="manga-img"
-        className="w-[100px] h-full hover:cursor-pointer"
-      />
+      <Link
+        to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+        className="hover:cursor-pointer"
+      >
+        <img
+          src={manga.mangaImage}
+          alt="manga-img"
+          className="w-[150px] h-full hover:cursor-pointer"
+        />
+      </Link>
       <div className="flex flex-col w-full">
         <Link
           to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}

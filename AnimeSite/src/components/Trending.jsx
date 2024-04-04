@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Trending({ comics }) {
   return (
     <div className="relative w-[200px] h-[280px] ml-3">
@@ -7,11 +9,16 @@ export default function Trending({ comics }) {
         </h2>
       </div>
       {comics.length > 0 ? (
-        <img
-          src={comics[3].mangaImage}
-          className="w-full h-full brightness-75 z-0"
-          alt="Trending"
-        />
+        <Link
+          to={`/${comics[3].mangaTitle.replace(/\s+/g, "-")}`}
+          className="hover:cursor-pointer"
+        >
+          <img
+            src={comics[3].mangaImage}
+            className="w-full h-full brightness-75 z-0"
+            alt="Trending"
+          />
+        </Link>
       ) : null}
     </div>
   );

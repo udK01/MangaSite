@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { slides, slide_timer } from "../constants";
+import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 
 export default function Carousel({ comics }) {
@@ -47,9 +48,12 @@ export default function Carousel({ comics }) {
                 <div className="flex flex-col w-full h-full">
                   {/* Title and Type */}
                   <div className="flex flex-col justify-center text-white">
-                    <h2 className="tracking-wide text-[24px] line-clamp-1 text-ellipsis hover:text-yellow-400 hover:cursor-pointer transition-all duration-300">
+                    <Link
+                      to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+                      className="tracking-wide text-[24px] line-clamp-1 text-ellipsis hover:text-yellow-400 hover:cursor-pointer transition-all duration-300"
+                    >
                       {manga.mangaTitle}
-                    </h2>
+                    </Link>
                     <h2 className="text-[20px] text-yellow-400">
                       {manga.type}
                     </h2>
@@ -80,11 +84,13 @@ export default function Carousel({ comics }) {
                   </div>
                 </div>
                 <div className="flex flex-col h-full">
-                  <img
-                    src={manga.mangaImage}
-                    alt="manga-img"
-                    className="w-[140px] h-full hover:cursor-pointer"
-                  />
+                  <Link to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}>
+                    <img
+                      src={manga.mangaImage}
+                      alt="manga-img"
+                      className="w-[140px] h-full hover:cursor-pointer"
+                    />
+                  </Link>
                   <StarRating rating={manga.rating} />
                 </div>
               </div>
