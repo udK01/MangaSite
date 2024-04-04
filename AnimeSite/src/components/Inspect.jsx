@@ -1,3 +1,4 @@
+import Separator from "./Separator";
 import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
 import { FaRegBookmark } from "react-icons/fa";
@@ -31,6 +32,10 @@ export default function Inspect({ manga }) {
     </div>
   );
 
+  function reverseChapters(chapters) {
+    return chapters.sort((a, b) => b.chapterNumber - a.chapterNumber);
+  }
+
   return (
     <section className="w-[826px] h-auto font-poppins">
       {/* Route */}
@@ -54,7 +59,7 @@ export default function Inspect({ manga }) {
         {/* Left Side */}
         <div id="left" className="flex flex-col w-[180px] flex-shrink-0">
           <img src={manga.mangaImage} alt={manga.mangaTitle} />
-          <button className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px]">
+          <button className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px] hover:bg-purple-800">
             <FaRegBookmark /> Bookmark
           </button>
           <p className="flex justify-center text-dimWhite text-[12px] my-1">
@@ -118,6 +123,64 @@ export default function Inspect({ manga }) {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+      {/* Chapters */}
+      <div className="w-full bg-quaternary h-auto mt-10 p-4">
+        {/* Manga Title For Chapters */}
+        <div className="font-semibold text-white text-[14px]">
+          Chapter {manga.mangaTitle}
+        </div>
+        <Separator />
+        <div className="flex">
+          {manga.chapters.length > 0 ? (
+            <div className="w-full">
+              {/* Chapter Buttons */}
+              <div className="flex w-full text-white">
+                <button className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md mr-1 hover:bg-purple-800">
+                  <div>First Chapter</div>
+                  <div className="font-semibold text-[20px]">Chapter 1</div>
+                </button>
+                <button className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md ml-1 hover:bg-purple-800">
+                  <div>New Chapter</div>
+                  <div className="font-semibold text-[20px]">
+                    Chapter {manga.chapters.length}
+                  </div>
+                </button>
+              </div>
+              {/* Search Bar */}
+              <div>
+                <input
+                  className="w-full mt-4 px-4 py-1 rounded-md border-2 bg-quinary border-gray-800 text-dimWhite focus:outline-none"
+                  placeholder={`Search Chapter. Example: 1 or ${manga.chapters.length}`}
+                  autoComplete="off"
+                />
+                {/* Scrollable Chapters */}
+                <div className="scrollbar-thumb-primary  scrollbar-track-transparent">
+                  <ul className="h-auto max-h-[297px] overflow-y-auto scrollbar-thin px-1">
+                    {reverseChapters(manga.chapters).map((chapter) => (
+                      <li
+                        key={chapter.chapterID}
+                        className="py-1 px-3 text-[14px] outline outline-[1px] mt-4 outline-quinary rounded-md hover:cursor-pointer hover:bg-quinary"
+                      >
+                        <div className="text-white hover:text-primary">
+                          Chapter {chapter.chapterNumber} -{" "}
+                          {chapter.chapterTitle}
+                        </div>
+                        <div className="text-dimWhite text-[12px]">
+                          April 2, 2024
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button className="w-full flex justify-center py-8 rounded-md text-white bg-primary">
+              Coming Soon...
+            </button>
+          )}
         </div>
       </div>
     </section>
