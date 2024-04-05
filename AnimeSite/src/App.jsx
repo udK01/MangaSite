@@ -21,25 +21,21 @@ function ScrollToTop() {
 export default function App() {
   const [user, setUser] = useState([]);
   const [comics, setComics] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false); // Track data loading state
 
   useEffect(() => {
-    // Fetch users.
+    // Fetch users and mangas
     axios
-      .get(`api/user/${"udk"}`)
-      .then((response) => {
-        setUser(response.data);
-      })
+      .all([axios.get(`api/user/${"udk"}`), axios.get(`api/mangas`)])
+      .then(
+        axios.spread((userResponse, comicsResponse) => {
+          setUser(userResponse.data);
+          setComics(comicsResponse.data);
+          setDataLoaded(true);
+        })
+      )
       .catch((error) => {
-        console.error(`Error fetching users:`, error);
-      });
-    // Fetch mangas.
-    axios
-      .get(`api/mangas`)
-      .then((response) => {
-        setComics(response.data);
-      })
-      .catch((error) => {
-        console.error(`Error fetching mangas:`, error);
+        console.error(`Error fetching data:`, error);
       });
   }, []);
 
@@ -55,53 +51,54 @@ export default function App() {
   ];
 
   // Generate dynamic routes based on comics & chapter data
-  const dynamicRoutes = Array.isArray(comics)
-    ? comics.flatMap((comic) => {
-        const mangaRoute = {
-          path: `/${comic.mangaTitle.replace(/\s+/g, "-")}`,
-          mangaID: comic.mangaID,
-        };
+  const dynamicRoutes = comics.flatMap((comic) => {
+    const mangaRoute = {
+      path: `/${comic.mangaTitle.replace(/\s+/g, "-")}`,
+      mangaID: comic.mangaID,
+    };
 
-        const chapterRoutes = comic.chapters.map((chapter) => ({
-          path: `/${comic.mangaTitle.replace(/\s+/g, "-")}/${
-            chapter.chapterNumber
-          }`,
-          mangaID: comic.mangaID,
-          chapterNumber: chapter.chapterNumber,
-        }));
+    const chapterRoutes = comic.chapters.map((chapter) => ({
+      path: `/${comic.mangaTitle.replace(/\s+/g, "-")}/${
+        chapter.chapterNumber
+      }`,
+      mangaID: comic.mangaID,
+      chapterNumber: chapter.chapterNumber,
+    }));
 
-        return [mangaRoute, ...chapterRoutes];
-      })
-    : [];
+    return [mangaRoute, ...chapterRoutes];
+  });
 
+  // Render routes only if data is loaded
   return (
     <Router>
       <ScrollToTop />
-      <Routes>
-        {/* Render static routes */}
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={<Home {...commonProps} view={route.view} />}
-          />
-        ))}
+      {dataLoaded && (
+        <Routes>
+          {/* Render static routes */}
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={<Home {...commonProps} view={route.view} />}
+            />
+          ))}
 
-        {/* Render dynamic routes */}
-        {dynamicRoutes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={
-              <Home
-                {...commonProps}
-                mangaID={route.mangaID}
-                chapterNumber={route.chapterNumber}
-              />
-            }
-          />
-        ))}
-      </Routes>
+          {/* Render dynamic routes */}
+          {dynamicRoutes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Home
+                  {...commonProps}
+                  mangaID={route.mangaID}
+                  chapterNumber={route.chapterNumber}
+                />
+              }
+            />
+          ))}
+        </Routes>
+      )}
     </Router>
   );
 }

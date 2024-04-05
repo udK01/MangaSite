@@ -1,8 +1,20 @@
 import { Link } from "react-router-dom";
 import { navLinks } from "../constants";
+import { useState } from "react";
 import Header from "./Header";
 
-export default function Navbar({ user }) {
+export default function Navbar({ comics, user }) {
+  const [path, setPath] = useState("");
+
+  function randomPath() {
+    setPath(
+      `/${comics[Math.floor(Math.random() * comics.length)].mangaTitle.replace(
+        /\s/g,
+        "-"
+      )}`
+    );
+  }
+
   return (
     <>
       <Header />
@@ -24,7 +36,9 @@ export default function Navbar({ user }) {
           <div className="flex items-center transition-all duration-300">
             {navLinks.length > 0 && (
               <div className="p-2 hover:bg-secondary hover:cursor-point">
-                <Link>{navLinks[navLinks.length - 1].title}</Link>
+                <Link to={path} onClick={randomPath}>
+                  {navLinks[navLinks.length - 1].title}
+                </Link>
               </div>
             )}
             {user && user.length > 0 && user[0].accessLevel > 0 && (
