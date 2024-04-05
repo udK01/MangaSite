@@ -3,3 +3,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-datepicker__day-name {
+  display: none;
+}
+
+.react-datepicker__header {
+  border: solid 1px #983ce4;
+  padding-top: 0;
+}

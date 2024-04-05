@@ -2,12 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Separator from "./Separator";
 import { useState } from "react";
 import axios from "axios";
+import CalendarPopup from "./CalendarPopup";
 
 export default function AddComic() {
   const [title, setTitle] = useState("Title");
   const [description, setDescription] = useState("Description");
   const [author, setAuthor] = useState("Author");
   const [status, setStatus] = useState("OnGoing");
+  const [artist, setArtist] = useState("Artist");
+  const [postedBy, setPostedBy] = useState("Posted-By");
+  const [postedOn, setPostedOn] = useState(new Date());
 
   const [type, setType] = useState("Manhwa");
   const navigate = useNavigate();
@@ -25,6 +29,9 @@ export default function AddComic() {
     formData.append("description", description);
     formData.append("author", author);
     formData.append("status", status);
+    formData.append("artist", artist);
+    formData.append("postedBy", postedBy);
+    formData.append("postedOn", formatDate());
 
     axios
       .post("/api/createComic", formData, {
@@ -40,6 +47,25 @@ export default function AddComic() {
       });
   }
 
+  function formatDate() {
+    const date = new Date(postedOn);
+
+    const year = padZero(date.getFullYear());
+    const month = padZero(date.getMonth() + 1);
+    const day = padZero(date.getDate());
+
+    const hours = padZero(date.getHours());
+    const minutes = padZero(date.getMinutes());
+    const seconds = padZero(date.getSeconds());
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  function padZero(n) {
+    return (n < 10 ? "0" : "") + n;
+  }
+
+  // Drag & Drop Image Funtions
   function handleImageChange(event) {
     const selectedImage = event.target.files[0];
     setImage(selectedImage);
@@ -58,6 +84,7 @@ export default function AddComic() {
     }
   }
 
+  // DrowDown
   function dropdown(options, dropdownType) {
     function handleTypeChange(event) {
       console.log("Type");
@@ -159,9 +186,15 @@ export default function AddComic() {
             ["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"],
             "status"
           )}
+          {customInputField("text", "Artist", artist, setArtist, 2)}
+          {customInputField("text", "Posted-By", postedBy, setPostedBy, 2)}
+          <CalendarPopup
+            selectedDate={postedOn}
+            setSelectedDate={setPostedOn}
+          />
 
           {/* Image Upload */}
-          <div className="flex w-[350px] h-[34px] bg-secondary justify-center items-center mt-4">
+          <div className="flex w-[350px] h-[34px] bg-secondary justify-center items-center mt-2">
             <input
               type="file"
               accept="image/*"
@@ -182,7 +215,7 @@ export default function AddComic() {
           )}
         </div>
         {/* Buttons */}
-        <div className="w-[350px] flex justify-between mx-auto mt-10 text-white font-poppins">
+        <div className="w-[350px] flex justify-between mx-auto mt-5 text-white font-poppins">
           <Link to={"/"} className="bg-red-600 px-4 py-2 rounded-md">
             Cancel
           </Link>

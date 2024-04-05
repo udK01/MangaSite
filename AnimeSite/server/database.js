@@ -277,15 +277,18 @@ export async function createManga(
   type,
   description,
   author,
-  status
+  status,
+  artist,
+  postedBy,
+  postedOn
 ) {
   try {
     let defaultRating = 0;
 
     // Sql Query.
     const query = `
-      INSERT INTO Mangas (mangaTitle, mangaImage, rating, type, description, author, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Mangas (mangaTitle, mangaImage, rating, type, description, author, status, artist, postedBy, postedOn)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     // Values To Enter.
@@ -297,6 +300,9 @@ export async function createManga(
       description,
       author,
       status,
+      artist,
+      postedBy,
+      postedOn,
     ];
 
     await db.query(query, values);

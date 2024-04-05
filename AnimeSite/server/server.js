@@ -52,8 +52,17 @@ app.get("/api/user/:username", async (req, res) => {
  */
 app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
   try {
-    const { mangaTitle, imagePath, type, description, author, status } =
-      req.body;
+    const {
+      mangaTitle,
+      imagePath,
+      type,
+      description,
+      author,
+      status,
+      artist,
+      postedBy,
+      postedOn,
+    } = req.body;
 
     await databaseFunctions.createManga(
       mangaTitle,
@@ -61,7 +70,10 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
       type,
       description,
       author,
-      status
+      status,
+      artist,
+      postedBy,
+      postedOn
     );
 
     res.status(200).json(`Comic created successfully!`);
