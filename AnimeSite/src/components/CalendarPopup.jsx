@@ -9,13 +9,13 @@ function CalendarPopup({ selectedDate, setSelectedDate }) {
   const CustomHeader = ({ date, decreaseMonth, increaseMonth }) => {
     return (
       <div className="flex justify-between px-4 py-2 border border-none bg-secondary text-white font-poppins">
-        <button onClick={decreaseMonth} className="text-white">
+        <button type="button" onClick={decreaseMonth} className="text-white">
           &lt;
         </button>
         <span>
           {date.toLocaleDateString("en-UK", { month: "long", year: "numeric" })}
         </span>
-        <button onClick={increaseMonth} className="text-white">
+        <button type="button" onClick={increaseMonth} className="text-white">
           &gt;
         </button>
       </div>
