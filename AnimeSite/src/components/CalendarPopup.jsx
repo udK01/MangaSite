@@ -27,7 +27,6 @@ function CalendarPopup({ selectedDate, setSelectedDate }) {
       selected={selectedDate}
       onChange={handleDateChange}
       dateFormat="yyyy-MM-dd"
-      placeholderText="Select a date"
       className={`w-[350px] min-h-[34px] px-4 mt-2 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`}
       calendarClassName="bg-quaternary border border-primary "
       dayClassName={(date) =>
