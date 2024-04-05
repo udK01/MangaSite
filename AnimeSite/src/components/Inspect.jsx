@@ -35,6 +35,13 @@ export default function Inspect({ manga }) {
     </div>
   );
 
+  function getFormattedDate() {
+    const savedDate = new Date(manga.postedOn);
+
+    const options = { month: "long", day: "2-digit", year: "numeric" };
+    return savedDate.toLocaleDateString("en-US", options);
+  }
+
   function reverseChapters(chapters) {
     return chapters.sort((a, b) => b.chapterNumber - a.chapterNumber);
   }
@@ -95,7 +102,7 @@ export default function Inspect({ manga }) {
           />
           <BodyInfo
             lLabel={"Artist"}
-            lValue={"Unknown"}
+            lValue={manga.artist ? manga.artist : "-"}
             rLabel={""}
             rValue={""}
           />
@@ -103,11 +110,11 @@ export default function Inspect({ manga }) {
             lLabel={"Serialisation"}
             lValue={"-"}
             rLabel={"Posted By"}
-            rValue={"udK"}
+            rValue={manga.postedBy ? manga.postedBy : "-"}
           />
           <BodyInfo
             lLabel={"Posted On"}
-            lValue={"September 19, 2023"}
+            lValue={manga.postedOn ? getFormattedDate() : "-"}
             rLabel={"Updated On"}
             rValue={"April 2, 2024"}
           />
