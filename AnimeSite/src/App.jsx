@@ -67,7 +67,7 @@ export default function App() {
             chapter.chapterNumber
           }`,
           mangaID: comic.mangaID,
-          chapterID: chapter.chapterID,
+          chapterNumber: chapter.chapterNumber,
         }));
 
         return [mangaRoute, ...chapterRoutes];
@@ -96,7 +96,7 @@ export default function App() {
               <Home
                 {...commonProps}
                 mangaID={route.mangaID}
-                chapterID={route.chapterID}
+                chapterNumber={route.chapterNumber}
               />
             }
           />

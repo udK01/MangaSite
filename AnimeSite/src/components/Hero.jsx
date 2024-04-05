@@ -8,14 +8,18 @@ import Inspect from "./Inspect";
 import Popular from "./Popular";
 import Stored from "./Stored";
 
-export default function Hero({ comics, view, mangaID, chapterID }) {
+export default function Hero({ comics, view, mangaID, chapterNumber }) {
+  let includeSidebar = true;
   let bodyContent;
 
   if (mangaID) {
     const manga = comics.find((comic) => comic.mangaID === mangaID);
-    if (chapterID) {
-      const chapter = manga.chapters.find((c) => c.chapterID === chapterID);
-      bodyContent = <InspectChapter chapter={chapter} />;
+    if (chapterNumber) {
+      const chapter = manga.chapters.find(
+        (c) => c.chapterNumber === chapterNumber
+      );
+      bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
+      includeSidebar = false;
     } else {
       bodyContent = <Inspect manga={manga} />;
     }
@@ -50,9 +54,11 @@ export default function Hero({ comics, view, mangaID, chapterID }) {
       <div id="body" className="flex flex-col">
         {bodyContent}
       </div>
-      <div id="sidebar">
-        <Popular comics={comics} />
-      </div>
+      {includeSidebar ? (
+        <div id="sidebar">
+          <Popular comics={comics} />
+        </div>
+      ) : null}
     </section>
   );
 }
