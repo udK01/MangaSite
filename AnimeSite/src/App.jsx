@@ -54,11 +54,25 @@ export default function App() {
     { path: "/addComic", view: "addComic" },
   ];
 
-  // Generate dynamic routes based on comics data
-  const comicRoutes = comics.map((comic) => ({
-    path: `/${comic.mangaTitle.replace(/\s+/g, "-")}`,
-    id: comic.mangaID,
-  }));
+  // Generate dynamic routes based on comics & chapter data
+  const dynamicRoutes = Array.isArray(comics)
+    ? comics.flatMap((comic) => {
+        const mangaRoute = {
+          path: `/${comic.mangaTitle.replace(/\s+/g, "-")}`,
+          mangaID: comic.mangaID,
+        };
+
+        const chapterRoutes = comic.chapters.map((chapter) => ({
+          path: `/${comic.mangaTitle.replace(/\s+/g, "-")}/${
+            chapter.chapterNumber
+          }`,
+          mangaID: comic.mangaID,
+          chapterID: chapter.chapterID,
+        }));
+
+        return [mangaRoute, ...chapterRoutes];
+      })
+    : [];
 
   return (
     <Router>
@@ -74,11 +88,17 @@ export default function App() {
         ))}
 
         {/* Render dynamic routes */}
-        {comicRoutes.map((route, index) => (
+        {dynamicRoutes.map((route, index) => (
           <Route
             key={index}
             path={route.path}
-            element={<Home {...commonProps} view={route.id} />}
+            element={
+              <Home
+                {...commonProps}
+                mangaID={route.mangaID}
+                chapterID={route.chapterID}
+              />
+            }
           />
         ))}
       </Routes>

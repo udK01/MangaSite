@@ -1,3 +1,4 @@
+import InspectChapter from "./InspectChapter";
 import LatestUpdate from "./LatestUpdate";
 import PopularToday from "./PopularToday";
 import Carousel from "./Carousel";
@@ -7,12 +8,19 @@ import Inspect from "./Inspect";
 import Popular from "./Popular";
 import Stored from "./Stored";
 
-export default function Hero({ comics, view }) {
+export default function Hero({ comics, view, mangaID, chapterID }) {
   let bodyContent;
 
-  if (typeof view === "number") {
-    const manga = comics.find((comic) => comic.mangaID === view);
-    bodyContent = <Inspect manga={manga} />;
+  if (mangaID) {
+    const manga = comics.find((comic) => comic.mangaID === mangaID);
+    if (chapterID) {
+      console.log("Chapter");
+      const chapter = manga.chapters.find((c) => c.chapterID === chapterID);
+      bodyContent = <InspectChapter chapter={chapter} />;
+    } else {
+      console.log("Manga");
+      bodyContent = <Inspect manga={manga} />;
+    }
   } else {
     switch (view) {
       case "bookmarks":
@@ -25,6 +33,7 @@ export default function Hero({ comics, view }) {
         bodyContent = <AddComic />;
         break;
       default:
+        console.log("Default");
         bodyContent = (
           <div>
             <div className="flex justify-between">

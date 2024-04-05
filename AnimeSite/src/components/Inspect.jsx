@@ -1,9 +1,12 @@
 import Separator from "./Separator";
 import StarRating from "./StarRating";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaRegBookmark } from "react-icons/fa";
 
 export default function Inspect({ manga }) {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   const SideInfo = ({ label, value, isHoverable = false }) => (
     <div className="flex justify-between w-full bg-quinary p-1 px-2 rounded-md text-dimWhite mt-2">
       <div>{label}</div>
@@ -137,10 +140,13 @@ export default function Inspect({ manga }) {
             <div className="w-full">
               {/* Chapter Buttons */}
               <div className="flex w-full text-white">
-                <button className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md mr-1 hover:bg-purple-800">
+                <Link
+                  to={`${currentPath}/1`}
+                  className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md mr-1 hover:bg-purple-800"
+                >
                   <div>First Chapter</div>
                   <div className="font-semibold text-[20px]">Chapter 1</div>
-                </button>
+                </Link>
                 <button className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md ml-1 hover:bg-purple-800">
                   <div>New Chapter</div>
                   <div className="font-semibold text-[20px]">
@@ -163,10 +169,13 @@ export default function Inspect({ manga }) {
                         key={chapter.chapterID}
                         className="py-1 px-3 text-[14px] outline outline-[1px] mt-4 outline-quinary rounded-md hover:cursor-pointer hover:bg-quinary"
                       >
-                        <div className="text-white hover:text-primary">
+                        <Link
+                          to={`${currentPath}/${chapter.chapterNumber}`}
+                          className="text-white hover:text-primary"
+                        >
                           Chapter {chapter.chapterNumber} -{" "}
                           {chapter.chapterTitle}
-                        </div>
+                        </Link>
                         <div className="text-dimWhite text-[12px]">
                           April 2, 2024
                         </div>
