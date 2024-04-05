@@ -14,11 +14,9 @@ export default function Hero({ comics, view, mangaID, chapterID }) {
   if (mangaID) {
     const manga = comics.find((comic) => comic.mangaID === mangaID);
     if (chapterID) {
-      console.log("Chapter");
       const chapter = manga.chapters.find((c) => c.chapterID === chapterID);
       bodyContent = <InspectChapter chapter={chapter} />;
     } else {
-      console.log("Manga");
       bodyContent = <Inspect manga={manga} />;
     }
   } else {
@@ -33,7 +31,6 @@ export default function Hero({ comics, view, mangaID, chapterID }) {
         bodyContent = <AddComic />;
         break;
       default:
-        console.log("Default");
         bodyContent = (
           <div>
             <div className="flex justify-between">
