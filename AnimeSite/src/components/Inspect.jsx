@@ -37,20 +37,20 @@ export default function Inspect({ manga }) {
       <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
         <div className="pl-2 text-white">{label1}</div>
         <DropDown
-          options={["Manhwa", "Manga", "Manhua"]}
-          dropdownType={"type"}
-          type={type}
-          setType={setType}
+          options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
+          dropdownType={status}
+          status={status}
+          setStatus={setStatus}
           className="w-[110px] px-1 rounded-md"
         />
       </div>
       <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
         <div className="pl-2 text-white">{label2}</div>
         <DropDown
-          options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
-          dropdownType={status}
-          status={status}
-          setStatus={setStatus}
+          options={["Manhwa", "Manga", "Manhua"]}
+          dropdownType={"type"}
+          type={type}
+          setType={setType}
           className="w-[110px] px-1 rounded-md"
         />
       </div>
