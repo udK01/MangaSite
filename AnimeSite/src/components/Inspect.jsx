@@ -11,11 +11,13 @@ import DropDown from "./DropDown";
 
 // Icon
 import { FaRegBookmark } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 
 export default function Inspect({ user, manga }) {
   const [filteredChapters, setFilteredChapters] = useState(
     reverseChapters(manga.chapters)
   );
+  const [image, setImage] = useState(null);
   const [title, setTitle] = useState(manga.mangaTitle);
   const [description, setDescription] = useState(manga.description);
   const [editing, setEditing] = useState(false);
@@ -76,9 +78,32 @@ export default function Inspect({ user, manga }) {
     }
   }
 
+  // Drag & Drop Image Funtions
+  function handleImageChange(event) {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+  }
+
+  function handleDragOver(event) {
+    event.preventDefault();
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+      const selectedImage = files[0];
+      setImage(selectedImage);
+    }
+  }
+
   function handleSubmit() {
     const formData = new FormData();
     formData.append("title", title);
+    formData.append(
+      "image",
+      (image && `../../thumbnails/${image.name}`) || manga.mangaImage
+    );
     formData.append("description", description);
     formData.append(
       "released",
@@ -154,13 +179,45 @@ export default function Inspect({ user, manga }) {
       <div className="flex w-full h-auto bg-quaternary mt-10 p-4">
         {/* Left Side */}
         <div id="left" className="flex flex-col w-[180px] flex-shrink-0">
-          <img src={manga.mangaImage} alt={manga.mangaTitle} />
+          {/* Image Selector */}
+          <div className="relative inline-block">
+            <img
+              src={manga.mangaImage}
+              alt={manga.mangaTitle}
+              className={`${editing ? "brightness-50" : ""}`}
+            />
+            {editing && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-secondary rounded-full p-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  id="fileInput"
+                />
+                <label
+                  htmlFor="fileInput"
+                  className="cursor-pointer text-white hover:text-primary text-3xl"
+                >
+                  <FaEdit />
+                </label>
+                {image && (
+                  <p className="absolute w-[150px] -translate-x-12 text-white mt-2">
+                    Selected Image: <br /> {image.name}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+          {/* Bookmark Button */}
           <button className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px] hover:bg-purple-800">
             <FaRegBookmark /> Bookmark
           </button>
+          {/* Bookmark Count */}
           <p className="flex justify-center text-dimWhite text-[12px] my-1">
             Followed by {0} people
           </p>
+          {/* Manga Rating */}
           <div>
             <div className="w-full flex justify-between items-center bg-quinary px-2 p-[2px] rounded-md text-dimWhite">
               <div className="h-full pb-1 flex items-center">
@@ -168,7 +225,7 @@ export default function Inspect({ user, manga }) {
               </div>
               {manga.rating}
             </div>
-
+            {/* Status / Type */}
             {editing ? (
               <>
                 <SideInfoInput label1={"Status"} label2={"Type"} />
