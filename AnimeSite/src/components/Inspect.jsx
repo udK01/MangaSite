@@ -1,10 +1,16 @@
+// Mandatory Imports
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+
+// Auxiliary Classes
 import BodyInfo from "./InspectAuxiliary/BodyInfo";
-import { FaRegBookmark } from "react-icons/fa";
+import SideInfo from "./InspectAuxiliary/SideInfo";
 import StarRating from "./StarRating";
 import Separator from "./Separator";
 import DropDown from "./DropDown";
-import { useState } from "react";
+
+// Icon
+import { FaRegBookmark } from "react-icons/fa";
 
 export default function Inspect({ user, manga }) {
   const [filteredChapters, setFilteredChapters] = useState(
@@ -16,23 +22,8 @@ export default function Inspect({ user, manga }) {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const SideInfo = ({ label, value, isHoverable = false }) => (
-    <div
-      className={`flex justify-between items-center w-full bg-quinary p-1 px-2 rounded-md text-dimWhite mt-2`}
-    >
-      <div>{label}</div>
-      <div
-        className={
-          isHoverable
-            ? "text-white hover:text-primary hover:cursor-pointer"
-            : ""
-        }
-      >
-        {value}
-      </div>
-    </div>
-  );
-
+  // Need to keep this due to useState's in this class.
+  // Otherwise I will have to add a lot of parameters...
   const SideInfoInput = ({ label1, label2 }) => (
     <div className="flex flex-col">
       <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
