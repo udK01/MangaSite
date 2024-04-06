@@ -16,27 +16,44 @@ export default function Inspect({ manga }) {
   const currentPath = location.pathname;
 
   const SideInfo = ({ label, value, isHoverable = false }) => (
-    <div className="flex justify-between w-full bg-quinary p-1 px-2 rounded-md text-dimWhite mt-2">
+    <div
+      className={`flex justify-between items-center w-full bg-quinary p-1 px-2 rounded-md text-dimWhite mt-2`}
+    >
       <div>{label}</div>
+      <div
+        className={
+          isHoverable
+            ? "text-white hover:text-primary hover:cursor-pointer"
+            : ""
+        }
+      >
+        {value}
+      </div>
+    </div>
+  );
 
-      {editing ? (
+  const SideInfoInput = ({ label1, label2 }) => (
+    <div className="flex flex-col">
+      <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
+        <div className="pl-2 text-white">{label1}</div>
         <DropDown
           options={["Manhwa", "Manga", "Manhua"]}
           dropdownType={"type"}
           type={type}
           setType={setType}
+          className="w-[110px] px-1 rounded-md"
         />
-      ) : (
-        <div
-          className={
-            isHoverable
-              ? "text-white hover:text-primary hover:cursor-pointer"
-              : ""
-          }
-        >
-          {value}
-        </div>
-      )}
+      </div>
+      <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
+        <div className="pl-2 text-white">{label2}</div>
+        <DropDown
+          options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
+          dropdownType={status}
+          status={status}
+          setStatus={setStatus}
+          className="w-[110px] px-1 rounded-md"
+        />
+      </div>
     </div>
   );
 
@@ -48,7 +65,7 @@ export default function Inspect({ manga }) {
           <input
             id={lLabel}
             placeholder={lValue}
-            className="w-[250px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+            className="w-[250px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
           />
         ) : (
           <div className="text-dimWhite">{lValue}</div>
@@ -102,9 +119,9 @@ export default function Inspect({ manga }) {
     );
     formData.append("postedBy", document.getElementById("Posted By").value);
 
-    for (const entry of formData.entries()) {
-      console.log(`${entry[0]}: ${entry[1]}`);
-    }
+    // for (const entry of formData.entries()) {
+    //   console.log(`${entry[0]}: ${entry[1]}`);
+    // }
 
     setEditing(false);
   }
@@ -150,8 +167,16 @@ export default function Inspect({ manga }) {
               {manga.rating}
             </div>
 
-            <SideInfo label="Status" value={manga.status} />
-            <SideInfo label="Type" value={manga.type} isHoverable={true} />
+            {editing ? (
+              <>
+                <SideInfoInput label1={"Status"} label2={"Type"} />
+              </>
+            ) : (
+              <>
+                <SideInfo label="Status" value={manga.status} />
+                <SideInfo label="Type" value={manga.type} isHoverable={true} />
+              </>
+            )}
           </div>
         </div>
         {/* Right Side */}
@@ -179,7 +204,18 @@ export default function Inspect({ manga }) {
             </div>
           </div>
           <h3 className="mt-3 font-semibold">Summary</h3>
-          <p className="mt-1 text-dimWhite text-[14px]">{manga.description}</p>
+          {editing ? (
+            <textarea
+              placeholder={manga.description}
+              className="w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+              style={{ height: "34px", maxHeight: "400px", lineHeight: "30px" }}
+            />
+          ) : (
+            <p className="mt-1 text-dimWhite text-[14px]">
+              {manga.description}
+            </p>
+          )}
+
           {/* Short Info Tags */}
           <BodyInfo
             lLabel={"Released"}

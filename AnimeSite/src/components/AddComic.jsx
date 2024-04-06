@@ -10,11 +10,11 @@ export default function AddComic() {
   const [description, setDescription] = useState("Description");
   const [author, setAuthor] = useState("Author");
   const [status, setStatus] = useState("OnGoing");
+  const [type, setType] = useState("Manhwa");
   const [artist, setArtist] = useState("Artist");
   const [postedBy, setPostedBy] = useState("Posted-By");
   const [postedOn, setPostedOn] = useState(new Date());
 
-  const [type, setType] = useState("Manhwa");
   const navigate = useNavigate();
 
   const [image, setImage] = useState(null);

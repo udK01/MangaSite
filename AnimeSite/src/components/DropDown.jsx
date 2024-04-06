@@ -5,6 +5,7 @@ export default function DropDown({
   setType,
   status,
   setStatus,
+  className = ``,
 }) {
   function handleTypeChange(event) {
     setType(event.target.value);
@@ -16,7 +17,11 @@ export default function DropDown({
 
   return (
     <div
-      className={`w-[350px] h-[34px] px-3 mt-2 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`}
+      className={`${
+        className === ""
+          ? "w-[350px] px-3 mt-2 rounded-sm border-2 border-quaternary"
+          : className
+      } h-[34px] bg-secondary text-white hover:cursor-pointer hover:text-primary`}
     >
       <select
         id="dropdown"
@@ -24,7 +29,7 @@ export default function DropDown({
         onChange={
           dropdownType === "type" ? handleTypeChange : handleStatusChange
         }
-        className="bg-transparent w-full h-full border-quaternary focus:bg-secondary focus:outline-none"
+        className={`w-full h-full bg-transparent border-quaternary focus:bg-secondary focus:outline-none hover:cursor-pointer`}
       >
         {options.map((option) => (
           <option key={option} value={option}>
