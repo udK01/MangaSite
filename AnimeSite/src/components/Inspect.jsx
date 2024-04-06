@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import BodyInfo from "./InspectAuxiliary/BodyInfo";
 import { FaRegBookmark } from "react-icons/fa";
 import StarRating from "./StarRating";
 import Separator from "./Separator";
@@ -53,35 +54,6 @@ export default function Inspect({ user, manga }) {
           setType={setType}
           className="w-[110px] px-1 rounded-md"
         />
-      </div>
-    </div>
-  );
-
-  const BodyInfo = ({ lLabel, lValue, rLabel, rValue, editable = true }) => (
-    <div className="w-full flex text-[14px] mt-4">
-      <div className="flex flex-col flex-1 flex-grow">
-        <div>{lLabel}</div>
-        {editable && editing ? (
-          <input
-            id={lLabel}
-            placeholder={lValue}
-            className="w-[250px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
-          />
-        ) : (
-          <div className="text-dimWhite">{lValue}</div>
-        )}
-      </div>
-      <div className="flex flex-col flex-1 flex-grow">
-        <div>{rLabel}</div>
-        {rValue.length > 0 && editable && editing ? (
-          <input
-            id={rLabel}
-            placeholder={rValue}
-            className="w-[250px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
-          />
-        ) : (
-          <div className="text-dimWhite">{rValue}</div>
-        )}
       </div>
     </div>
   );
@@ -232,18 +204,21 @@ export default function Inspect({ user, manga }) {
             lValue={"-"}
             rLabel={"Author"}
             rValue={manga.author}
+            editing={editing}
           />
           <BodyInfo
             lLabel={"Artist"}
             lValue={manga.artist ? manga.artist : "-"}
             rLabel={""}
             rValue={""}
+            editing={editing}
           />
           <BodyInfo
             lLabel={"Serialisation"}
             lValue={"-"}
             rLabel={"Posted By"}
             rValue={manga.postedBy ? manga.postedBy : "-"}
+            editing={editing}
           />
           <BodyInfo
             lLabel={"Posted On"}
@@ -251,6 +226,7 @@ export default function Inspect({ user, manga }) {
             rLabel={"Updated On"}
             rValue={"April 2, 2024"}
             editable={false}
+            editing={editing}
           />
           <div className="flex flex-col">
             <div className="text-[14px] mt-4">Genres</div>
