@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
+import CalendarPopup from "./CalendarPopup";
 import Separator from "./Separator";
+import DropDown from "./DropDown";
 import { useState } from "react";
 import axios from "axios";
-import CalendarPopup from "./CalendarPopup";
 
 export default function AddComic() {
   const [title, setTitle] = useState("Title");
@@ -27,10 +28,10 @@ export default function AddComic() {
     formData.append("imagePath", `../../thumbnails/${image.name}`);
     formData.append("type", type);
     formData.append("description", description);
-    formData.append("author", author);
+    formData.append("author", author === "Author" ? null : author);
     formData.append("status", status);
-    formData.append("artist", artist);
-    formData.append("postedBy", postedBy);
+    formData.append("artist", artist === "Artist" ? null : artist);
+    formData.append("postedBy", postedBy === "Posted-By" ? null : postedBy);
     formData.append("postedOn", formatDate());
 
     axios
@@ -82,43 +83,6 @@ export default function AddComic() {
       const selectedImage = files[0];
       setImage(selectedImage);
     }
-  }
-
-  // DrowDown
-  function dropdown(options, dropdownType) {
-    function handleTypeChange(event) {
-      console.log("Type");
-      setType(event.target.value);
-    }
-
-    function handleStatusChange(event) {
-      console.log("Status");
-      setStatus(event.target.value);
-    }
-
-    return (
-      <div
-        className={`w-[350px] h-[34px] px-3 mt-2 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`}
-      >
-        <select
-          id="dropdown"
-          value={dropdownType === "type" ? type : status}
-          onChange={
-            dropdownType === "type" ? handleTypeChange : handleStatusChange
-          }
-          className="bg-transparent w-full h-full border-quaternary focus:bg-secondary focus:outline-none"
-        >
-          {options.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-          {/* <option value="manhwa">Manhwa</option>
-          <option value="manga">Manga</option>
-          <option value="manhua">Manhua</option> */}
-        </select>
-      </div>
-    );
   }
 
   function customInputField(type, placeholder, value, func, mt = 0) {
@@ -180,12 +144,25 @@ export default function AddComic() {
             setDescription,
             2
           )}
-          {dropdown(["Manhwa", "Manga", "Manhua"], "type")}
+          <DropDown
+            options={["Manhwa", "Manga", "Manhua"]}
+            dropdownType={"type"}
+            type={type}
+            setType={setType}
+          />
           {customInputField("text", "Author", author, setAuthor, 2)}
-          {dropdown(
-            ["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"],
-            "status"
-          )}
+          <DropDown
+            options={[
+              "OnGoing",
+              "Completed",
+              "Hiatus",
+              "Dropped",
+              "Coming Soon",
+            ]}
+            dropdownType={status}
+            status={status}
+            setStatus={setStatus}
+          />
           {customInputField("text", "Artist", artist, setArtist, 2)}
           {customInputField("text", "Posted-By", postedBy, setPostedBy, 2)}
           <CalendarPopup
