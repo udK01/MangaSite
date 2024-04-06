@@ -147,6 +147,24 @@ export default function Inspect({ user, manga }) {
             {manga.mangaTitle}
           </Link>
         </div>
+        <div className="flex">
+          {user[0].accessLevel > 1 ? (
+            <button
+              className="bg-primary hover:bg-purple-700 px-4 rounded-md"
+              onClick={() => setEditing(true)}
+            >
+              Edit
+            </button>
+          ) : null}
+          {editing ? (
+            <button
+              className="bg-green-700 hover:bg-green-800 px-4 rounded-md ml-2"
+              onClick={() => handleSubmit()}
+            >
+              Save
+            </button>
+          ) : null}
+        </div>
       </div>
       {/* Body */}
       <div className="flex w-full h-auto bg-quaternary mt-10 p-4">
@@ -183,27 +201,17 @@ export default function Inspect({ user, manga }) {
         <div id="right" className="ml-4 text-white w-full">
           {/* Title - Summary - Description */}
           <div className="flex justify-between">
-            <h2 className="font-bold text-[20px] line-clamp-1 text-ellipsis">
-              {manga.mangaTitle}
-            </h2>
-            <div className="flex">
-              {user[0].accessLevel > 1 ? (
-                <button
-                  className="bg-primary hover:bg-purple-700 px-4 rounded-md"
-                  onClick={() => setEditing(true)}
-                >
-                  Edit
-                </button>
-              ) : null}
-              {editing ? (
-                <button
-                  className="bg-green-700 hover:bg-green-800 px-4 rounded-md ml-2"
-                  onClick={() => handleSubmit()}
-                >
-                  Save
-                </button>
-              ) : null}
-            </div>
+            {editing ? (
+              <input
+                id="title"
+                placeholder={manga.mangaTitle}
+                className="w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+              />
+            ) : (
+              <h2 className="font-bold text-[20px] line-clamp-1 text-ellipsis">
+                {manga.mangaTitle}
+              </h2>
+            )}
           </div>
           <h3 className="mt-3 font-semibold">Summary</h3>
           {editing ? (
