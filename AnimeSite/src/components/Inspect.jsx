@@ -16,6 +16,8 @@ export default function Inspect({ user, manga }) {
   const [filteredChapters, setFilteredChapters] = useState(
     reverseChapters(manga.chapters)
   );
+  const [title, setTitle] = useState(manga.mangaTitle);
+  const [description, setDescription] = useState(manga.description);
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState("OnGoing");
   const [type, setType] = useState("Manhwa");
@@ -49,6 +51,7 @@ export default function Inspect({ user, manga }) {
     </div>
   );
 
+  // Formatting Function #1
   function getFormattedDate() {
     const savedDate = new Date(manga.postedOn);
 
@@ -56,10 +59,12 @@ export default function Inspect({ user, manga }) {
     return savedDate.toLocaleDateString("en-US", options);
   }
 
+  // Formatting Function #2
   function reverseChapters(chapters) {
     return chapters.sort((a, b) => b.chapterNumber - a.chapterNumber);
   }
 
+  // Filter for Dynamic Search
   function filterChapters(e) {
     if (e === "") {
       setFilteredChapters(reverseChapters(manga.chapters));
@@ -73,18 +78,34 @@ export default function Inspect({ user, manga }) {
 
   function handleSubmit() {
     const formData = new FormData();
-    formData.append("released", document.getElementById("Released").value);
-    formData.append("author", document.getElementById("Author").value);
-    formData.append("artist", document.getElementById("Artist").value);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append(
+      "released",
+      document.getElementById("Released").value || manga.released
+    );
+    formData.append(
+      "author",
+      document.getElementById("Author").value || manga.author
+    );
+    formData.append(
+      "artist",
+      document.getElementById("Artist").value || manga.artist
+    );
     formData.append(
       "serialisation",
-      document.getElementById("Serialisation").value
+      document.getElementById("Serialisation").value || manga.serialisation
     );
-    formData.append("postedBy", document.getElementById("Posted By").value);
+    formData.append(
+      "postedBy",
+      document.getElementById("Posted By").value || manga.postedBy
+    );
+    formData.append("status", status);
+    formData.append("type", type);
 
-    // for (const entry of formData.entries()) {
-    //   console.log(`${entry[0]}: ${entry[1]}`);
-    // }
+    for (const entry of formData.entries()) {
+      console.log(`${entry[0]}: ${entry[1]}`);
+    }
 
     setEditing(false);
   }
@@ -167,7 +188,8 @@ export default function Inspect({ user, manga }) {
             {editing ? (
               <input
                 id="title"
-                placeholder={manga.mangaTitle}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 className="w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
               />
             ) : (
@@ -179,7 +201,8 @@ export default function Inspect({ user, manga }) {
           <h3 className="mt-3 font-semibold">Summary</h3>
           {editing ? (
             <textarea
-              placeholder={manga.description}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
               style={{ height: "34px", maxHeight: "400px", lineHeight: "30px" }}
             />
@@ -192,28 +215,28 @@ export default function Inspect({ user, manga }) {
           {/* Short Info Tags */}
           <BodyInfo
             lLabel={"Released"}
-            lValue={"-"}
+            lValue={manga.released || "-"}
             rLabel={"Author"}
-            rValue={manga.author}
+            rValue={manga.author || "-"}
             editing={editing}
           />
           <BodyInfo
             lLabel={"Artist"}
-            lValue={manga.artist ? manga.artist : "-"}
+            lValue={manga.artist || "-"}
             rLabel={""}
             rValue={""}
             editing={editing}
           />
           <BodyInfo
             lLabel={"Serialisation"}
-            lValue={"-"}
+            lValue={manga.serialisation || "-"}
             rLabel={"Posted By"}
-            rValue={manga.postedBy ? manga.postedBy : "-"}
+            rValue={manga.postedBy || "-"}
             editing={editing}
           />
           <BodyInfo
             lLabel={"Posted On"}
-            lValue={manga.postedOn ? getFormattedDate() : "-"}
+            lValue={getFormattedDate() || "-"}
             rLabel={"Updated On"}
             rValue={"April 2, 2024"}
             editable={false}
