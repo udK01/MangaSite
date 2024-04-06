@@ -57,11 +57,11 @@ export default function Inspect({ user, manga }) {
     </div>
   );
 
-  const BodyInfo = ({ lLabel, lValue, rLabel, rValue }) => (
+  const BodyInfo = ({ lLabel, lValue, rLabel, rValue, editable = true }) => (
     <div className="w-full flex text-[14px] mt-4">
       <div className="flex flex-col flex-1 flex-grow">
         <div>{lLabel}</div>
-        {editing ? (
+        {editable && editing ? (
           <input
             id={lLabel}
             placeholder={lValue}
@@ -73,7 +73,7 @@ export default function Inspect({ user, manga }) {
       </div>
       <div className="flex flex-col flex-1 flex-grow">
         <div>{rLabel}</div>
-        {rValue.length > 0 && editing ? (
+        {rValue.length > 0 && editable && editing ? (
           <input
             id={rLabel}
             placeholder={rValue}
@@ -242,6 +242,7 @@ export default function Inspect({ user, manga }) {
             lValue={manga.postedOn ? getFormattedDate() : "-"}
             rLabel={"Updated On"}
             rValue={"April 2, 2024"}
+            editable={false}
           />
           <div className="flex flex-col">
             <div className="text-[14px] mt-4">Genres</div>
