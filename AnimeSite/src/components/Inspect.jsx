@@ -5,7 +5,7 @@ import Separator from "./Separator";
 import DropDown from "./DropDown";
 import { useState } from "react";
 
-export default function Inspect({ manga }) {
+export default function Inspect({ user, manga }) {
   const [filteredChapters, setFilteredChapters] = useState(
     reverseChapters(manga.chapters)
   );
@@ -187,12 +187,14 @@ export default function Inspect({ manga }) {
               {manga.mangaTitle}
             </h2>
             <div className="flex">
-              <button
-                className="bg-primary hover:bg-purple-700 px-4 rounded-md"
-                onClick={() => setEditing(true)}
-              >
-                Edit
-              </button>
+              {user[0].accessLevel > 1 ? (
+                <button
+                  className="bg-primary hover:bg-purple-700 px-4 rounded-md"
+                  onClick={() => setEditing(true)}
+                >
+                  Edit
+                </button>
+              ) : null}
               {editing ? (
                 <button
                   className="bg-green-700 hover:bg-green-800 px-4 rounded-md ml-2"

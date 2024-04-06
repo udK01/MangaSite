@@ -260,7 +260,10 @@ export async function getBookmarks(userID) {
  *  `Manga`,
  *  `The sneaky cat, pushed the dull dog...`,
  *  `FoxLover`,
- *  `OnGoing`
+ *  `OnGoing`,
+ *  `Unknown`,
+ *  `udK`,
+ *  `2022-07-10`
  * );
  *
  * @param {string} mangaTitle The comic's title.
@@ -269,6 +272,9 @@ export async function getBookmarks(userID) {
  * @param {string} description The comic's description.
  * @param {string} author The comic's author.
  * @param {string} status The comic's status.
+ * @param {string} artist The comic's artist.
+ * @param {string} postedBy The comic's poster's username.
+ * @param {date} postedOn The comic's posting date.
  *
  */
 export async function createManga(

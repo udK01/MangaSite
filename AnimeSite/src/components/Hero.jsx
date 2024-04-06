@@ -8,7 +8,7 @@ import Inspect from "./Inspect";
 import Popular from "./Popular";
 import Stored from "./Stored";
 
-export default function Hero({ comics, view, mangaID, chapterNumber }) {
+export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
   let includeSidebar = true;
   let bodyContent;
 
@@ -21,7 +21,7 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
       bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
       includeSidebar = false;
     } else {
-      bodyContent = <Inspect manga={manga} />;
+      bodyContent = <Inspect user={user} manga={manga} />;
     }
   } else {
     switch (view) {
