@@ -2,8 +2,12 @@ import Separator from "./Separator";
 import StarRating from "./StarRating";
 import { Link, useLocation } from "react-router-dom";
 import { FaRegBookmark } from "react-icons/fa";
+import { useState } from "react";
 
 export default function Inspect({ manga }) {
+  const [filteredChapters, setFilteredChapters] = useState(
+    reverseChapters(manga.chapters)
+  );
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -44,6 +48,17 @@ export default function Inspect({ manga }) {
 
   function reverseChapters(chapters) {
     return chapters.sort((a, b) => b.chapterNumber - a.chapterNumber);
+  }
+
+  function filterChapters(e) {
+    if (e === "") {
+      setFilteredChapters(reverseChapters(manga.chapters));
+    } else {
+      const filtered = reverseChapters(manga.chapters).filter((chapter) =>
+        chapter.chapterNumber.toString().includes(e)
+      );
+      setFilteredChapters(filtered);
+    }
   }
 
   return (
@@ -169,12 +184,13 @@ export default function Inspect({ manga }) {
                 <input
                   className="w-full mt-4 px-4 py-1 rounded-md border-2 bg-quinary border-gray-800 text-dimWhite focus:outline-none"
                   placeholder={`Search Chapter. Example: 1 or ${manga.chapters.length}`}
+                  onChange={(e) => filterChapters(e.target.value)}
                   autoComplete="off"
                 />
                 {/* Scrollable Chapters */}
                 <div className="scrollbar-thumb-primary  scrollbar-track-transparent">
                   <ul className="h-auto max-h-[297px] overflow-y-auto scrollbar-thin px-1">
-                    {reverseChapters(manga.chapters).map((chapter) => (
+                    {filteredChapters.map((chapter) => (
                       <li
                         key={chapter.chapterID}
                         className="py-1 px-3 text-[14px] outline outline-[1px] mt-4 outline-quinary rounded-md hover:cursor-pointer hover:bg-quinary"
