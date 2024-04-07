@@ -1,6 +1,6 @@
 // Mandatory Imports
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Auxiliary Classes
@@ -26,6 +26,11 @@ export default function Inspect({ user, manga }) {
   const [type, setType] = useState("Manhwa");
   const location = useLocation();
   const currentPath = location.pathname;
+
+  useEffect(() => {
+    cancelEdit();
+    setEditing(false);
+  }, [currentPath]);
 
   // Need to keep this due to useState's in this class.
   // Otherwise I will have to add a lot of parameters...
@@ -98,6 +103,16 @@ export default function Inspect({ user, manga }) {
     }
   }
 
+  // Cancel edit, reset values.
+  function cancelEdit() {
+    setEditing(false);
+    setTitle(manga.mangaTitle);
+    setDescription(manga.description);
+    setStatus(manga.status);
+    setType(manga.type);
+    setImage(null);
+  }
+
   function handleSubmit() {
     const formData = new FormData();
     formData.append("title", title);
@@ -163,22 +178,32 @@ export default function Inspect({ user, manga }) {
           </Link>
         </div>
         <div className="flex">
-          {user[0].accessLevel > 1 ? (
-            <button
-              className="bg-primary hover:bg-purple-700 px-4 rounded-md"
-              onClick={() => setEditing(true)}
-            >
-              Edit
-            </button>
-          ) : null}
-          {editing ? (
+          {user[0].accessLevel > 1 && (
+            <div>
+              {editing && (
+                <button
+                  className="mr-2 bg-gray-500 px-4 rounded-md"
+                  onClick={cancelEdit}
+                >
+                  Cancel
+                </button>
+              )}
+              <button
+                className="bg-primary hover:bg-purple-700 px-4 rounded-md"
+                onClick={() => setEditing(true)}
+              >
+                Edit
+              </button>
+            </div>
+          )}
+          {editing && (
             <button
               className="bg-green-700 hover:bg-green-800 px-4 rounded-md ml-2"
               onClick={() => handleSubmit()}
             >
               Save
             </button>
-          ) : null}
+          )}
         </div>
       </div>
       {/* Body */}
@@ -190,7 +215,7 @@ export default function Inspect({ user, manga }) {
             <img
               src={manga.mangaImage}
               alt={manga.mangaTitle}
-              className={`${editing ? "brightness-50" : ""}`}
+              className={`${editing && "brightness-50"}`}
             />
             {editing && (
               <div
