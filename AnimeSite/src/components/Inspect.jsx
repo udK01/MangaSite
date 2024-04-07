@@ -1,6 +1,7 @@
 // Mandatory Imports
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 // Auxiliary Classes
 import BodyInfo from "./InspectAuxiliary/BodyInfo";
@@ -129,7 +130,7 @@ export default function Inspect({ user, manga }) {
     formData.append("type", type);
 
     for (const entry of formData.entries()) {
-      console.log(`${entry[0]}: ${entry[1]}`);
+      entry[1] === "undefined" ? (entry[1] = null) : null;
     }
 
     setEditing(false);
@@ -187,7 +188,11 @@ export default function Inspect({ user, manga }) {
               className={`${editing ? "brightness-50" : ""}`}
             />
             {editing && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-secondary rounded-full p-1">
+              <div
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-secondary rounded-full p-1"
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+              >
                 <input
                   type="file"
                   accept="image/*"
