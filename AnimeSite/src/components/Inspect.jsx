@@ -364,19 +364,13 @@ export default function Inspect({ user, manga }) {
                   }`}
                 >
                   {genre}
-                  {editing && (
-                    <div
-                      className="ml-2 px-2 bg-red-500 rounded-md"
-                      onClick={() => removeGenre(manga.mangaID, genre, index)}
-                    >
-                      x
-                    </div>
-                  )}
                 </div>
               ))}
               {editing && (
                 <TagDropDown
+                  initiallySelected={manga.genres}
                   genres={genres}
+                  setGenres={setGenres}
                   addGenres={addGenres}
                   setAddGenres={setAddGenres}
                   removeGenres={removeGenres}

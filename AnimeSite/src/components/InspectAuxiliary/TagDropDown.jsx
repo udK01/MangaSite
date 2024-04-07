@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 
 const Dropdown = ({
+  initiallySelected,
   genres,
+  setGenres,
   addGenres,
   setAddGenres,
   removeGenres,
@@ -25,31 +28,26 @@ const Dropdown = ({
   };
 
   const handleItemClick = (item) => {
-    // Check if the item is already selected
     if (selectedItems.includes(item)) {
-      // Deselect the item
+      // Item was initially selected, now deselected
       setSelectedItems(
         selectedItems.filter((selectedItem) => selectedItem !== item)
       );
-      // If the item was initially selected and is deselected now, add it to removeGenres
-      if (genres.includes(item) && !addGenres.includes(item)) {
+      setGenres(genres.filter((genre) => genre !== item));
+      if (initiallySelected.includes(item)) {
         setRemoveGenres([...removeGenres, item]);
       }
-      // If the item was not initially selected and is deselected now, remove it from addGenres
-      if (!genres.includes(item) && addGenres.includes(item)) {
-        setAddGenres(addGenres.filter((genre) => genre !== item));
-      }
+      // Remove from Add list
+      setAddGenres(addGenres.filter((genre) => genre !== item));
     } else {
-      // Select the item
+      // Item initially not Selected, now selected
       setSelectedItems([...selectedItems, item]);
-      // If the item was initially selected and is selected now, remove it from removeGenres
-      if (genres.includes(item) && removeGenres.includes(item)) {
-        setRemoveGenres(removeGenres.filter((genre) => genre !== item));
-      }
-      // If the item was not initially selected and is selected now, add it to addGenres
-      if (!genres.includes(item) && !addGenres.includes(item)) {
+      setGenres([...genres, item]);
+      if (!initiallySelected.includes(item)) {
         setAddGenres([...addGenres, item]);
       }
+      // Remove from Remove list
+      setRemoveGenres(removeGenres.filter((genre) => genre !== item));
     }
   };
 
@@ -69,10 +67,10 @@ const Dropdown = ({
   return (
     <div className="relative font-poppins" ref={dropdownRef}>
       <div
-        className="flex items-center bg-secondary rounded-md px-3 py-1 mt-2 ml-2 hover:text-primary hover:cursor-pointer"
+        className="flex items-center bg-secondary rounded-md px-3 py-2 mt-2 ml-2 hover:text-primary hover:cursor-pointer"
         onClick={toggleDropdown}
       >
-        +
+        <FaEdit />
       </div>
       {isOpen && (
         <div className="scrollbar-thumb-primary scrollbar-track-transparent">
