@@ -27,6 +27,7 @@ export default function Inspect({ user, manga }) {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  // Reset and disable edit, if route swapped.
   useEffect(() => {
     cancelEdit();
     setEditing(false);
@@ -84,7 +85,7 @@ export default function Inspect({ user, manga }) {
     }
   }
 
-  // Drag & Drop Image Funtions
+  // Drag & Drop Image Funtions--------------------
   function handleImageChange(event) {
     const selectedImage = event.target.files[0];
     setImage(selectedImage);
@@ -102,6 +103,7 @@ export default function Inspect({ user, manga }) {
       setImage(selectedImage);
     }
   }
+  //-----------------------------------------------
 
   // Cancel edit, reset values.
   function cancelEdit() {
@@ -153,9 +155,11 @@ export default function Inspect({ user, manga }) {
 
   function handleDelete() {}
 
-  function removeGenre(mangaID, genreID) {
+  // Gets mangaID and genre, stores it
+  // and on save, deletes it.
+  function removeGenre(mangaID, genre) {
     console.log(mangaID);
-    console.log(genreID);
+    console.log(genre);
   }
 
   return (
