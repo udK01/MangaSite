@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Auxiliary Classes
+import TagDropDown from "./InspectAuxiliary/TagDropDown";
 import BodyInfo from "./InspectAuxiliary/BodyInfo";
 import SideInfo from "./InspectAuxiliary/SideInfo";
 import StarRating from "./StarRating";
@@ -24,12 +25,15 @@ export default function Inspect({ user, manga }) {
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState("OnGoing");
   const [type, setType] = useState("Manhwa");
+  const [genres, setGenres] = useState(manga.genres);
+  const [removeGenres, setRemoveGenres] = useState([]);
+  const [addGenres, setAddGenres] = useState([]);
   const location = useLocation();
   const currentPath = location.pathname;
 
   // Reset and disable edit, if route swapped.
   useEffect(() => {
-    cancelEdit();
+    clearItems();
     setEditing(false);
   }, [currentPath]);
 
@@ -106,13 +110,16 @@ export default function Inspect({ user, manga }) {
   //-----------------------------------------------
 
   // Cancel edit, reset values.
-  function cancelEdit() {
+  function clearItems() {
     setEditing(false);
     setTitle(manga.mangaTitle);
     setDescription(manga.description);
     setStatus(manga.status);
     setType(manga.type);
     setImage(null);
+    setGenres(manga.genres);
+    setRemoveGenres([]);
+    setAddGenres([]);
   }
 
   function handleSubmit() {
@@ -150,16 +157,22 @@ export default function Inspect({ user, manga }) {
       entry[1] === "undefined" ? (entry[1] = null) : null;
     }
 
-    setEditing(false);
+    console.log("Remove");
+    console.log(removeGenres);
+    console.log("Add");
+    console.log(addGenres);
+
+    clearItems();
   }
 
+  // Handles deletion of comic.
   function handleDelete() {}
 
   // Gets mangaID and genre, stores it
   // and on save, deletes it.
   function removeGenre(mangaID, genre) {
-    console.log(mangaID);
-    console.log(genre);
+    setGenres(genres.filter((g) => g !== genre));
+    setRemoveGenres((prevRemoveGenres) => [...prevRemoveGenres, genre]);
   }
 
   return (
@@ -187,7 +200,7 @@ export default function Inspect({ user, manga }) {
               {editing && (
                 <button
                   className="mr-2 bg-gray-500 px-4 rounded-md"
-                  onClick={cancelEdit}
+                  onClick={clearItems}
                 >
                   Cancel
                 </button>
@@ -341,10 +354,12 @@ export default function Inspect({ user, manga }) {
           <div className="flex flex-col">
             <div className="text-[14px] mt-4">Genres</div>
             <div className="flex flex-wrap text-[14px]">
-              {manga.genres.map((genre, index) => (
+              {genres.map((genre, index) => (
                 <div
                   key={index}
-                  className={`flex items-center bg-quinary rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
+                  className={`flex items-center ${
+                    editing ? "bg-secondary" : "bg-quinary"
+                  } rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
                     index > 0 ? "ml-2" : "ml-0"
                   }`}
                 >
@@ -352,7 +367,7 @@ export default function Inspect({ user, manga }) {
                   {editing && (
                     <div
                       className="ml-2 px-2 bg-red-500 rounded-md"
-                      onClick={() => removeGenre(manga.mangaID, genre)}
+                      onClick={() => removeGenre(manga.mangaID, genre, index)}
                     >
                       x
                     </div>
@@ -360,9 +375,13 @@ export default function Inspect({ user, manga }) {
                 </div>
               ))}
               {editing && (
-                <div className="flex items-center bg-quinary rounded-md px-3 mt-2 ml-2 hover:text-primary hover:cursor-pointer">
-                  +
-                </div>
+                <TagDropDown
+                  genres={genres}
+                  addGenres={addGenres}
+                  setAddGenres={setAddGenres}
+                  removeGenres={removeGenres}
+                  setRemoveGenres={setRemoveGenres}
+                />
               )}
             </div>
           </div>
@@ -406,7 +425,7 @@ export default function Inspect({ user, manga }) {
                   autoComplete="off"
                 />
                 {/* Scrollable Chapters */}
-                <div className="scrollbar-thumb-primary  scrollbar-track-transparent">
+                <div className="scrollbar-thumb-primary scrollbar-track-transparent">
                   <ul className="h-auto max-h-[297px] overflow-y-auto scrollbar-thin px-1">
                     {filteredChapters.map((chapter) => (
                       <li

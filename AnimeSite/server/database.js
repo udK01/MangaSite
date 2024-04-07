@@ -672,3 +672,14 @@ export async function removeGenre(mangaID, genreID) {
     console.error(`Failed to delete genre:`, error);
   }
 }
+
+/**
+ * @returns Every genre's name.
+ */
+export async function getAllGenres() {
+  try {
+    return await db.query(`SELECT genreTag FROM genres ORDER BY genreTag ASC`);
+  } catch (error) {
+    console.error(`Failed to fetch genres:`, error);
+  }
+}

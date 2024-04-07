@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import * as databaseFunctions from "./database.js";
+import { FaRegSun } from "react-icons/fa";
 
 const PORT = 8080;
 const app = express();
@@ -80,6 +81,16 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
   } catch (error) {
     console.error(`Couldn't create comic:`, error);
     res.status(500).json({ error: "Error creating comic." });
+  }
+});
+
+app.get("/api/getGenres", async (req, res) => {
+  try {
+    const result = await databaseFunctions.getAllGenres();
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: `Error fetching genres.` });
   }
 });
 
