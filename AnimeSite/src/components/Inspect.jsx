@@ -138,6 +138,11 @@ export default function Inspect({ user, manga }) {
 
   function handleDelete() {}
 
+  function removeGenre(mangaID, genreID) {
+    console.log(mangaID);
+    console.log(genreID);
+  }
+
   return (
     <section className="w-[826px] h-auto font-poppins">
       {/* Route */}
@@ -308,15 +313,28 @@ export default function Inspect({ user, manga }) {
             <div className="text-[14px] mt-4">Genres</div>
             <div className="flex flex-wrap text-[14px]">
               {manga.genres.map((genre, index) => (
-                <p
+                <div
                   key={index}
-                  className={`bg-quinary rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
+                  className={`flex items-center bg-quinary rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
                     index > 0 ? "ml-2" : "ml-0"
                   }`}
                 >
                   {genre}
-                </p>
+                  {editing && (
+                    <div
+                      className="ml-2 px-2 bg-red-500 rounded-md"
+                      onClick={() => removeGenre(manga.mangaID, genre)}
+                    >
+                      x
+                    </div>
+                  )}
+                </div>
               ))}
+              {editing && (
+                <div className="flex items-center bg-quinary rounded-md px-3 mt-2 ml-2 hover:text-primary hover:cursor-pointer">
+                  +
+                </div>
+              )}
             </div>
           </div>
         </div>
