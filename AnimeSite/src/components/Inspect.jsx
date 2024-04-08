@@ -19,15 +19,18 @@ export default function Inspect({ user, manga }) {
   const [filteredChapters, setFilteredChapters] = useState(
     reverseChapters(manga.chapters)
   );
+
+  const [editing, setEditing] = useState(false);
+
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState(manga.mangaTitle);
   const [description, setDescription] = useState(manga.description);
-  const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState("OnGoing");
   const [type, setType] = useState("Manhwa");
   const [genres, setGenres] = useState(manga.genres);
   const [removeGenres, setRemoveGenres] = useState([]);
   const [addGenres, setAddGenres] = useState([]);
+
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -170,13 +173,6 @@ export default function Inspect({ user, manga }) {
 
   // Handles deletion of comic.
   function handleDelete() {}
-
-  // Gets mangaID and genre, stores it
-  // and on save, deletes it.
-  function removeGenre(mangaID, genre) {
-    setGenres(genres.filter((g) => g !== genre));
-    setRemoveGenres((prevRemoveGenres) => [...prevRemoveGenres, genre]);
-  }
 
   return (
     <section className="w-[826px] h-auto font-poppins">
