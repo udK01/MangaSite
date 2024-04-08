@@ -94,6 +94,60 @@ app.get("/api/getGenres", async (req, res) => {
   }
 });
 
+app.put("/api/:id", async (req, res) => {
+  const mangaID = req.params.id;
+
+  const {
+    mangaTitle,
+    mangaImage,
+    description,
+    released,
+    author,
+    artist,
+    rating,
+    serialisation,
+    postedBy,
+    status,
+    type,
+    addGenres,
+    removeGenres,
+  } = req.body;
+
+  console.log(mangaID);
+  console.log(mangaTitle);
+  console.log(mangaImage);
+  console.log(rating);
+  console.log(type);
+  console.log(description);
+  console.log(author);
+  console.log(status);
+  console.log(artist);
+  console.log(postedBy);
+  console.log(released);
+  console.log(serialisation);
+  console.log(addGenres);
+  console.log(removeGenres);
+
+  try {
+    // await databaseFunctions.updateManga(
+    //   mangaID,
+    //   mangaTitle,
+    //   mangaImage,
+    //   rating,
+    //   type,
+    //   description,
+    //   author,
+    //   status,
+    //   artist,
+    //   postedBy
+    // );
+    res.status(200).send("Manga updated successfully");
+  } catch (error) {
+    console.error("Failed to update manga:", error);
+    res.status(500).send("Failed to update manga");
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res

@@ -123,44 +123,47 @@ export default function Inspect({ user, manga }) {
   }
 
   function handleSubmit() {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append(
-      "image",
-      (image && `../../thumbnails/${image.name}`) || manga.mangaImage
-    );
-    formData.append("description", description);
-    formData.append(
-      "released",
-      document.getElementById("Released").value || manga.released
-    );
-    formData.append(
-      "author",
-      document.getElementById("Author").value || manga.author
-    );
-    formData.append(
-      "artist",
-      document.getElementById("Artist").value || manga.artist
-    );
-    formData.append(
-      "serialisation",
-      document.getElementById("Serialisation").value || manga.serialisation
-    );
-    formData.append(
-      "postedBy",
-      document.getElementById("Posted By").value || manga.postedBy
-    );
-    formData.append("status", status);
-    formData.append("type", type);
+    const mImage =
+      (image && `../../thumbnails/${image.name}`) || manga.mangaImage;
+    const mReleased =
+      document.getElementById("Released").value || manga.released;
+    const mAuthor = document.getElementById("Author").value || manga.author;
+    const mArtist = document.getElementById("Artist").value || manga.artist;
+    const mSerialisation =
+      document.getElementById("Serialisation").value || manga.serialisation;
+    const mPostedBy =
+      document.getElementById("Posted By").value || manga.postedBy;
 
-    for (const entry of formData.entries()) {
-      entry[1] === "undefined" ? (entry[1] = null) : null;
-    }
-
-    console.log("Remove");
-    console.log(removeGenres);
-    console.log("Add");
-    console.log(addGenres);
+    axios
+      .put(
+        `/api/${manga.mangaID}`,
+        {
+          mangaTitle: title,
+          mangaImage: mImage,
+          description: description,
+          released: mReleased,
+          author: mAuthor,
+          artist: mArtist,
+          rating: manga.rating,
+          serialisation: mSerialisation,
+          postedBy: mPostedBy,
+          status: status,
+          type: type,
+          addGenres: addGenres,
+          removeGenres: removeGenres,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Adjust the content type if needed
+          },
+        }
+      )
+      .then(() => {
+        setEditing(false);
+      })
+      .catch((error) => {
+        console.error(`Failed to update comic:`, error);
+      });
 
     clearItems();
   }
