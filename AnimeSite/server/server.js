@@ -129,18 +129,20 @@ app.put("/api/:id", async (req, res) => {
   console.log(removeGenres);
 
   try {
-    // await databaseFunctions.updateManga(
-    //   mangaID,
-    //   mangaTitle,
-    //   mangaImage,
-    //   rating,
-    //   type,
-    //   description,
-    //   author,
-    //   status,
-    //   artist,
-    //   postedBy
-    // );
+    await databaseFunctions.updateManga(
+      mangaID,
+      mangaTitle,
+      mangaImage,
+      rating,
+      type,
+      description,
+      author,
+      status,
+      artist,
+      postedBy,
+      released,
+      serialisation
+    );
     res.status(200).send("Manga updated successfully");
   } catch (error) {
     console.error("Failed to update manga:", error);

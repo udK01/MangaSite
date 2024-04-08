@@ -357,7 +357,9 @@ export async function getMangas() {
  *  "udK",
  *  "OnGoing",
  *  "Unknown",
- *  "udK"
+ *  "udK",
+ *  "manga-site",
+ *  null
  * );
  *
  * @param {int} mangaID The comic's unique identifier.
@@ -370,6 +372,8 @@ export async function getMangas() {
  * @param {string} status The comic's status.
  * @param {string} artist The comic's artist.
  * @param {string} postedBy The comic's poster.
+ * @param {string} released The platform it was released on.
+ * @param {string} serialisation The comic's serialisation.
  */
 export async function updateManga(
   mangaID,
@@ -381,13 +385,15 @@ export async function updateManga(
   author,
   status,
   artist,
-  postedBy
+  postedBy,
+  released,
+  serialisation
 ) {
   try {
     // SQL Query.
     const query = `
   UPDATE Mangas 
-  SET mangaTitle = ?, mangaImage = ?, rating = ?, type = ?, description = ?, author = ?, status = ?, artist = ?, postedBy = ?
+  SET mangaTitle = ?, mangaImage = ?, rating = ?, type = ?, description = ?, author = ?, status = ?, artist = ?, postedBy = ?, released = ?, serialisation = ?
   WHERE mangaID = ?
 `;
 
@@ -402,6 +408,8 @@ export async function updateManga(
       status,
       artist,
       postedBy,
+      released,
+      serialisation,
       mangaID,
     ];
 
