@@ -82,6 +82,11 @@ export default function Inspect({ user, inspect }) {
     return chapters.sort((a, b) => b.chapterNumber - a.chapterNumber);
   }
 
+  // Formatting Function #3
+  function sortGenres(genres) {
+    return genres.sort((a, b) => a.localeCompare(b));
+  }
+
   // Filter for Dynamic Search
   function filterChapters(e) {
     if (e === "") {
@@ -165,6 +170,7 @@ export default function Inspect({ user, inspect }) {
       )
       .then((response) => {
         setManga(response.data);
+        setGenres(response.data.genres);
         setEditing(false);
       })
       .catch((error) => {
@@ -356,7 +362,7 @@ export default function Inspect({ user, inspect }) {
           <div className="flex flex-col">
             <div className="text-[14px] mt-4">Genres</div>
             <div className="flex flex-wrap text-[14px]">
-              {genres.map((genre, index) => (
+              {sortGenres(genres).map((genre, index) => (
                 <div
                   key={index}
                   className={`flex items-center ${
