@@ -113,21 +113,6 @@ app.put("/api/:id", async (req, res) => {
     removeGenres,
   } = req.body;
 
-  console.log(mangaID);
-  console.log(mangaTitle);
-  console.log(mangaImage);
-  console.log(rating);
-  console.log(type);
-  console.log(description);
-  console.log(author);
-  console.log(status);
-  console.log(artist);
-  console.log(postedBy);
-  console.log(released);
-  console.log(serialisation);
-  console.log(addGenres);
-  console.log(removeGenres);
-
   try {
     await databaseFunctions.updateManga(
       mangaID,
