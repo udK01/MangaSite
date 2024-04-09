@@ -21,7 +21,7 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
       bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
       includeSidebar = false;
     } else {
-      bodyContent = <Inspect user={user} manga={manga} />;
+      bodyContent = <Inspect user={user} inspect={manga} />;
     }
   } else {
     switch (view) {

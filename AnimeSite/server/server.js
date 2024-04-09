@@ -141,7 +141,9 @@ app.put("/api/:id", async (req, res) => {
       await databaseFunctions.removeGenre(mangaID, genreID[0].genreID);
     }
 
-    res.status(200).send("Manga updated successfully");
+    const updatedManga = await databaseFunctions.getManga(mangaID);
+
+    res.status(200).json(updatedManga[0]);
   } catch (error) {
     console.error("Failed to update manga:", error);
     res.status(500).send("Failed to update manga");

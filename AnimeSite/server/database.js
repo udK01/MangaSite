@@ -342,6 +342,32 @@ export async function getMangas() {
 
 /**
  *
+ * Finds and returns the specified manga,
+ * including existing genres and chapters.
+ *
+ * Example Usage
+ *
+ * await getManga(2);
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @returns the specified manga.
+ */
+export async function getManga(mangaID) {
+  try {
+    const manga = (
+      await db.query(`SELECT * FROM mangas WHERE mangaID = ?`, [mangaID])
+    )[0];
+    manga[0].genres = await getGenres(mangaID);
+    manga[0].chapters = await getChapters(mangaID);
+
+    return manga;
+  } catch (error) {
+    console.error(`Failed to fetch manga:`, error);
+  }
+}
+
+/**
+ *
  * Finds the comic based on ID and updates
  * any changes values.
  *

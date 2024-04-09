@@ -15,7 +15,9 @@ import DropDown from "./DropDown";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
-export default function Inspect({ user, manga }) {
+export default function Inspect({ user, inspect }) {
+  const [manga, setManga] = useState(inspect);
+
   const [filteredChapters, setFilteredChapters] = useState(
     reverseChapters(manga.chapters)
   );
@@ -161,7 +163,8 @@ export default function Inspect({ user, manga }) {
           },
         }
       )
-      .then(() => {
+      .then((response) => {
+        setManga(response.data);
         setEditing(false);
       })
       .catch((error) => {
