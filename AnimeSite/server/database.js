@@ -669,6 +669,29 @@ export async function getGenreName(genreID) {
 
 /**
  *
+ * Finds the genre using it's name and returns its ID.
+ *
+ * Example Usage
+ *
+ * await getGenreID("Fantasy");
+ *
+ * @param {string} genreTag The genre's name. E.g. Fatansy
+ * @returns The genre's ID.
+ */
+export async function getGenreID(genreTag) {
+  try {
+    return (
+      await db.query(`SELECT genreID FROM genres WHERE genreTag = ?`, [
+        genreTag,
+      ])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to get genre tag:`, error);
+  }
+}
+
+/**
+ *
  * Removes the genre from the specified manga.
  *
  * Example Usage.

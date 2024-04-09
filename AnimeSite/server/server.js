@@ -143,6 +143,19 @@ app.put("/api/:id", async (req, res) => {
       released,
       serialisation
     );
+
+    // Add Genres.
+    for (const genres of addGenres) {
+      const genreID = await databaseFunctions.getGenreID(genres);
+      await databaseFunctions.addGenre(mangaID, genreID[0].genreID);
+    }
+
+    // Remove Genres.
+    for (const genres of removeGenres) {
+      const genreID = await databaseFunctions.getGenreID(genres);
+      await databaseFunctions.removeGenre(mangaID, genreID[0].genreID);
+    }
+
     res.status(200).send("Manga updated successfully");
   } catch (error) {
     console.error("Failed to update manga:", error);
