@@ -25,16 +25,20 @@ export default function Inspect({ user, inspect }) {
   const [editing, setEditing] = useState(false);
 
   const [image, setImage] = useState(null);
-  const [title, setTitle] = useState(manga.mangaTitle);
-  const [description, setDescription] = useState(manga.description);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [status, setStatus] = useState("OnGoing");
   const [type, setType] = useState("Manhwa");
-  const [genres, setGenres] = useState(manga.genres);
+  const [genres, setGenres] = useState([]);
   const [removeGenres, setRemoveGenres] = useState([]);
   const [addGenres, setAddGenres] = useState([]);
 
   const location = useLocation();
   const currentPath = location.pathname;
+
+  useEffect(() => {
+    setManga(inspect);
+  }, [inspect]);
 
   // Reset and disable edit, if route swapped.
   useEffect(() => {
@@ -122,12 +126,12 @@ export default function Inspect({ user, inspect }) {
   // Cancel edit, reset values.
   function clearItems() {
     setEditing(false);
-    setTitle(manga.mangaTitle);
-    setDescription(manga.description);
-    setStatus(manga.status);
-    setType(manga.type);
+    setTitle(inspect.mangaTitle);
+    setDescription(inspect.description);
+    setStatus(inspect.status);
+    setType(inspect.type);
     setImage(null);
-    setGenres(manga.genres);
+    setGenres(inspect.genres);
     setRemoveGenres([]);
     setAddGenres([]);
   }
