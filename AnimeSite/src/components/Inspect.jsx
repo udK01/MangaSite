@@ -148,6 +148,20 @@ export default function Inspect({ user, inspect }) {
     const mPostedBy =
       document.getElementById("Posted By").value || manga.postedBy;
 
+    if (mImage !== manga.mangaImage) {
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("previousFileName", manga.mangaImage);
+      axios
+        .post("/api/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(() => console.log(`File replaced.`))
+        .catch((error) => console.error(`Failed to replace file:`, error));
+    }
+
     axios
       .put(
         `/api/${manga.mangaID}`,
@@ -168,7 +182,7 @@ export default function Inspect({ user, inspect }) {
         },
         {
           headers: {
-            "Content-Type": "application/json", // Adjust the content type if needed
+            "Content-Type": "application/json",
           },
         }
       )

@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
+import fs from "fs";
 import * as databaseFunctions from "./database.js";
-import { FaRegSun } from "react-icons/fa";
 
 const PORT = 8080;
 const app = express();
@@ -147,6 +147,22 @@ app.put("/api/:id", async (req, res) => {
   } catch (error) {
     console.error("Failed to update manga:", error);
     res.status(500).send("Failed to update manga");
+  }
+});
+
+app.post("/api/upload", upload.single("file"), async (req, res) => {
+  try {
+    // Delete the previous file if it exists
+    const previousFile = req.body.previousFileName;
+    const fileLocation = `../public/${previousFile.slice(6)}`;
+    if (fs.existsSync(fileLocation)) {
+      fs.unlinkSync(fileLocation);
+    }
+
+    res.status(200).send("File uploaded successfully.");
+  } catch (error) {
+    console.error("Failed to upload file:", error);
+    res.status(500).send("Failed to upload file.");
   }
 });
 
