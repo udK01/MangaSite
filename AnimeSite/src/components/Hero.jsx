@@ -6,7 +6,7 @@ import Trending from "./Trending";
 import Create from "./CreateView/Create";
 import Inspect from "./InspectView/Inspect";
 import Popular from "./Popular/Popular";
-import Stored from "./Stored";
+import Stored from "./BookmarkView/Bookmarks";
 
 export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
   let includeSidebar = true;
@@ -26,7 +26,7 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
   } else {
     switch (view) {
       case "bookmarks":
-        bodyContent = <Stored />;
+        bodyContent = <Stored user={user} comics={comics} />;
         break;
       case "comics":
         // bodyContent = <Comics />;

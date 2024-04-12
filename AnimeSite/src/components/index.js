@@ -2,6 +2,6 @@ import Navbar from "./Navbar";
 import Hero from "./Hero";
 import Footer from "./Footer";
 import Popular from "./Popular/Popular";
-import Stored from "./Stored";
+import Bookmarks from "./BookmarkView/Bookmarks";
 
-export { Navbar, Hero, Footer, Popular, Stored };
+export { Navbar, Hero, Footer, Popular, Bookmarks };

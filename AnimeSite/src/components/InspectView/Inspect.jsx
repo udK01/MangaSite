@@ -38,21 +38,18 @@ export default function Inspect({ user, inspect }) {
   const currentPath = location.pathname;
 
   useEffect(() => {
+    setManga(inspect);
+    setBookmarked(false);
     user[0].bookmarks.map((bookmark) => {
-      if (bookmark.mangaID === manga.mangaID) {
+      if (bookmark.mangaID === inspect.mangaID) {
         setBookmarked(true);
       }
     });
-  }, [bookmarked]);
-
-  useEffect(() => {
-    setManga(inspect);
   }, [inspect]);
 
   // Reset and disable edit, if route swapped.
   useEffect(() => {
-    clearItems();
-    setEditing(false);
+    initialiseItems();
   }, [currentPath]);
 
   // Need to keep this due to useState's in this class.
@@ -133,7 +130,7 @@ export default function Inspect({ user, inspect }) {
   //-----------------------------------------------
 
   // Cancel edit, reset values.
-  function clearItems() {
+  function initialiseItems() {
     setEditing(false);
     setTitle(inspect.mangaTitle);
     setDescription(inspect.description);
@@ -204,7 +201,7 @@ export default function Inspect({ user, inspect }) {
         console.error(`Failed to update comic:`, error);
       });
 
-    clearItems();
+    initialiseItems();
   }
 
   function toggleBookmarked() {
@@ -255,7 +252,7 @@ export default function Inspect({ user, inspect }) {
               {editing && (
                 <button
                   className="mr-2 bg-gray-500 px-4 rounded-md"
-                  onClick={clearItems}
+                  onClick={initialiseItems}
                 >
                   Cancel
                 </button>

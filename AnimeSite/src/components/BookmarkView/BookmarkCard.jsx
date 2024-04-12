@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import StarRating from "../StarRating";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function PopularTodayCard({ manga }) {
+import StarRating from "../StarRating";
+
+export default function BookmarkCard({ manga }) {
   const [hover, setHover] = useState(false);
 
   const handleMouseEnter = () => {
@@ -14,7 +15,7 @@ export default function PopularTodayCard({ manga }) {
   };
 
   return (
-    <div className="w-[147px] font-poppins rounded-md overflow-hidden flex flex-col">
+    <div className="w-[147px] h-full font-poppins rounded-md overflow-hidden flex flex-col ml-5 pb-5">
       <Link to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}>
         <img
           src={manga.mangaImage}
