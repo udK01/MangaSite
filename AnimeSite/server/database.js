@@ -376,6 +376,28 @@ export async function getManga(mangaID) {
 
 /**
  *
+ * Finds the manga in the database, using the unique
+ * title, and returns only the manga's ID.
+ *
+ * @param {string} mangaTitle The manga's title.
+ * @returns the manga's ID.
+ */
+export async function getMangaID(mangaTitle) {
+  try {
+    const mangaID = (
+      await db.query(`SELECT mangaID FROM mangas WHERE mangaTitle = ?`, [
+        mangaTitle,
+      ])
+    )[0];
+
+    return mangaID[0].mangaID;
+  } catch (error) {
+    console.error(`Failed to fetch manga:`, error);
+  }
+}
+
+/**
+ *
  * Finds the comic based on ID and updates
  * any changes values.
  *

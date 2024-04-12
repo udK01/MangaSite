@@ -58,6 +58,7 @@ export default function AddComic() {
       "serialisation",
       serialisation === "Serialisation" ? "-" : serialisation
     );
+    formData.append("genres", genres);
 
     axios
       .post("/api/createComic", formData, {

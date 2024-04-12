@@ -65,6 +65,7 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
       postedOn,
       released,
       serialisation,
+      genres,
     } = req.body;
 
     await databaseFunctions.createManga(
@@ -80,6 +81,13 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
       released,
       serialisation
     );
+
+    const mangaID = await databaseFunctions.getMangaID(mangaTitle);
+
+    for (const genre of genres.split(",")) {
+      const genreID = await databaseFunctions.getGenreID(genre);
+      await databaseFunctions.addGenre(mangaID, genreID[0].genreID);
+    }
 
     res.status(200).json(`Comic created successfully!`);
   } catch (error) {
