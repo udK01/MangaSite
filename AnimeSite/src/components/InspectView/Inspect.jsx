@@ -198,6 +198,21 @@ export default function Inspect({ user, inspect }) {
     clearItems();
   }
 
+  function handleBookmark(action) {
+    axios
+      .post(
+        "/api/bookmark",
+        { userID: user[0].userID, mangaID: manga.mangaID, action: action },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => console.log(response.data))
+      .catch((error) => console.error(`Failed to alter bookmarks:`, error));
+  }
+
   // Handles deletion of comic.
   function handleDelete() {}
 
@@ -288,7 +303,10 @@ export default function Inspect({ user, inspect }) {
             )}
           </div>
           {/* Bookmark Button */}
-          <button className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px] hover:bg-purple-800">
+          <button
+            className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px] hover:bg-purple-800"
+            onClick={() => handleBookmark("add")}
+          >
             <FaRegBookmark /> Bookmark
           </button>
           {/* Bookmark Count */}

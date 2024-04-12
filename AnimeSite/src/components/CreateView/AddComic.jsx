@@ -10,21 +10,6 @@ import CalendarPopup from "./CalendarPopup";
 import Separator from "../Separator";
 import DropDown from "../DropDown";
 
-/**
- * ToDo List...
- *
- * 1.
- * Change default values as "-" instead of null. ------------------Done
- * Account for extra fields (serialisation, etc.) -----------------Done
- * Account for tags.
- *
- * 2.
- * Add section for creating tags, create it in
- * different component and call it in...?
- * It would help reduce clutter in the class.
- *
- */
-
 export default function AddComic({ customInputField }) {
   const [title, setTitle] = useState("Title");
   const [description, setDescription] = useState("Description");

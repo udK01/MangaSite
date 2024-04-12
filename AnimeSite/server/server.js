@@ -194,6 +194,24 @@ app.post("/api/tag", async (req, res) => {
   }
 });
 
+app.post("/api/bookmark", async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const mangaID = req.body.mangaID;
+    const action = req.body.action;
+
+    console.log(userID);
+    console.log(mangaID);
+    console.log(action);
+
+    await databaseFunctions.alterBookmarks(userID, mangaID, action);
+    res.status(200).send("Bookmark successfully altered!");
+  } catch (error) {
+    console.error(`Failed to alter bookmark:`, error);
+    res.status(500).send("Failed to alter bookmark.");
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
