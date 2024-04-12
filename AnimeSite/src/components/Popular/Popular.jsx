@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Separator from "./Separator";
+import Separator from "../Separator";
 import PopularCard from "./PopularCard";
 
 export default function Popular({ comics }) {

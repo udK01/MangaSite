@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Auxiliary Classes
-import TagDropDown from "./InspectAuxiliary/TagDropDown";
-import BodyInfo from "./InspectAuxiliary/BodyInfo";
-import SideInfo from "./InspectAuxiliary/SideInfo";
-import StarRating from "./StarRating";
-import Separator from "./Separator";
-import DropDown from "./DropDown";
+import TagDropDown from "./TagDropDown";
+import BodyInfo from "./BodyInfo";
+import SideInfo from "./SideInfo";
+import StarRating from "../StarRating";
+import Separator from "../Separator";
+import DropDown from "../DropDown";
 
 // Icon
 import { FaRegBookmark } from "react-icons/fa";

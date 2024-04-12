@@ -1,4 +1,4 @@
-import Separator from "./Separator";
+import Separator from "../Separator";
 import Card from "./Card";
 
 export default function LatestUpdate({ comics }) {

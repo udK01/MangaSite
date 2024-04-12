@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import StarRating from "./StarRating";
+import StarRating from "../StarRating";
 
 export default function PopularCard({ manga, index }) {
   return (

@@ -1,4 +1,4 @@
-import TagDropDown from "../InspectAuxiliary/TagDropDown";
+import TagDropDown from "../InspectView/TagDropDown";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-import CalendarPopup from "../CalendarPopup";
+import CalendarPopup from "./CalendarPopup";
 import Separator from "../Separator";
 import DropDown from "../DropDown";
 

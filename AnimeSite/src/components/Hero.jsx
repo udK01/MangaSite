@@ -1,11 +1,11 @@
 import InspectChapter from "./InspectChapter";
-import LatestUpdate from "./LatestUpdate";
-import PopularToday from "./PopularToday";
+import LatestUpdate from "./LatestUpdate/LatestUpdate";
+import PopularToday from "./PopularToday/PopularToday";
 import Carousel from "./Carousel";
 import Trending from "./Trending";
 import Create from "./CreateView/Create";
-import Inspect from "./Inspect";
-import Popular from "./Popular";
+import Inspect from "./InspectView/Inspect";
+import Popular from "./Popular/Popular";
 import Stored from "./Stored";
 
 export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
