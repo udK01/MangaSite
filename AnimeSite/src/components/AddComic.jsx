@@ -43,10 +43,10 @@ export default function AddComic() {
     formData.append("imagePath", `../../thumbnails/${image.name}`);
     formData.append("type", type);
     formData.append("description", description);
-    formData.append("author", author === "Author" ? null : author);
+    formData.append("author", author === "Author" ? "-" : author);
     formData.append("status", status);
-    formData.append("artist", artist === "Artist" ? null : artist);
-    formData.append("postedBy", postedBy === "Posted-By" ? null : postedBy);
+    formData.append("artist", artist === "Artist" ? "-" : artist);
+    formData.append("postedBy", postedBy === "Posted-By" ? "-" : postedBy);
     formData.append("postedOn", formatDate());
 
     axios
