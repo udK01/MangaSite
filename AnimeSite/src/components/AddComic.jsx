@@ -158,7 +158,7 @@ export default function AddComic() {
   return (
     // Container
     <section
-      className="w-[826px] h-auto bg-quaternary rounded-sm font-poppins"
+      className="w-[826px] h-auto py-1 bg-quaternary rounded-sm font-poppins"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >

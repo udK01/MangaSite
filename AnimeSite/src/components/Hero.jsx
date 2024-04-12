@@ -3,7 +3,7 @@ import LatestUpdate from "./LatestUpdate";
 import PopularToday from "./PopularToday";
 import Carousel from "./Carousel";
 import Trending from "./Trending";
-import AddComic from "./AddComic";
+import Create from "./Create";
 import Inspect from "./Inspect";
 import Popular from "./Popular";
 import Stored from "./Stored";
@@ -32,7 +32,7 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
         // bodyContent = <Comics />;
         break;
       case "addComic":
-        bodyContent = <AddComic />;
+        bodyContent = <Create />;
         break;
       default:
         bodyContent = (
