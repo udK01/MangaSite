@@ -627,7 +627,12 @@ export async function getChapters(mangaID) {
  */
 export async function createGenre(genre) {
   try {
-    await db.query(`INSERT INTO genres (genreTag) VALUES (?)`, [genre]);
+    let formattedGenre = genre.toLowerCase();
+    formattedGenre =
+      formattedGenre.charAt(0).toUpperCase() + formattedGenre.slice(1);
+    await db.query(`INSERT INTO genres (genreTag) VALUES (?)`, [
+      formattedGenre,
+    ]);
   } catch (error) {
     if (error.code === "ER_DUP_ENTRY") {
       console.error(`"${genre}" genre already exists.`);
