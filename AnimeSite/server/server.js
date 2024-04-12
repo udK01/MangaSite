@@ -63,6 +63,8 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
       artist,
       postedBy,
       postedOn,
+      released,
+      serialisation,
     } = req.body;
 
     await databaseFunctions.createManga(
@@ -74,7 +76,9 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
       status,
       artist,
       postedBy,
-      postedOn
+      postedOn,
+      released,
+      serialisation
     );
 
     res.status(200).json(`Comic created successfully!`);

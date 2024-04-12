@@ -9,8 +9,8 @@ import axios from "axios";
  * ToDo List...
  *
  * 1.
- * Change default values as "-" instead of null.
- * Account for extra fields (serialisation, etc.)
+ * Change default values as "-" instead of null. ------------------Done
+ * Account for extra fields (serialisation, etc.) -----------------Done
  * Account for tags.
  *
  * 2.
@@ -29,6 +29,8 @@ export default function AddComic() {
   const [artist, setArtist] = useState("Artist");
   const [postedBy, setPostedBy] = useState("Posted-By");
   const [postedOn, setPostedOn] = useState(new Date());
+  const [released, setReleased] = useState("Released");
+  const [serialisation, setSerialisation] = useState("Serialisation");
 
   const navigate = useNavigate();
 
@@ -48,6 +50,11 @@ export default function AddComic() {
     formData.append("artist", artist === "Artist" ? "-" : artist);
     formData.append("postedBy", postedBy === "Posted-By" ? "-" : postedBy);
     formData.append("postedOn", formatDate());
+    formData.append("released", released === "Released" ? "-" : released);
+    formData.append(
+      "serialisation",
+      serialisation === "Serialisation" ? "-" : serialisation
+    );
 
     axios
       .post("/api/createComic", formData, {
@@ -165,6 +172,7 @@ export default function AddComic() {
             type={type}
             setType={setType}
           />
+          {customInputField("text", "Released", released, setReleased, 2)}
           {customInputField("text", "Author", author, setAuthor, 2)}
           <DropDown
             options={[
@@ -179,6 +187,13 @@ export default function AddComic() {
             setStatus={setStatus}
           />
           {customInputField("text", "Artist", artist, setArtist, 2)}
+          {customInputField(
+            "text",
+            "Serialisation",
+            serialisation,
+            setSerialisation,
+            2
+          )}
           {customInputField("text", "Posted-By", postedBy, setPostedBy, 2)}
           <CalendarPopup
             selectedDate={postedOn}

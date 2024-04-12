@@ -264,6 +264,8 @@ export async function getBookmarks(userID) {
  *  `Unknown`,
  *  `udK`,
  *  `2022-07-10`
+ *  `mangaSite.com`
+ *  `-`
  * );
  *
  * @param {string} mangaTitle The comic's title.
@@ -275,6 +277,8 @@ export async function getBookmarks(userID) {
  * @param {string} artist The comic's artist.
  * @param {string} postedBy The comic's poster's username.
  * @param {date} postedOn The comic's posting date.
+ * @param {string} released The platform the comic released on.
+ * @param {string} serialisation The comic's serialisation.
  *
  */
 export async function createManga(
@@ -286,15 +290,17 @@ export async function createManga(
   status,
   artist,
   postedBy,
-  postedOn
+  postedOn,
+  released,
+  serialisation
 ) {
   try {
     let defaultRating = 0;
 
     // Sql Query.
     const query = `
-      INSERT INTO Mangas (mangaTitle, mangaImage, rating, type, description, author, status, artist, postedBy, postedOn)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Mangas (mangaTitle, mangaImage, rating, type, description, author, status, artist, postedBy, postedOn, released, serialisation)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     // Values To Enter.
@@ -309,6 +315,8 @@ export async function createManga(
       artist,
       postedBy,
       postedOn,
+      released,
+      serialisation,
     ];
 
     await db.query(query, values);
