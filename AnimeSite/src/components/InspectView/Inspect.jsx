@@ -12,7 +12,7 @@ import Separator from "../Separator";
 import DropDown from "../DropDown";
 
 // Icon
-import { FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
 export default function Inspect({ user, inspect }) {
@@ -32,9 +32,18 @@ export default function Inspect({ user, inspect }) {
   const [genres, setGenres] = useState([]);
   const [removeGenres, setRemoveGenres] = useState([]);
   const [addGenres, setAddGenres] = useState([]);
+  const [bookmarked, setBookmarked] = useState(false);
 
   const location = useLocation();
   const currentPath = location.pathname;
+
+  useEffect(() => {
+    user[0].bookmarks.map((bookmark) => {
+      if (bookmark.mangaID === manga.mangaID) {
+        setBookmarked(true);
+      }
+    });
+  }, [bookmarked]);
 
   useEffect(() => {
     setManga(inspect);
@@ -198,7 +207,12 @@ export default function Inspect({ user, inspect }) {
     clearItems();
   }
 
+  function toggleBookmarked() {
+    setBookmarked(!bookmarked);
+  }
+
   function handleBookmark(action) {
+    toggleBookmarked();
     axios
       .post(
         "/api/bookmark",
@@ -304,10 +318,14 @@ export default function Inspect({ user, inspect }) {
           </div>
           {/* Bookmark Button */}
           <button
-            className="w-full flex items-center justify-center text-white p-2 bg-primary rounded-md mt-2 text-[14px] hover:bg-purple-800"
-            onClick={() => handleBookmark("add")}
+            className={`w-full flex items-center justify-center text-white p-2 rounded-md mt-2 text-[14px] transition-all duration-300 ${
+              bookmarked
+                ? "bg-red-700 hover:bg-red-800"
+                : "bg-primary hover:bg-purple-800"
+            } `}
+            onClick={() => handleBookmark(bookmarked ? "remove" : "add")}
           >
-            <FaRegBookmark /> Bookmark
+            {bookmarked ? <FaBookmark /> : <FaRegBookmark />} Bookmark
           </button>
           {/* Bookmark Count */}
           <p className="flex justify-center text-dimWhite text-[12px] my-1">

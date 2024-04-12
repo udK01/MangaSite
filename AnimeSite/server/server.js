@@ -41,6 +41,9 @@ app.get("/api/user/:username", async (req, res) => {
   try {
     const username = req.params.username;
     const userData = await databaseFunctions.getUser(username);
+    userData[0].bookmarks = await databaseFunctions.getBookmarks(
+      userData[0].userID
+    );
     res.status(200).json(userData);
   } catch (error) {
     console.error(`Couldn't fetch users:`, error);
@@ -199,10 +202,6 @@ app.post("/api/bookmark", async (req, res) => {
     const userID = req.body.userID;
     const mangaID = req.body.mangaID;
     const action = req.body.action;
-
-    console.log(userID);
-    console.log(mangaID);
-    console.log(action);
 
     await databaseFunctions.alterBookmarks(userID, mangaID, action);
     res.status(200).send("Bookmark successfully altered!");
