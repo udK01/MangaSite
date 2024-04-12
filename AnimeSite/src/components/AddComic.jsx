@@ -5,6 +5,8 @@ import DropDown from "./DropDown";
 import { useState } from "react";
 import axios from "axios";
 
+import TagDropDown from "../components/InspectAuxiliary/TagDropDown";
+
 /**
  * ToDo List...
  *
@@ -31,6 +33,7 @@ export default function AddComic() {
   const [postedOn, setPostedOn] = useState(new Date());
   const [released, setReleased] = useState("Released");
   const [serialisation, setSerialisation] = useState("Serialisation");
+  const [genres, setGenres] = useState([]);
 
   const navigate = useNavigate();
 
@@ -42,7 +45,7 @@ export default function AddComic() {
     const formData = new FormData();
     formData.append("mangaTitle", title);
     formData.append("mangaImage", image);
-    formData.append("imagePath", `../../thumbnails/${image.name}`);
+    formData.append("imagePath", image && `../../thumbnails/${image.name}`);
     formData.append("type", type);
     formData.append("description", description);
     formData.append("author", author === "Author" ? "-" : author);
@@ -82,6 +85,10 @@ export default function AddComic() {
     const seconds = padZero(date.getSeconds());
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  function sortGenres(genres) {
+    return genres.sort((a, b) => a.localeCompare(b));
   }
 
   function padZero(n) {
@@ -199,7 +206,38 @@ export default function AddComic() {
             selectedDate={postedOn}
             setSelectedDate={setPostedOn}
           />
-
+          {/* Genres */}
+          <div className="relative">
+            <div className="w-[350px] min-h-[34px] flex flex-wrap bg-secondary mt-2 p-2 rounded-md relative">
+              {/* Edit Button */}
+              <div className={`absolute bottom-1 right-1 text-white`}>
+                <TagDropDown
+                  initiallySelected={[]}
+                  genres={genres}
+                  setGenres={setGenres}
+                  addGenres={[]}
+                  setAddGenres={() => {}}
+                  removeGenres={[]}
+                  setRemoveGenres={() => {}}
+                />
+              </div>
+              {genres.length === 0 ? (
+                <div className="text-white ml-2 font-poppins">Genres</div>
+              ) : (
+                ""
+              )}
+              {sortGenres(genres).map((genre, index) => (
+                <div
+                  key={index}
+                  className={`flex bg-white items-center rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
+                    index > 0 ? "ml-2" : "ml-0"
+                  }`}
+                >
+                  {genre}
+                </div>
+              ))}
+            </div>
+          </div>
           {/* Image Upload */}
           <div className="flex w-[350px] h-[34px] bg-secondary justify-center items-center mt-2">
             <input
