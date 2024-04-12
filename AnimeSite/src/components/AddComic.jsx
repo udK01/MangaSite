@@ -1,11 +1,14 @@
+import TagDropDown from "../components/InspectAuxiliary/TagDropDown";
+
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
-import CalendarPopup from "./CalendarPopup";
-import Separator from "./Separator";
-import DropDown from "./DropDown";
 import { useState } from "react";
 import axios from "axios";
 
-import TagDropDown from "../components/InspectAuxiliary/TagDropDown";
+import CalendarPopup from "./CalendarPopup";
+import Separator from "./Separator";
+import DropDown from "./DropDown";
 
 /**
  * ToDo List...
@@ -34,6 +37,7 @@ export default function AddComic() {
   const [released, setReleased] = useState("Released");
   const [serialisation, setSerialisation] = useState("Serialisation");
   const [genres, setGenres] = useState([]);
+  const [collapsed, setCollapsed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -87,6 +91,10 @@ export default function AddComic() {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
+
+  const handleToggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
 
   function sortGenres(genres) {
     return genres.sort((a, b) => a.localeCompare(b));
@@ -155,124 +163,131 @@ export default function AddComic() {
       onDrop={handleDrop}
     >
       {/* Add Comic Text */}
-      <div className="flex justify-between my-4 mx-4 text-white">
+      <div className="flex justify-between my-4 mx-4 text-white items-center">
         <p>Add Comic</p>
+        <button onClick={handleToggleCollapse} className="text-white">
+          {collapsed ? <FaChevronDown /> : <FaChevronUp />}
+        </button>
       </div>
       <Separator />
-      {/* Form */}
-      <form
-        onSubmit={handleAddComic}
-        className="my-4 mx-4 p-2 rounded-md text-[13px]"
-      >
-        {/* Input Fields */}
-        <div className="w-full flex flex-col items-center justify-center">
-          {customInputField("text", "Title", title, setTitle)}
-          {customInputField(
-            "text",
-            "Description",
-            description,
-            setDescription,
-            2
-          )}
-          <DropDown
-            options={["Manhwa", "Manga", "Manhua"]}
-            dropdownType={"type"}
-            type={type}
-            setType={setType}
-          />
-          {customInputField("text", "Released", released, setReleased, 2)}
-          {customInputField("text", "Author", author, setAuthor, 2)}
-          <DropDown
-            options={[
-              "OnGoing",
-              "Completed",
-              "Hiatus",
-              "Dropped",
-              "Coming Soon",
-            ]}
-            dropdownType={status}
-            status={status}
-            setStatus={setStatus}
-          />
-          {customInputField("text", "Artist", artist, setArtist, 2)}
-          {customInputField(
-            "text",
-            "Serialisation",
-            serialisation,
-            setSerialisation,
-            2
-          )}
-          {customInputField("text", "Posted-By", postedBy, setPostedBy, 2)}
-          <CalendarPopup
-            selectedDate={postedOn}
-            setSelectedDate={setPostedOn}
-          />
-          {/* Genres */}
-          <div className="relative">
-            <div className="w-[350px] min-h-[34px] flex flex-wrap bg-secondary mt-2 p-2 rounded-md relative">
-              {/* Edit Button */}
-              <div className={`absolute bottom-1 right-1 text-white`}>
-                <TagDropDown
-                  initiallySelected={[]}
-                  genres={genres}
-                  setGenres={setGenres}
-                  addGenres={[]}
-                  setAddGenres={() => {}}
-                  removeGenres={[]}
-                  setRemoveGenres={() => {}}
-                />
-              </div>
-              {genres.length === 0 ? (
-                <div className="text-white ml-2 font-poppins">Genres</div>
-              ) : (
-                ""
-              )}
-              {sortGenres(genres).map((genre, index) => (
-                <div
-                  key={index}
-                  className={`flex bg-white items-center rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
-                    index > 0 ? "ml-2" : "ml-0"
-                  }`}
-                >
-                  {genre}
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Image Upload */}
-          <div className="flex w-[350px] h-[34px] bg-secondary justify-center items-center mt-2">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-              id="fileInput"
-            />
-            <label
-              htmlFor="fileInput"
-              className="cursor-pointer text-white hover:text-primary"
-            >
-              Drag & Drop or Click to Upload Image
-            </label>
-          </div>
-          {/* Image Display */}
-          {image && (
-            <p className="text-white mt-2">Selected Image: {image.name}</p>
-          )}
-        </div>
-        {/* Buttons */}
-        <div className="w-[350px] flex justify-between mx-auto mt-5 text-white font-poppins">
-          <Link to={"/"} className="bg-red-600 px-4 py-2 rounded-md">
-            Cancel
-          </Link>
-          <button
-            type="submit"
-            className="bg-primary ml-5 px-4 py-2 rounded-md"
+      {!collapsed && (
+        <>
+          {/* Form */}
+          <form
+            onSubmit={handleAddComic}
+            className="my-4 mx-4 p-2 rounded-md text-[13px]"
           >
-            Add Comic
-          </button>
-        </div>
-      </form>
+            {/* Input Fields */}
+            <div className="w-full flex flex-col items-center justify-center">
+              {customInputField("text", "Title", title, setTitle)}
+              {customInputField(
+                "text",
+                "Description",
+                description,
+                setDescription,
+                2
+              )}
+              <DropDown
+                options={["Manhwa", "Manga", "Manhua"]}
+                dropdownType={"type"}
+                type={type}
+                setType={setType}
+              />
+              {customInputField("text", "Released", released, setReleased, 2)}
+              {customInputField("text", "Author", author, setAuthor, 2)}
+              <DropDown
+                options={[
+                  "OnGoing",
+                  "Completed",
+                  "Hiatus",
+                  "Dropped",
+                  "Coming Soon",
+                ]}
+                dropdownType={status}
+                status={status}
+                setStatus={setStatus}
+              />
+              {customInputField("text", "Artist", artist, setArtist, 2)}
+              {customInputField(
+                "text",
+                "Serialisation",
+                serialisation,
+                setSerialisation,
+                2
+              )}
+              {customInputField("text", "Posted-By", postedBy, setPostedBy, 2)}
+              <CalendarPopup
+                selectedDate={postedOn}
+                setSelectedDate={setPostedOn}
+              />
+              {/* Genres */}
+              <div className="relative">
+                <div className="w-[350px] min-h-[34px] flex flex-wrap bg-secondary mt-2 p-2 rounded-md relative">
+                  {/* Edit Button */}
+                  <div className={`absolute bottom-1 right-1 text-white`}>
+                    <TagDropDown
+                      initiallySelected={[]}
+                      genres={genres}
+                      setGenres={setGenres}
+                      addGenres={[]}
+                      setAddGenres={() => {}}
+                      removeGenres={[]}
+                      setRemoveGenres={() => {}}
+                    />
+                  </div>
+                  {genres.length === 0 ? (
+                    <div className="text-white ml-2 font-poppins">Genres</div>
+                  ) : (
+                    ""
+                  )}
+                  {sortGenres(genres).map((genre, index) => (
+                    <div
+                      key={index}
+                      className={`flex bg-white items-center rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
+                        index > 0 ? "ml-2" : "ml-0"
+                      }`}
+                    >
+                      {genre}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Image Upload */}
+              <div className="flex w-[350px] h-[34px] bg-secondary justify-center items-center mt-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  id="fileInput"
+                />
+                <label
+                  htmlFor="fileInput"
+                  className="cursor-pointer text-white hover:text-primary"
+                >
+                  Drag & Drop or Click to Upload Image
+                </label>
+              </div>
+              {/* Image Display */}
+              {image && (
+                <p className="text-white mt-2">Selected Image: {image.name}</p>
+              )}
+            </div>
+            {/* Buttons */}
+            <div className="w-[350px] flex justify-between mx-auto mt-5 text-white font-poppins">
+              <Link to={"/"} className="bg-red-600 px-4 py-2 rounded-md">
+                Cancel
+              </Link>
+              <button
+                type="submit"
+                className="bg-primary ml-5 px-4 py-2 rounded-md"
+              >
+                Add Comic
+              </button>
+            </div>
+          </form>
+        </>
+      )}
     </section>
   );
 }
