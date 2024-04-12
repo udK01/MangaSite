@@ -178,6 +178,22 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
   }
 });
 
+app.post("/api/tag", async (req, res) => {
+  try {
+    const genre = req.body.genre;
+    const exists = await databaseFunctions.getGenreID(genre);
+    if (exists.length === 0) {
+      await databaseFunctions.createGenre(genre);
+      res.status(200).send("Genre created successfully.");
+    } else {
+      res.status(200).send("Genre already exists!");
+    }
+  } catch (error) {
+    console.error(`Failed to add tag:`, error);
+    res.status(500).send("Failed to add tag.");
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res

@@ -1,4 +1,4 @@
-import TagDropDown from "../components/InspectAuxiliary/TagDropDown";
+import TagDropDown from "../InspectAuxiliary/TagDropDown";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -6,9 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-import CalendarPopup from "./CalendarPopup";
-import Separator from "./Separator";
-import DropDown from "./DropDown";
+import CalendarPopup from "../CalendarPopup";
+import Separator from "../Separator";
+import DropDown from "../DropDown";
 
 /**
  * ToDo List...
@@ -25,7 +25,7 @@ import DropDown from "./DropDown";
  *
  */
 
-export default function AddComic() {
+export default function AddComic({ customInputField }) {
   const [title, setTitle] = useState("Title");
   const [description, setDescription] = useState("Description");
   const [author, setAuthor] = useState("Author");
@@ -123,42 +123,10 @@ export default function AddComic() {
     }
   }
 
-  function customInputField(type, placeholder, value, func, mt = 0) {
-    const commonProps = {
-      placeholder: placeholder,
-      value: value,
-      onChange: (e) => func(e.target.value),
-      onFocus: (e) => {
-        if (e.target.value === placeholder) {
-          func("");
-        }
-      },
-      onBlur: (e) => {
-        if (e.target.value === "") {
-          func(placeholder);
-        }
-      },
-      className: `w-[350px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
-    };
-
-    return (
-      <>
-        {placeholder === "Description" ? (
-          <textarea
-            {...commonProps}
-            style={{ height: "34px", maxHeight: "400px", lineHeight: "30px" }}
-          />
-        ) : (
-          <input {...commonProps} type={type} />
-        )}
-      </>
-    );
-  }
-
   return (
     // Container
     <section
-      className="w-[826px] h-auto py-1 bg-quaternary rounded-sm font-poppins"
+      className="w-full h-auto py-1 bg-quaternary rounded-sm"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
@@ -169,9 +137,9 @@ export default function AddComic() {
           {collapsed ? <FaChevronDown /> : <FaChevronUp />}
         </button>
       </div>
-      <Separator />
       {!collapsed && (
         <>
+          <Separator />
           {/* Form */}
           <form
             onSubmit={handleAddComic}
