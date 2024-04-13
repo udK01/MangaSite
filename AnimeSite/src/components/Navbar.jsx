@@ -43,10 +43,10 @@ export default function Navbar({ comics, user }) {
             )}
             {user && user.length > 0 && user[0].accessLevel > 0 && (
               <Link
-                to={`/addComic`}
+                to={`/create`}
                 className="ml-2 p-2 hover:bg-secondary hover:cursor-pointer"
               >
-                Add Comic
+                Create
               </Link>
             )}
           </div>
