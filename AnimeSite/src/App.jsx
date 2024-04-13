@@ -40,7 +40,7 @@ export default function App() {
   }, []);
 
   // Define common props
-  const commonProps = { comics, user };
+  const commonProps = { comics, setComics, user };
 
   // Define static routes
   const routes = [
