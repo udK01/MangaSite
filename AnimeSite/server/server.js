@@ -211,6 +211,19 @@ app.post("/api/bookmark", async (req, res) => {
   }
 });
 
+app.post("/api/deleteManga", async (req, res) => {
+  try {
+    const mangaID = req.body.mangaID;
+
+    await databaseFunctions.deleteManga(mangaID);
+
+    res.status(200).send(`Deleted successfully!`);
+  } catch (error) {
+    console.error(`Failed to delete manga:`, error);
+    res.status(500).send(`Failed to delete manga`);
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res

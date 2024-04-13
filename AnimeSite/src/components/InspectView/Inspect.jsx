@@ -1,5 +1,5 @@
 // Mandatory Imports
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -34,6 +34,7 @@ export default function Inspect({ user, inspect }) {
   const [addGenres, setAddGenres] = useState([]);
   const [bookmarked, setBookmarked] = useState(false);
 
+  const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -225,7 +226,22 @@ export default function Inspect({ user, inspect }) {
   }
 
   // Handles deletion of comic.
-  function handleDelete() {}
+  function handleDelete() {
+    axios
+      .post(
+        "/api/deleteManga",
+        {
+          mangaID: manga.mangaID,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => navigate("/"))
+      .catch((error) => console.error(`Failed to delete manga:`, error));
+  }
 
   return (
     <section className="w-[826px] h-auto font-poppins">
@@ -255,6 +271,14 @@ export default function Inspect({ user, inspect }) {
                   onClick={initialiseItems}
                 >
                   Cancel
+                </button>
+              )}
+              {!editing && (
+                <button
+                  className="bg-red-600 hover:bg-red-700 px-4 rounded-md mr-2"
+                  onClick={handleDelete}
+                >
+                  Delete
                 </button>
               )}
               <button

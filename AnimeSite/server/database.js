@@ -475,6 +475,14 @@ export async function updateManga(
   }
 }
 
+export async function deleteManga(mangaID) {
+  try {
+    await db.query(`DELETE FROM mangas WHERE mangaID = ?`, [mangaID]);
+  } catch (error) {
+    console.error(`Failed to delete manga:`, error);
+  }
+}
+
 ////////////
 //Chapters//
 ////////////
