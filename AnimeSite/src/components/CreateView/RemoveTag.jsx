@@ -4,6 +4,17 @@ import axios from "axios";
 
 import Separator from "../Separator";
 
+/**
+ * Need to make database function for removing tag,
+ * ensure it cascades to other tables.
+ *
+ * Need to complete server API to remove tag.
+ *
+ * Need to complete UI with dropdown containing all
+ * existing tags for remove tag.
+ *
+ */
+
 export default function RemoveTag({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
   const [tag, setTag] = useState("Tag");
