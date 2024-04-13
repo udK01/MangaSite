@@ -1,5 +1,6 @@
 import AddComic from "./AddComic";
 import CreateTag from "./CreateTag";
+import RemoveTag from "./RemoveTag";
 
 export default function Create() {
   function customInputField(type, placeholder, value, func, mt = 0) {
@@ -37,9 +38,8 @@ export default function Create() {
   return (
     <section className="w-[826px] font-poppins">
       <AddComic customInputField={customInputField} />
-      <div className="mt-5">
-        <CreateTag customInputField={customInputField} />
-      </div>
+      <CreateTag customInputField={customInputField} />
+      <RemoveTag customInputField={customInputField} />
     </section>
   );
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Separator from "../Separator";
 
-export default function CreateTag({ customInputField }) {
+export default function RemoveTag({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
   const [tag, setTag] = useState("Tag");
 
@@ -17,7 +17,7 @@ export default function CreateTag({ customInputField }) {
 
     axios
       .post(
-        "/api/createTag",
+        "/api/removeTag",
         { genre: tag },
         {
           headers: {
@@ -25,14 +25,14 @@ export default function CreateTag({ customInputField }) {
           },
         }
       )
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error("Error adding tag:", error));
+      .then(() => setTag("Tag"))
+      .catch((error) => console.error("Error removing tag:", error));
   };
 
   return (
     <section className="w-full h-auto py-1 bg-quaternary rounded-sm mt-5">
       <div className="flex justify-between my-4 mx-4 text-white items-center">
-        <p>Create Genre</p>
+        <p>Delete Genre</p>
         <button onClick={handleToggleCollapse} className="text-white">
           {collapsed ? <FaChevronDown /> : <FaChevronUp />}
         </button>
@@ -46,8 +46,8 @@ export default function CreateTag({ customInputField }) {
             onSubmit={(e) => handleSubmit(e)}
           >
             {customInputField("text", "Tag", tag, setTag, 2)}
-            <button className="h-[30px] bg-primary ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-purple-800">
-              Create
+            <button className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800">
+              Remove
             </button>
           </form>
         </>

@@ -181,7 +181,7 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-app.post("/api/tag", async (req, res) => {
+app.post("/api/createTag", async (req, res) => {
   try {
     const genre = req.body.genre;
     const exists = await databaseFunctions.getGenreID(genre);
@@ -194,6 +194,14 @@ app.post("/api/tag", async (req, res) => {
   } catch (error) {
     console.error(`Failed to add tag:`, error);
     res.status(500).send("Failed to add tag.");
+  }
+});
+
+app.post("/api/removeTag", async (req, res) => {
+  try {
+  } catch (error) {
+    console.error(`Failed to remove tag:`, error);
+    res.status(500).send("Failed to remove tag.");
   }
 });
 
