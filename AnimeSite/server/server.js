@@ -187,9 +187,9 @@ app.post("/api/createTag", async (req, res) => {
     const exists = await databaseFunctions.getGenreID(genre);
     if (exists.length === 0) {
       await databaseFunctions.createGenre(genre);
-      res.status(200).send("Genre created successfully.");
+      res.status(200).send("success");
     } else {
-      res.status(200).send("Genre already exists!");
+      res.status(200).send("error");
     }
   } catch (error) {
     console.error(`Failed to add tag:`, error);

@@ -1,4 +1,5 @@
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import Feedback from "./Feedback";
 import { useState } from "react";
 import axios from "axios";
 
@@ -13,9 +14,28 @@ import Separator from "../Separator";
 export default function CreateTag({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
   const [tag, setTag] = useState("Tag");
+  const [isTransitioned, setIsTransitioned] = useState(false);
+  const [text, setText] = useState("");
+  const [color, setColor] = useState("");
+  let timer;
+
+  const handleTransition = () => {
+    clearTimeout(timer);
+    setIsTransitioned(true);
+    timer = setTimeout(() => {
+      setIsTransitioned(false);
+    }, 3000);
+  };
 
   const handleToggleCollapse = () => {
     setCollapsed(!collapsed);
+  };
+
+  const capitalizeWords = (str) => {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   const handleSubmit = (e) => {
@@ -24,14 +44,27 @@ export default function CreateTag({ customInputField }) {
     axios
       .post(
         "/api/createTag",
-        { genre: tag },
+        { genre: capitalizeWords(tag) },
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       )
-      .then((response) => console.log(response.data))
+      .then((response) => {
+        switch (response.data) {
+          case "success":
+            setColor(`bg-green-600`);
+            setText(`Successfully created ${capitalizeWords(tag)}!`);
+            setTag(""); // Clean-up input field.
+            break;
+          case "error":
+            setColor(`bg-red-600`);
+            setText(`${capitalizeWords(tag)} already exists!`);
+            break;
+        }
+        handleTransition();
+      })
       .catch((error) => console.error("Error adding tag:", error));
   };
 
@@ -47,6 +80,14 @@ export default function CreateTag({ customInputField }) {
       {!collapsed && (
         <>
           <Separator />
+          {isTransitioned && (
+            <Feedback
+              color={color}
+              text={text}
+              handleTransition={handleTransition}
+            />
+          )}
+
           <form
             className="flex justify-center items-center pb-5"
             onSubmit={(e) => handleSubmit(e)}
