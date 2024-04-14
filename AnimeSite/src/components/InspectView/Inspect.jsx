@@ -63,7 +63,7 @@ export default function Inspect({ user, inspect }) {
           options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
           value={status}
           func={setStatus}
-          className="w-[110px] px-1 rounded-md"
+          className="w-[118px] justify-evenly pb-2 pr-2 rounded-md"
         />
       </div>
       <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
@@ -72,7 +72,7 @@ export default function Inspect({ user, inspect }) {
           options={["Manhwa", "Manga", "Manhua"]}
           value={type}
           func={setType}
-          className="w-[110px] px-1 rounded-md"
+          className="w-[118px] justify-evenly pb-2 pr-2 rounded-md"
         />
       </div>
     </div>
@@ -194,6 +194,8 @@ export default function Inspect({ user, inspect }) {
       .then((response) => {
         setManga(response.data);
         setGenres(response.data.genres);
+        setStatus(response.data.status);
+        setType(response.data.type);
         setEditing(false);
       })
       .catch((error) => {

@@ -144,6 +144,7 @@ export default function AddComic({ customInputField }) {
                 options={["Manhwa", "Manga", "Manhua"]}
                 value={type}
                 func={setType}
+                className={"w-[350px] px-4"}
               />
               {customInputField("text", "Released", released, setReleased, 2)}
               {customInputField("text", "Author", author, setAuthor, 2)}
@@ -157,6 +158,7 @@ export default function AddComic({ customInputField }) {
                 ]}
                 value={status}
                 func={setStatus}
+                className={"w-[350px] px-4"}
               />
               {customInputField("text", "Artist", artist, setArtist, 2)}
               {customInputField(
