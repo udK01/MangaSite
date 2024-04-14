@@ -64,6 +64,7 @@ export default function Inspect({ user, inspect }) {
           value={status}
           func={setStatus}
           className="w-[118px] justify-evenly pb-2 pr-2 rounded-md"
+          inspectWidth={"w-[150px] px-2 -translate-x-6"}
         />
       </div>
       <div className="flex justify-between items-center w-full bg-secondary rounded-md text-dimWhite mt-2">
@@ -73,6 +74,7 @@ export default function Inspect({ user, inspect }) {
           value={type}
           func={setType}
           className="w-[118px] justify-evenly pb-2 pr-2 rounded-md"
+          inspectWidth={"w-[150px] px-4 -translate-x-6"}
         />
       </div>
     </div>

@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const DropDown = ({ options, value, func, className }) => {
+const DropDown = ({
+  options,
+  value,
+  func,
+  className,
+  inspectWidth = className,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
 
@@ -39,12 +45,12 @@ const DropDown = ({ options, value, func, className }) => {
       {isOpen && (
         <div className="scrollbar-thumb-primary scrollbar-track-transparent">
           <div
-            className={`absolute mt-1 bg-secondary ${className} text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
+            className={`absolute mt-1 bg-secondary ${inspectWidth} text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
           >
             {options.map((option, index) => (
               <div
                 key={index}
-                className="px-4 py-2 cursor-pointer hover:text-primary"
+                className="py-2 cursor-pointer hover:text-primary"
                 onClick={() => handleItemClick(option)}
               >
                 {option}

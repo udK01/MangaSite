@@ -21,6 +21,13 @@ export default function DeleteTag() {
   const [refresh, setRefresh] = useState(true);
   let timer;
 
+  useEffect(() => {
+    axios
+      .get("/api/getGenres")
+      .then((response) => setTags(response.data))
+      .catch((error) => console.error(`Failed to fetch genres:`, error));
+  }, [refresh]);
+
   const handleTransition = () => {
     clearTimeout(timer);
     setIsTransitioned(true);
@@ -28,13 +35,6 @@ export default function DeleteTag() {
       setIsTransitioned(false);
     }, 3000);
   };
-
-  useEffect(() => {
-    axios
-      .get("/api/getGenres")
-      .then((response) => setTags(response.data))
-      .catch((error) => console.error(`Failed to fetch genres:`, error));
-  }, [refresh]);
 
   const handleToggleCollapse = () => {
     setCollapsed(!collapsed);
