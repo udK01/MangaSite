@@ -61,9 +61,8 @@ export default function Inspect({ user, inspect }) {
         <div className="pl-2 text-white">{label1}</div>
         <DropDown
           options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
-          dropdownType={status}
-          status={status}
-          setStatus={setStatus}
+          value={status}
+          func={setStatus}
           className="w-[110px] px-1 rounded-md"
         />
       </div>
@@ -71,9 +70,8 @@ export default function Inspect({ user, inspect }) {
         <div className="pl-2 text-white">{label2}</div>
         <DropDown
           options={["Manhwa", "Manga", "Manhua"]}
-          dropdownType={"type"}
-          type={type}
-          setType={setType}
+          value={type}
+          func={setType}
           className="w-[110px] px-1 rounded-md"
         />
       </div>

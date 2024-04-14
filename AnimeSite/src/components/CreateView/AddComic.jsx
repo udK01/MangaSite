@@ -142,9 +142,8 @@ export default function AddComic({ customInputField }) {
               )}
               <DropDown
                 options={["Manhwa", "Manga", "Manhua"]}
-                dropdownType={"type"}
-                type={type}
-                setType={setType}
+                value={type}
+                func={setType}
               />
               {customInputField("text", "Released", released, setReleased, 2)}
               {customInputField("text", "Author", author, setAuthor, 2)}
@@ -156,9 +155,8 @@ export default function AddComic({ customInputField }) {
                   "Dropped",
                   "Coming Soon",
                 ]}
-                dropdownType={status}
-                status={status}
-                setStatus={setStatus}
+                value={status}
+                func={setStatus}
               />
               {customInputField("text", "Artist", artist, setArtist, 2)}
               {customInputField(

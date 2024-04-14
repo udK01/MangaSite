@@ -1,8 +1,9 @@
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Separator from "../Separator";
+import DropDown from "../DropDown";
 
 /**
  * Need to make database function for removing tag,
@@ -17,7 +18,15 @@ import Separator from "../Separator";
 
 export default function RemoveTag({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [tag, setTag] = useState("Tag");
+  const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState("Please Select");
+
+  useEffect(() => {
+    axios
+      .get("/api/getGenres")
+      .then((response) => setTags(response.data))
+      .catch((error) => console.error(`Failed to fetch genres:`, error));
+  }, []);
 
   const handleToggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -40,6 +49,27 @@ export default function RemoveTag({ customInputField }) {
       .catch((error) => console.error("Error removing tag:", error));
   };
 
+  function DropDown() {
+    return (
+      <div
+        className={`w-[350px] px-3 mt-2 rounded-sm border-2 border-quaternary h-[34px] bg-secondary text-white hover:cursor-pointer hover:text-primary`}
+      >
+        <select
+          id="dropdown"
+          value={tag}
+          onChange={(event) => setTag(event.target.value)}
+          className={`w-full h-full bg-transparent border-quaternary focus:bg-secondary focus:outline-none hover:cursor-pointer`}
+        >
+          {tags.map((tag, i) => (
+            <option key={i} value={tag.genreTag}>
+              {tag.genreTag}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
   return (
     <section className="w-full h-auto py-1 bg-quaternary rounded-sm mt-5">
       <div className="flex justify-between my-4 mx-4 text-white items-center">
@@ -56,7 +86,7 @@ export default function RemoveTag({ customInputField }) {
             className="flex justify-center items-center pb-5"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {customInputField("text", "Tag", tag, setTag, 2)}
+            {DropDown()}
             <button className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800">
               Remove
             </button>
