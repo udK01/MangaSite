@@ -201,6 +201,7 @@ app.post("/api/deleteTag", async (req, res) => {
   try {
     const genre = req.body.genre;
     await databaseFunctions.deleteGenre(genre);
+    res.status(200).send("success");
   } catch (error) {
     console.error(`Failed to remove tag:`, error);
     res.status(500).send("Failed to remove tag.");
