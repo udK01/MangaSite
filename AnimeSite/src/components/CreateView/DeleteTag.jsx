@@ -8,7 +8,7 @@ import DropDown from "../DropDown";
 
 /**
  *
- * Add visual feedback.
+ * Make sure freshly added tags show up.
  *
  */
 

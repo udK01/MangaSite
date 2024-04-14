@@ -5,12 +5,6 @@ import axios from "axios";
 
 import Separator from "../Separator";
 
-/**
- *
- * Need to add visual feedback to users.
- *
- */
-
 export default function CreateTag({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
   const [tag, setTag] = useState("Tag");
