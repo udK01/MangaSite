@@ -47,7 +47,7 @@ export default function App() {
     { path: "/", view: "home" },
     { path: "/bookmarks", view: "bookmarks" },
     { path: "/comics", view: "comics" },
-    { path: "/create", view: "create" },
+    { path: "/management", view: "management" },
   ];
 
   // Generate dynamic routes based on comics & chapter data

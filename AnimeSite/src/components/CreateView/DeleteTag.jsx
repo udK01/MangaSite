@@ -16,7 +16,7 @@ import DropDown from "../DropDown";
  *
  */
 
-export default function RemoveTag({ customInputField }) {
+export default function DeleteTag() {
   const [collapsed, setCollapsed] = useState(false);
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("Please Select");
@@ -35,18 +35,20 @@ export default function RemoveTag({ customInputField }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post(
-        "/api/removeTag",
-        { genre: tag },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then(() => setTag("Tag"))
-      .catch((error) => console.error("Error removing tag:", error));
+    if (tag !== "Please Select") {
+      axios
+        .post(
+          "/api/deleteTag",
+          { genre: tag },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then(() => setTag("Tag"))
+        .catch((error) => console.error("Error removing tag:", error));
+    }
   };
 
   function formatOptions() {
@@ -77,7 +79,10 @@ export default function RemoveTag({ customInputField }) {
               func={setTag}
               className={"w-[350px] px-4"}
             />
-            <button className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800">
+            <button
+              className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800"
+              onClick={() => console.log(tag)}
+            >
               Remove
             </button>
           </form>

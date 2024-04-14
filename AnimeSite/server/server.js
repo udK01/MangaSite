@@ -197,8 +197,10 @@ app.post("/api/createTag", async (req, res) => {
   }
 });
 
-app.post("/api/removeTag", async (req, res) => {
+app.post("/api/deleteTag", async (req, res) => {
   try {
+    const genre = req.body.genre;
+    await databaseFunctions.deleteGenre(genre);
   } catch (error) {
     console.error(`Failed to remove tag:`, error);
     res.status(500).send("Failed to remove tag.");

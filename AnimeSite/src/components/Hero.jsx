@@ -31,7 +31,7 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
       case "comics":
         // bodyContent = <Comics />;
         break;
-      case "create":
+      case "management":
         bodyContent = <Create />;
         break;
       default:
