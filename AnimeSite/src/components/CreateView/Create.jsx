@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AddComic from "./AddComic";
+import AddChapter from "./AddChapter";
 import CreateTag from "./CreateTag";
 import DeleteTag from "./DeleteTag";
 
@@ -45,6 +46,7 @@ export default function Create() {
   return (
     <section className="w-[826px] font-poppins">
       <AddComic customInputField={customInputField} />
+      <AddChapter customInputField={customInputField} />
       <CreateTag
         customInputField={customInputField}
         toggleRefresh={toggleRefresh}
