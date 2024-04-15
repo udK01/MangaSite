@@ -619,6 +619,19 @@ export async function getChapters(mangaID) {
   }
 }
 
+export async function getChapter(mangaID, chapterNumber) {
+  try {
+    return (
+      await db.query(
+        `SELECT * FROM chapters WHERE mangaID = ? && chapterNumber = ?`,
+        [mangaID, chapterNumber]
+      )
+    )[0];
+  } catch (error) {
+    console.error(`Failed to get chapter:`, error);
+  }
+}
+
 //////////
 //Genres//
 //////////

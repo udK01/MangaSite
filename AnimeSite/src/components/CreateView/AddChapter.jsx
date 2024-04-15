@@ -6,16 +6,23 @@ import axios from "axios";
 
 import Separator from "../Separator";
 import DropDown from "../DropDown";
+import Feedback from "./Feedback";
 
 export default function AddChapter({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
+
   const [title, setTitle] = useState("Title");
   const [chapterNum, setChapterNum] = useState("0");
   const [chapterContent, setChapterContent] = useState("Chapter Content");
+
   const [mangas, setMangas] = useState([]);
   const [manga, setManga] = useState("Please Select");
 
-  const navigate = useNavigate();
+  const [color, setColor] = useState("");
+  const [text, setText] = useState("");
+
+  const [isTransitioned, setIsTransitioned] = useState(false);
+  let timer;
 
   useEffect(() => {
     axios
@@ -23,6 +30,14 @@ export default function AddChapter({ customInputField }) {
       .then((response) => setMangas(response.data))
       .catch((error) => console.error(`Failed to fetch mangas:`, error));
   }, []);
+
+  const handleTransition = () => {
+    clearTimeout(timer);
+    setIsTransitioned(true);
+    timer = setTimeout(() => {
+      setIsTransitioned(false);
+    }, 3000);
+  };
 
   const handleToggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -34,15 +49,30 @@ export default function AddChapter({ customInputField }) {
     axios
       .post(
         "/api/createChapter",
-        {}, // Body stuff.
+        {
+          mangaID: getMangaID(),
+          chapterTitle: title,
+          chapterNumber: chapterNum,
+          chapterContent: chapterContent,
+        },
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       )
-      .then(() => {
-        navigate("/");
+      .then((response) => {
+        switch (response.data) {
+          case "success":
+            setColor(`bg-green-600`);
+            setText(`Successfully created new chapter for ${manga}!`);
+            break;
+          case "error":
+            setColor(`bg-red-600`);
+            setText(`${manga} already has a Chapter ${chapterNum}!`);
+            break;
+        }
+        handleTransition();
       })
       .catch((error) => {
         console.error(`Failed to create chapter:`, error);
@@ -53,6 +83,10 @@ export default function AddChapter({ customInputField }) {
     let options = [];
     mangas && mangas.map((manga) => options.push(manga.mangaTitle));
     return options.sort((a, b) => a.localeCompare(b));
+  }
+
+  function getMangaID() {
+    return mangas.find((m) => m.mangaTitle === manga).mangaID;
   }
 
   return (
@@ -67,6 +101,14 @@ export default function AddChapter({ customInputField }) {
       {!collapsed && (
         <>
           <Separator />
+          {isTransitioned && (
+            <Feedback
+              color={color}
+              text={text}
+              handleTransition={handleTransition}
+            />
+          )}
+
           <form
             className="flex flex-col justify-center items-center pb-5 text-[13px]"
             onSubmit={(e) => handleSubmit(e)}

@@ -99,6 +99,32 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
   }
 });
 
+app.post("/api/createChapter", async (req, res) => {
+  try {
+    const mangaID = req.body.mangaID;
+    const chapterTitle = req.body.chapterTitle;
+    const chapterNumber = req.body.chapterNumber;
+    const chapterContent = req.body.chapterContent;
+
+    const chapter = await databaseFunctions.getChapter(mangaID, chapterNumber);
+    // if chapter doesn't exist...
+    if (chapter.length <= 0) {
+      await databaseFunctions.createChapter(
+        mangaID,
+        chapterNumber,
+        chapterTitle,
+        chapterContent
+      );
+      res.status(200).send("success");
+    } else {
+      res.status(200).send("error");
+    }
+  } catch (error) {
+    console.error(`Failed to create chapter:`, error);
+    res.status(500).json({ error: `Failed to create chapter!` });
+  }
+});
+
 app.get("/api/getGenres", async (req, res) => {
   try {
     const result = await databaseFunctions.getAllGenres();
