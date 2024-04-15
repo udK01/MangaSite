@@ -1,4 +1,4 @@
-import Chapter from "../Chapter";
+import Chapter from "../InspectView/Chapter/Chapter";
 import { Link } from "react-router-dom";
 
 function sortChapters(chapters) {

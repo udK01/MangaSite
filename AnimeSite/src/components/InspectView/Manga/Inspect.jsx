@@ -7,9 +7,9 @@ import axios from "axios";
 import TagDropDown from "./TagDropDown";
 import BodyInfo from "./BodyInfo";
 import SideInfo from "./SideInfo";
-import StarRating from "../StarRating";
-import Separator from "../Separator";
-import DropDown from "../DropDown";
+import StarRating from "../../StarRating";
+import Separator from "../../Separator";
+import DropDown from "../../DropDown";
 
 // Icon
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";

@@ -1,4 +1,4 @@
-import TagDropDown from "../InspectView/TagDropDown";
+import TagDropDown from "../InspectView/Manga/TagDropDown";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 

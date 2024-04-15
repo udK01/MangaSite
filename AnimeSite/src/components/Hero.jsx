@@ -1,10 +1,10 @@
-import InspectChapter from "./InspectChapter";
+import InspectChapter from "./InspectView/Chapter/InspectChapter";
 import LatestUpdate from "./LatestUpdate/LatestUpdate";
 import PopularToday from "./PopularToday/PopularToday";
 import Carousel from "./Carousel";
 import Trending from "./Trending";
 import Create from "./CreateView/Create";
-import Inspect from "./InspectView/Inspect";
+import Inspect from "./InspectView/Manga/Inspect";
 import Popular from "./Popular/Popular";
 import Stored from "./BookmarkView/Bookmarks";
 
