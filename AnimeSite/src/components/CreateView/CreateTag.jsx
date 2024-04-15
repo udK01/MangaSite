@@ -5,7 +5,7 @@ import axios from "axios";
 
 import Separator from "../Separator";
 
-export default function CreateTag({ customInputField }) {
+export default function CreateTag({ customInputField, toggleRefresh }) {
   const [collapsed, setCollapsed] = useState(false);
   const [tag, setTag] = useState("Tag");
   const [isTransitioned, setIsTransitioned] = useState(false);
@@ -51,6 +51,7 @@ export default function CreateTag({ customInputField }) {
             setColor(`bg-green-600`);
             setText(`Successfully created ${capitalizeWords(tag)}!`);
             setTag(""); // Clean-up input field.
+            toggleRefresh(); // Refresh delete list.
             break;
           case "error":
             setColor(`bg-red-600`);

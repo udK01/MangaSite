@@ -1,8 +1,11 @@
+import { useState } from "react";
 import AddComic from "./AddComic";
 import CreateTag from "./CreateTag";
 import DeleteTag from "./DeleteTag";
 
 export default function Create() {
+  const [refresh, setRefresh] = useState(false);
+
   function customInputField(type, placeholder, value, func, mt = 0) {
     const commonProps = {
       placeholder: placeholder,
@@ -35,11 +38,18 @@ export default function Create() {
     );
   }
 
+  function toggleRefresh() {
+    setRefresh(!refresh);
+  }
+
   return (
     <section className="w-[826px] font-poppins">
       <AddComic customInputField={customInputField} />
-      <CreateTag customInputField={customInputField} />
-      <DeleteTag />
+      <CreateTag
+        customInputField={customInputField}
+        toggleRefresh={toggleRefresh}
+      />
+      <DeleteTag refresh={refresh} toggleRefresh={toggleRefresh} />
     </section>
   );
 }

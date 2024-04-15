@@ -12,13 +12,12 @@ import DropDown from "../DropDown";
  *
  */
 
-export default function DeleteTag() {
+export default function DeleteTag({ refresh, toggleRefresh }) {
   const [collapsed, setCollapsed] = useState(false);
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("Please Select");
   const [deletedTag, setDeletedTag] = useState("");
   const [isTransitioned, setIsTransitioned] = useState(false);
-  const [refresh, setRefresh] = useState(true);
   let timer;
 
   useEffect(() => {
@@ -63,10 +62,6 @@ export default function DeleteTag() {
         .catch((error) => console.error("Error removing tag:", error));
     }
   };
-
-  function toggleRefresh() {
-    setRefresh(!refresh);
-  }
 
   function formatOptions() {
     let options = [];
