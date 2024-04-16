@@ -498,23 +498,31 @@ export async function deleteManga(mangaID) {
  *
  * Example Usage.
  *
- * await createChapter(2, 16, "Plated Escort", "The treacherous tale of Sun-Min Woo, The Plates Escort.");
+ * await createChapter(2, 16, "Plated Escort", "The treacherous tale of Sun-Min Woo, The Plates Escort.", "2001-09-28 12:32:52");
  *
  * @param {int} mangaID The manga's unique identifier.
  * @param {int} chapterNumber The chapter's number.
  * @param {string} chapterTitle The chapter's title.
  * @param {string} chapterContent The chapter's content.
+ * @param {date} uploadDate The chapter's upload date.
  */
 export async function createChapter(
   mangaID,
   chapterNumber,
   chapterTitle,
-  chapterContent
+  chapterContent,
+  uploadDate
 ) {
   try {
-    const query = `INSERT INTO chapters (mangaID, chapterNumber, chapterTitle, chapterContent) VALUES (?, ?, ?, ?)`;
+    const query = `INSERT INTO chapters (mangaID, chapterNumber, chapterTitle, chapterContent, uploadDate) VALUES (?, ?, ?, ?, ?)`;
 
-    const values = [mangaID, chapterNumber, chapterTitle, chapterContent];
+    const values = [
+      mangaID,
+      chapterNumber,
+      chapterTitle,
+      chapterContent,
+      uploadDate,
+    ];
 
     await db.query(query, values);
   } catch (error) {

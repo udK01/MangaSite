@@ -54,6 +54,7 @@ export default function AddChapter({ customInputField }) {
           chapterTitle: title,
           chapterNumber: chapterNum,
           chapterContent: chapterContent,
+          uploadDate: getFormattedDate(),
         },
         {
           headers: {
@@ -83,6 +84,24 @@ export default function AddChapter({ customInputField }) {
     let options = [];
     mangas && mangas.map((manga) => options.push(manga.mangaTitle));
     return options.sort((a, b) => a.localeCompare(b));
+  }
+
+  function getFormattedDate() {
+    const date = new Date();
+
+    const year = padZero(date.getFullYear());
+    const month = padZero(date.getMonth());
+    const day = padZero(date.getDate());
+
+    const hours = padZero(date.getHours());
+    const minutes = padZero(date.getMinutes());
+    const seconds = padZero(date.getSeconds());
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  function padZero(n) {
+    return (n < 10 ? "0" : "") + n;
   }
 
   function getMangaID() {

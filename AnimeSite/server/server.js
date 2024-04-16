@@ -105,6 +105,7 @@ app.post("/api/createChapter", async (req, res) => {
     const chapterTitle = req.body.chapterTitle;
     const chapterNumber = req.body.chapterNumber;
     const chapterContent = req.body.chapterContent;
+    const uploadDate = req.body.uploadDate;
 
     const chapter = await databaseFunctions.getChapter(mangaID, chapterNumber);
     // if chapter doesn't exist...
@@ -113,7 +114,8 @@ app.post("/api/createChapter", async (req, res) => {
         mangaID,
         chapterNumber,
         chapterTitle,
-        chapterContent
+        chapterContent,
+        uploadDate
       );
       res.status(200).send("success");
     } else {
