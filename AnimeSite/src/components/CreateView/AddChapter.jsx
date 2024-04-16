@@ -90,7 +90,7 @@ export default function AddChapter({ customInputField }) {
     const date = new Date();
 
     const year = padZero(date.getFullYear());
-    const month = padZero(date.getMonth());
+    const month = padZero(date.getMonth() + 1);
     const day = padZero(date.getDate());
 
     const hours = padZero(date.getHours());
