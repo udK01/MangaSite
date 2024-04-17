@@ -5,29 +5,21 @@ export default function Chapter({ chapter, mangaTitle }) {
     const savedDateTime = new Date(chapter.uploadDate);
     const currentDateTime = new Date();
 
-    const timeDifference = currentDateTime.getTime() - savedDateTime.getTime();
+    const timeDifference = (currentDateTime - savedDateTime) / 1000; // Difference in seconds
 
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(timeDifference / 60000);
-    const hours = Math.floor(timeDifference / 3600000);
-    const days = Math.floor(timeDifference / 86400000);
-    const month = Math.floor(days / 31);
-    const year = Math.floor(month / 12);
+    const units = [
+      { value: Math.floor(timeDifference / 31536000), label: "year" },
+      { value: Math.floor(timeDifference / 2592000), label: "month" },
+      { value: Math.floor(timeDifference / 86400), label: "day" },
+      { value: Math.floor(timeDifference / 3600), label: "hour" },
+      { value: Math.floor(timeDifference / 60), label: "minute" },
+      { value: Math.floor(timeDifference), label: "second" },
+    ];
 
-    // Return highest available option.
-
-    if (year !== 0) {
-      return `${year} year${year > 1 ? "s" : ""} ago`;
-    } else if (month !== 0) {
-      return `${month} month${month > 1 ? "s" : ""} ago`;
-    } else if (days !== 0) {
-      return `${days} day${days > 1 ? "s" : ""} ago`;
-    } else if (hours !== 0) {
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    } else if (minutes !== 0) {
-      return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-    } else {
-      return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
+    for (const { value, label } of units) {
+      if (value !== 0) {
+        return `${value} ${label}${value > 1 ? "s" : ""} ago`;
+      }
     }
   }
 
