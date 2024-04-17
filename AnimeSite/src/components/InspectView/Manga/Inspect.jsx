@@ -456,6 +456,7 @@ export default function Inspect({ user, inspect }) {
       </div>
       {/* Chapters */}
       <MangaChapters
+        user={user}
         manga={manga}
         reverseChapters={reverseChapters}
         getFormattedDate={getFormattedDate}

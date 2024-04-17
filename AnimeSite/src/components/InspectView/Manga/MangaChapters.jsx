@@ -3,6 +3,7 @@ import Separator from "../../Separator";
 import { useState } from "react";
 
 export default function MangaChapters({
+  user,
   manga,
   reverseChapters,
   getFormattedDate,
@@ -24,6 +25,10 @@ export default function MangaChapters({
       );
       setFilteredChapters(filtered);
     }
+  }
+
+  function handleDelete(chapterID) {
+    console.log(`Delete: ${chapterID}`);
   }
 
   return (
@@ -71,14 +76,27 @@ export default function MangaChapters({
                       key={chapter.chapterID}
                       className="py-1 px-3 text-[14px] outline outline-[1px] mt-4 outline-quinary rounded-md hover:cursor-pointer hover:bg-quinary"
                     >
-                      <Link
-                        to={`${currentPath}/${chapter.chapterNumber}`}
-                        className="text-white hover:text-primary"
-                      >
-                        Chapter {chapter.chapterNumber} - {chapter.chapterTitle}
-                      </Link>
-                      <div className="text-dimWhite text-[12px]">
-                        {getFormattedDate(chapter.uploadDate)}
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <Link
+                            to={`${currentPath}/${chapter.chapterNumber}`}
+                            className="text-white hover:text-primary"
+                          >
+                            Chapter {chapter.chapterNumber} -{" "}
+                            {chapter.chapterTitle}
+                          </Link>
+                          <div className="text-dimWhite text-[12px]">
+                            {getFormattedDate(chapter.uploadDate)}
+                          </div>
+                        </div>
+                        {user[0].accessLevel > 1 && (
+                          <button
+                            className="bg-red-600 hover:bg-red-700 px-2 h-[30px] rounded-md mr-2 text-[13px]"
+                            onClick={() => handleDelete(chapter.chapterID)}
+                          >
+                            Delete
+                          </button>
+                        )}
                       </div>
                     </li>
                   ))}
