@@ -103,24 +103,20 @@ app.post("/api/createChapter", async (req, res) => {
   try {
     const mangaID = req.body.mangaID;
     const chapterTitle = req.body.chapterTitle;
-    const chapterNumber = req.body.chapterNumber;
     const chapterContent = req.body.chapterContent;
     const uploadDate = req.body.uploadDate;
 
-    const chapter = await databaseFunctions.getChapter(mangaID, chapterNumber);
-    // if chapter doesn't exist...
-    if (chapter.length <= 0) {
-      await databaseFunctions.createChapter(
-        mangaID,
-        chapterNumber,
-        chapterTitle,
-        chapterContent,
-        uploadDate
-      );
-      res.status(200).send("success");
-    } else {
-      res.status(200).send("error");
-    }
+    const chapters = await databaseFunctions.getChapters(mangaID);
+    const chapterNumber = chapters.length + 1 || 1;
+
+    await databaseFunctions.createChapter(
+      mangaID,
+      chapterNumber,
+      chapterTitle,
+      chapterContent,
+      uploadDate
+    );
+    res.status(200).send("success");
   } catch (error) {
     console.error(`Failed to create chapter:`, error);
     res.status(500).json({ error: `Failed to create chapter!` });

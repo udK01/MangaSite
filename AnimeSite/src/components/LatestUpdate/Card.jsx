@@ -21,7 +21,7 @@ export default function Card({ manga }) {
       <div className="flex flex-col w-full">
         <Link
           to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
-          className="ml-3 mt-1 hover:text-primary hover:cursor-pointer"
+          className="ml-3 mt-1 hover:text-primary hover:cursor-pointer line-clamp-1 text-ellipsis"
         >
           {manga.mangaTitle}
         </Link>

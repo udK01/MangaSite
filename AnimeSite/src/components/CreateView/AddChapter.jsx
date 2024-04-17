@@ -12,7 +12,6 @@ export default function AddChapter({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
 
   const [title, setTitle] = useState("Title");
-  const [chapterNum, setChapterNum] = useState("0");
   const [chapterContent, setChapterContent] = useState("Chapter Content");
 
   const [mangas, setMangas] = useState([]);
@@ -52,7 +51,6 @@ export default function AddChapter({ customInputField }) {
         {
           mangaID: getMangaID(),
           chapterTitle: title,
-          chapterNumber: chapterNum,
           chapterContent: chapterContent,
           uploadDate: getFormattedDate(),
         },
@@ -140,7 +138,6 @@ export default function AddChapter({ customInputField }) {
               className={"w-[346px] px-4"}
             />
             {customInputField("text", "Title", title, setTitle, 2)}
-            {customInputField("number", "0", chapterNum, setChapterNum, 2)}
             {customInputField(
               "text",
               "Chapter Content",
