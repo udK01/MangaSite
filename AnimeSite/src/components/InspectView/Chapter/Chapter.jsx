@@ -11,9 +11,16 @@ export default function Chapter({ chapter, mangaTitle }) {
     const minutes = Math.floor(timeDifference / 60000);
     const hours = Math.floor(timeDifference / 3600000);
     const days = Math.floor(timeDifference / 86400000);
+    const month = Math.floor(days / 31);
+    const year = Math.floor(month / 12);
 
     // Return highest available option.
-    if (days !== 0) {
+
+    if (year !== 0) {
+      return `${year} year${year > 1 ? "s" : ""} ago`;
+    } else if (month !== 0) {
+      return `${month} month${month > 1 ? "s" : ""} ago`;
+    } else if (days !== 0) {
       return `${days} day${days > 1 ? "s" : ""} ago`;
     } else if (hours !== 0) {
       return `${hours} hour${hours > 1 ? "s" : ""} ago`;

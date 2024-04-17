@@ -81,8 +81,8 @@ export default function Inspect({ user, inspect }) {
   );
 
   // Formatting Function #1
-  function getFormattedDate() {
-    const savedDate = new Date(manga.postedOn);
+  function getFormattedDate(date) {
+    const savedDate = new Date(date);
 
     const options = { month: "long", day: "2-digit", year: "numeric" };
     return savedDate.toLocaleDateString("en-US", options);
@@ -430,9 +430,13 @@ export default function Inspect({ user, inspect }) {
           />
           <BodyInfo
             lLabel={"Posted On"}
-            lValue={getFormattedDate() || "-"}
+            lValue={getFormattedDate(manga.postedOn) || "-"}
             rLabel={"Updated On"}
-            rValue={"April 2, 2024"}
+            rValue={
+              manga.chapters.length > 0
+                ? getFormattedDate(manga.chapters[0].uploadDate)
+                : "-"
+            }
             editable={false}
             editing={editing}
           />
@@ -519,7 +523,7 @@ export default function Inspect({ user, inspect }) {
                           {chapter.chapterTitle}
                         </Link>
                         <div className="text-dimWhite text-[12px]">
-                          April 2, 2024
+                          {getFormattedDate(chapter.uploadDate)}
                         </div>
                       </li>
                     ))}
