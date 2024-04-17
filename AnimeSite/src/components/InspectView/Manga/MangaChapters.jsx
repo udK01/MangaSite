@@ -1,6 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import Separator from "../../Separator";
 import { useState } from "react";
+import axios from "axios";
+
+/**
+ *
+ * Update the manga's chapter itself on delete,
+ * instead of doing it locally within the class.
+ *
+ */
 
 export default function MangaChapters({
   user,
@@ -28,7 +36,21 @@ export default function MangaChapters({
   }
 
   function handleDelete(chapterID) {
-    console.log(`Delete: ${chapterID}`);
+    axios
+      .delete("/api/deleteChapter", {
+        data: {
+          chapterID: chapterID,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() =>
+        setFilteredChapters(
+          filteredChapters.filter((chapter) => chapter.chapterID !== chapterID)
+        )
+      )
+      .catch((error) => console.error(`Failed to delete chapter:`, error));
   }
 
   return (

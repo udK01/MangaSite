@@ -127,6 +127,17 @@ app.post("/api/createChapter", async (req, res) => {
   }
 });
 
+app.delete("/api/deleteChapter", async (req, res) => {
+  try {
+    const chapterID = req.body.chapterID;
+    await databaseFunctions.deleteChapter(chapterID);
+    res.status(200).send(`success`);
+  } catch (error) {
+    console.error(`Failed to delete chapter:`, error);
+    res.status(500).send(`error`);
+  }
+});
+
 app.get("/api/getGenres", async (req, res) => {
   try {
     const result = await databaseFunctions.getAllGenres();

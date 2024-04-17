@@ -540,17 +540,14 @@ export async function createChapter(
  *
  * Example Usage.
  *
- * await deleteChapter(2, 16);
+ * await deleteChapter(115);
  *
- * @param {int} mangaID The manga's unique identifier.
- * @param {int} chapterNumber The chapter's number.
+ * @param {int} chapterID the chapter's unique identifier.
+ *
  */
-export async function deleteChapter(mangaID, chapterNumber) {
+export async function deleteChapter(chapterID) {
   try {
-    await db.query(
-      `DELETE FROM chapters WHERE mangaID = ? AND chapterNumber = ?`,
-      [mangaID, chapterNumber]
-    );
+    await db.query(`DELETE FROM chapters WHERE chapterID = ?`, [chapterID]);
   } catch (error) {
     console.error(`Failed to delete chapter:`, error);
   }
