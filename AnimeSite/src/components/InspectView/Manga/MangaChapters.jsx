@@ -67,13 +67,14 @@ export default function MangaChapters({
                 <div>First Chapter</div>
                 <div className="font-semibold text-[20px]">Chapter 1</div>
               </Link>
+              {console.log(filteredChapters)}
               <Link
-                to={`${currentPath}/${manga.chapters[0].chapterNumber}`}
+                to={`${currentPath}/${filteredChapters[0].chapterNumber}`}
                 className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md ml-1 hover:bg-purple-800"
               >
                 <div>New Chapter</div>
                 <div className="font-semibold text-[20px]">
-                  Chapter {manga.chapters.length}
+                  Chapter {filteredChapters.length}
                 </div>
               </Link>
             </div>
