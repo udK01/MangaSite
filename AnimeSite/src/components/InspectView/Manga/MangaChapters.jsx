@@ -1,14 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Separator from "../../Separator";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
-/**
- *
- * Update the manga's chapter itself on delete,
- * instead of doing it locally within the class.
- *
- */
 
 export default function MangaChapters({
   user,
@@ -16,9 +9,11 @@ export default function MangaChapters({
   reverseChapters,
   getFormattedDate,
 }) {
-  const [filteredChapters, setFilteredChapters] = useState(
-    reverseChapters(manga.chapters)
-  );
+  const [filteredChapters, setFilteredChapters] = useState([]);
+
+  useEffect(() => {
+    setFilteredChapters(reverseChapters(manga.chapters));
+  }, [manga]);
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -61,7 +56,7 @@ export default function MangaChapters({
       </div>
       <Separator />
       <div className="flex">
-        {manga.chapters.length > 0 ? (
+        {filteredChapters.length > 0 ? (
           <div className="w-full">
             {/* Chapter Buttons */}
             <div className="flex w-full text-white">
