@@ -39,6 +39,22 @@ export default function App() {
       });
   }, []);
 
+  function sortByUploadDate() {
+    comics.sort((a, b) => {
+      if (a.chapters.length > 0 && b.chapters.length > 0) {
+        const dateA = new Date(a.chapters[0].uploadDate);
+        const dateB = new Date(b.chapters[0].uploadDate);
+        return dateB - dateA;
+      } else if (a.chapters.length === 0 && b.chapters.length > 0) {
+        return 1;
+      } else if (a.chapters.length > 0 && b.chapters.length === 0) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   // Define common props
   const commonProps = { comics, setComics, user };
 
@@ -74,6 +90,7 @@ export default function App() {
       <ScrollToTop />
       {dataLoaded && (
         <Routes>
+          {sortByUploadDate()}
           {/* Render static routes */}
           {routes.map((route, index) => (
             <Route
