@@ -50,7 +50,7 @@ export default function AddChapter({ customInputField }) {
         "/api/createChapter",
         {
           mangaID: getMangaID(),
-          chapterTitle: title,
+          chapterTitle: title === "Title" ? "" : title,
           chapterContent: chapterContent,
           uploadDate: getFormattedDate(),
         },

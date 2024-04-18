@@ -104,8 +104,9 @@ export default function MangaChapters({
                             to={`${currentPath}/${chapter.chapterNumber}`}
                             className="text-white hover:text-primary"
                           >
-                            Chapter {chapter.chapterNumber} -{" "}
-                            {chapter.chapterTitle}
+                            Chapter {chapter.chapterNumber}
+                            {chapter.chapterTitle &&
+                              ` - ${chapter.chapterTitle}`}
                           </Link>
                           <div className="text-dimWhite text-[12px]">
                             {getFormattedDate(chapter.uploadDate)}
