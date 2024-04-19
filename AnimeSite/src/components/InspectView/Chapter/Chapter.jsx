@@ -31,7 +31,8 @@ export default function Chapter({ chapter, mangaTitle }) {
           to={`/${mangaTitle.replace(/\s+/g, "-")}/${chapter.chapterNumber}`}
           className="hover:text-primary hover:cursor-pointer ml-3 text-[14px] line-clamp-1 text-ellipsis"
         >
-          Chapter {chapter.chapterNumber} - {chapter.chapterTitle}
+          Chapter {chapter.chapterNumber}{" "}
+          {chapter.chapterTitle.length > 0 && `- ${chapter.chapterTitle}`}
         </Link>
       </div>
       <p className="text-dimWhite text-[11px] whitespace-nowrap">
