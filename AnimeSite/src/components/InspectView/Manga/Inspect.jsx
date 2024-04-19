@@ -29,6 +29,7 @@ export default function Inspect({ user, inspect }) {
   const [removeGenres, setRemoveGenres] = useState([]);
   const [addGenres, setAddGenres] = useState([]);
   const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarkCount, setBookmarkCount] = useState();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,6 +43,20 @@ export default function Inspect({ user, inspect }) {
         setBookmarked(true);
       }
     });
+
+    axios
+      .get("/api/bookmark", {
+        params: {
+          mangaID: manga.mangaID,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => setBookmarkCount(response.data.count))
+      .catch((error) =>
+        console.error(`Failed to fetch bookmark count:`, error)
+      );
   }, [inspect]);
 
   // Reset and disable edit, if route swapped.
@@ -336,7 +351,7 @@ export default function Inspect({ user, inspect }) {
           </button>
           {/* Bookmark Count */}
           <p className="flex justify-center text-dimWhite text-[12px] my-1">
-            Followed by {0} people
+            Followed by {bookmarkCount} people
           </p>
           {/* Manga Rating */}
           <div>

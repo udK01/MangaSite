@@ -67,7 +67,6 @@ export default function MangaChapters({
                 <div>First Chapter</div>
                 <div className="font-semibold text-[20px]">Chapter 1</div>
               </Link>
-              {console.log(filteredChapters)}
               <Link
                 to={`${currentPath}/${filteredChapters[0].chapterNumber}`}
                 className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md ml-1 hover:bg-purple-800"

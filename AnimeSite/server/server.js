@@ -243,6 +243,17 @@ app.post("/api/deleteTag", async (req, res) => {
   }
 });
 
+app.get("/api/bookmark", async (req, res) => {
+  try {
+    const mangaID = req.query.mangaID;
+    const bookmarkCount = await databaseFunctions.getBookmarkCount(mangaID);
+    res.status(200).json({ count: bookmarkCount });
+  } catch (error) {
+    console.error(`Failed to fetch bookmarks:`, error);
+    res.status(500).send(`error`);
+  }
+});
+
 app.post("/api/bookmark", async (req, res) => {
   try {
     const userID = req.body.userID;
