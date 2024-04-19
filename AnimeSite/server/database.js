@@ -243,6 +243,30 @@ export async function getBookmarks(userID) {
   }
 }
 
+/**
+ *
+ * Counts all the user's that have bookmarked a specific manga.
+ *
+ * Example Usage
+ *
+ * await getBookmarkCount(17);
+ *
+ * @param {int} mangaID the manga's unique identifier.
+ * @returns the number of bookmarks for the manga.
+ */
+export async function getBookmarkCount(mangaID) {
+  try {
+    return (
+      await db.query(
+        `SELECT COUNT(*) AS count FROM user_bookmarks WHERE mangaID = ?`,
+        [mangaID]
+      )
+    )[0][0].count;
+  } catch (error) {
+    console.error(`Failed to fetch bookmark count:`, error);
+  }
+}
+
 //////////
 //Mangas//
 //////////
@@ -475,6 +499,16 @@ export async function updateManga(
   }
 }
 
+/**
+ *
+ * Removes a manga from the table using it's unique ID.
+ *
+ * Example Usage
+ *
+ * deleteManga(5);
+ *
+ * @param {int} mangaID the manga's unique identifier.
+ */
 export async function deleteManga(mangaID) {
   try {
     await db.query(`DELETE FROM mangas WHERE mangaID = ?`, [mangaID]);
@@ -624,6 +658,19 @@ export async function getChapters(mangaID) {
   }
 }
 
+/**
+ *
+ * Finds and returns the specified chapter for the
+ * specified manga.
+ *
+ * Example Usage
+ *
+ * await getChapter(17, 2);
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {int} chapterNumber The chapter's number.
+ * @returns the specific chapter.
+ */
 export async function getChapter(mangaID, chapterNumber) {
   try {
     return (
