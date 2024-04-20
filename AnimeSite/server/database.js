@@ -885,3 +885,26 @@ export async function setRating(userID, mangaID, rating) {
     console.error(`Failed to set rating:`, error);
   }
 }
+
+/**
+ *
+ * Deletes an existing rating from the user
+ * for a specified manga.
+ *
+ * Example Usage
+ *
+ * await deleteRating(1, 18);
+ *
+ * @param {int} userID The user's unique identifier.
+ * @param {int} mangaID The manga's unique identifier.
+ */
+async function deleteRating(userID, mangaID) {
+  try {
+    await db.query(`DELETE FROM ratings WHERE userID = ? && mangaID = ?`, [
+      userID,
+      mangaID,
+    ]);
+  } catch (error) {
+    console.error(`Failed to delete rating:`, error);
+  }
+}
