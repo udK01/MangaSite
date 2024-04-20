@@ -856,3 +856,32 @@ export async function getAllGenres() {
     console.error(`Failed to fetch genres:`, error);
   }
 }
+
+///////////
+//Ratings//
+///////////
+
+/**
+ *
+ * Saves the rating given by an user to a specified manga.
+ * If the user has already given it a rating, it replaces it with a new value.
+ *
+ * Example Usage
+ *
+ * await setRating(1, 18, 4.4);
+ *
+ * @param {int} userID The user's unique identifier.
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {float} rating The manga's rating.
+ */
+export async function setRating(userID, mangaID, rating) {
+  try {
+    await db.query(
+      `INSERT INTO ratings (userID, mangaID, rating) VALUES (?, ?, ?)
+       ON DUPLICATE KEY UPDATE rating = VALUES(rating)`,
+      [userID, mangaID, rating]
+    );
+  } catch (error) {
+    console.error(`Failed to set rating:`, error);
+  }
+}
