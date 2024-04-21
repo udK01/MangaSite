@@ -10,6 +10,7 @@ import SideInfo from "./SideInfo";
 import StarRating from "../../StarRating";
 import DropDown from "../../DropDown";
 import MangaChapters from "./MangaChapters";
+import InteractiveStarRating from "./InteractiveStarRating";
 
 // Icon
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
@@ -19,6 +20,7 @@ export default function Inspect({ user, inspect }) {
   const [manga, setManga] = useState(inspect);
 
   const [editing, setEditing] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -355,9 +357,17 @@ export default function Inspect({ user, inspect }) {
           </p>
           {/* Manga Rating */}
           <div>
-            <div className="w-full flex justify-between items-center bg-quinary px-2 p-[2px] rounded-md text-dimWhite">
-              <div className="h-full pb-1 flex items-center">
-                <StarRating rating={manga.rating} includeText={false} />
+            <div
+              className="w-full flex justify-between items-center bg-quinary px-2 p-[2px] rounded-md text-dimWhite"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              <div className="h-full pb-1 flex flex-col items-center">
+                {hover ? (
+                  <InteractiveStarRating manga={manga} />
+                ) : (
+                  <StarRating rating={manga.rating} includeText={false} />
+                )}
               </div>
               {manga.rating}
             </div>
