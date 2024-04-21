@@ -33,9 +33,6 @@ export default function InteractiveStarRating({ user, manga }) {
         mangaID: manga.mangaID,
         rating: currentRating,
       })
-      .then((response) => {
-        console.log(response.data);
-      })
       .catch((error) => {
         console.error(`Failed to handle rating:`, error);
       });
