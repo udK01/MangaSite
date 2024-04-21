@@ -864,7 +864,8 @@ export async function getAllGenres() {
 /**
  *
  * Saves the rating given by an user to a specified manga.
- * If the user has already given it a rating, it replaces it with a new value.
+ * If the user has already given it a rating, it replaces it
+ * with a new value and updates the overall rating.
  *
  * Example Usage
  *
@@ -872,7 +873,7 @@ export async function getAllGenres() {
  *
  * @param {int} userID The user's unique identifier.
  * @param {int} mangaID The manga's unique identifier.
- * @param {float} rating The manga's rating.
+ * @param {int} rating The manga's rating.
  */
 export async function setRating(userID, mangaID, rating) {
   try {
@@ -881,6 +882,7 @@ export async function setRating(userID, mangaID, rating) {
        ON DUPLICATE KEY UPDATE rating = VALUES(rating)`,
       [userID, mangaID, rating]
     );
+    await changeMangaRating(mangaID);
   } catch (error) {
     console.error(`Failed to set rating:`, error);
   }
@@ -899,7 +901,7 @@ export async function setRating(userID, mangaID, rating) {
  * @param {int} mangaID The manga's unique identifier.
  * @returns The user's rating of a manga.
  */
-export async function getRating(userID, mangaID) {
+export async function getUserRating(userID, mangaID) {
   try {
     return (
       await db.query(`SELECT * FROM ratings WHERE userID = ? && mangaID = ?`, [
@@ -932,5 +934,34 @@ export async function deleteRating(userID, mangaID) {
     ]);
   } catch (error) {
     console.error(`Failed to delete rating:`, error);
+  }
+}
+
+/**
+ *
+ * Finds the average rating for the specified manga
+ * and alters the overall rating to match it.
+ *
+ * Example Usage
+ *
+ * await changeMangaRating(18);
+ *
+ * @param {int} mangaID The manga's unique identifier.
+ */
+async function changeMangaRating(mangaID) {
+  try {
+    const avgRating = (
+      await db.query(
+        `SELECT ROUND(AVG(rating), 2) as rating FROM ratings WHERE mangaID = ?`,
+        [mangaID]
+      )
+    )[0][0].rating;
+
+    await db.query(
+      `UPDATE mangas SET rating = ${avgRating} WHERE mangaID = ?`,
+      [mangaID]
+    );
+  } catch (error) {
+    console.error(`Failed to change manga rating:`, error);
   }
 }

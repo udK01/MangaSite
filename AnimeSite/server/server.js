@@ -272,7 +272,7 @@ app.get("/api/rating", async (req, res) => {
   try {
     const userID = req.query.userID;
     const mangaID = req.query.mangaID;
-    const rating = await databaseFunctions.getRating(userID, mangaID);
+    const rating = await databaseFunctions.getUserRating(userID, mangaID);
     if (rating.length > 0) {
       res.status(200).json(rating);
     }
