@@ -39,11 +39,14 @@ export default function InteractiveStarRating({ user, manga }) {
   }
 
   return (
-    <div className="w-[105px] flex justify-evenly py-[1px] pb-[2px] mt-1">
+    <div
+      className="w-[105px] flex justify-evenly py-[1px] pb-[2px] mt-1"
+      onMouseLeave={() => setHover(null)}
+    >
       {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;
         return (
-          <label key={index}>
+          <label key={index} onMouseEnter={() => setHover(currentRating)}>
             <input
               type="radio"
               name="rating"
@@ -61,8 +64,6 @@ export default function InteractiveStarRating({ user, manga }) {
                   ? "text-yellow-500"
                   : "text-gray-500"
               }`}
-              onMouseEnter={() => setHover(currentRating)}
-              onMouseLeave={() => setHover(null)}
             />
           </label>
         );
