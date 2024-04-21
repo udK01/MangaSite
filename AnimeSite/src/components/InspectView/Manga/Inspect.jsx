@@ -364,7 +364,7 @@ export default function Inspect({ user, inspect }) {
             >
               <div className="h-full pb-1 flex flex-col items-center">
                 {hover ? (
-                  <InteractiveStarRating manga={manga} />
+                  <InteractiveStarRating user={user} manga={manga} />
                 ) : (
                   <StarRating rating={manga.rating} includeText={false} />
                 )}

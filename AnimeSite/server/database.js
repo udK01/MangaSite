@@ -888,6 +888,32 @@ export async function setRating(userID, mangaID, rating) {
 
 /**
  *
+ * Finds the specified manga for the user and
+ * returns the user's rating of it.
+ *
+ * Example Usage
+ *
+ * await getRating(1, 18);
+ *
+ * @param {int} userID The user's unique identifier.
+ * @param {int} mangaID The manga's unique identifier.
+ * @returns The user's rating of a manga.
+ */
+export async function getRating(userID, mangaID) {
+  try {
+    return (
+      await db.query(`SELECT * FROM ratings WHERE userID = ? && mangaID = ?`, [
+        userID,
+        mangaID,
+      ])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to fetch rating:`, error);
+  }
+}
+
+/**
+ *
  * Deletes an existing rating from the user
  * for a specified manga.
  *
@@ -898,7 +924,7 @@ export async function setRating(userID, mangaID, rating) {
  * @param {int} userID The user's unique identifier.
  * @param {int} mangaID The manga's unique identifier.
  */
-async function deleteRating(userID, mangaID) {
+export async function deleteRating(userID, mangaID) {
   try {
     await db.query(`DELETE FROM ratings WHERE userID = ? && mangaID = ?`, [
       userID,

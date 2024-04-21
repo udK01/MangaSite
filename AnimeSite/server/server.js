@@ -268,6 +268,34 @@ app.post("/api/bookmark", async (req, res) => {
   }
 });
 
+app.get("/api/rating", async (req, res) => {
+  try {
+    const userID = req.query.userID;
+    const mangaID = req.query.mangaID;
+    const rating = await databaseFunctions.getRating(userID, mangaID);
+    if (rating.length > 0) {
+      res.status(200).json(rating);
+    }
+  } catch (error) {
+    console.error(`Failed to fetch rating:`, error);
+    res.status(500).send(`Failed to fetch rating`);
+  }
+});
+
+app.post("/api/rating", async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const mangaID = req.body.mangaID;
+    const rating = req.body.rating;
+
+    await databaseFunctions.setRating(userID, mangaID, rating);
+    res.status(200).send(`success`);
+  } catch (error) {
+    console.error(`Failed to save rating:`, error);
+    res.status(500).send(`Failed to save rating`);
+  }
+});
+
 app.post("/api/deleteManga", async (req, res) => {
   try {
     const mangaID = req.body.mangaID;
