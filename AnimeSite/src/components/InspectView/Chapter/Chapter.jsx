@@ -24,9 +24,9 @@ export default function Chapter({ chapter, mangaTitle }) {
   }
 
   return (
-    <div className="flex items-center justify-between mt-3">
+    <div className="flex items-center justify-between mt-3 hover:bg-tertiary hover:text-primary pr-3">
       <div className="flex items-center mx-3">
-        <p className="w-1 h-1 rounded-full bg-red-500" />
+        <p className="min-w-[3px] max-w-[3px] h-8 rounded-full bg-red-500" />
         <Link
           to={`/${mangaTitle.replace(/\s+/g, "-")}/${chapter.chapterNumber}`}
           className="hover:text-primary hover:cursor-pointer ml-3 text-[14px] line-clamp-1 text-ellipsis"

@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
 export default function InteractiveStarRating({ user, manga }) {
-  const [rating, setRating] = useState(Math.floor(manga.rating));
+  const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
   useEffect(() => {
