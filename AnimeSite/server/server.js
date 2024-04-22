@@ -41,6 +41,7 @@ app.get("/api/user/:username", async (req, res) => {
   try {
     const username = req.params.username;
     const userData = await databaseFunctions.getUser(username);
+    console.log(userData);
     userData[0].bookmarks = await databaseFunctions.getBookmarks(
       userData[0].userID
     );

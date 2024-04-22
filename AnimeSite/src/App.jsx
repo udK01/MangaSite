@@ -21,23 +21,25 @@ function ScrollToTop() {
 export default function App() {
   const [user, setUser] = useState([]);
   const [comics, setComics] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false); // Track data loading state
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    // Fetch users and mangas
-    axios
-      .all([axios.get(`api/user/${"udk"}`), axios.get(`api/mangas`)])
-      .then(
-        axios.spread((userResponse, comicsResponse) => {
-          setUser(userResponse.data);
-          setComics(comicsResponse.data);
-          setDataLoaded(true);
-        })
-      )
-      .catch((error) => {
-        console.error(`Error fetching data:`, error);
-      });
-  }, []);
+    // Fetch users and mangas only if not already loaded
+    if (!dataLoaded) {
+      axios
+        .all([axios.get(`/api/user/${"udk"}`), axios.get(`/api/mangas`)])
+        .then(
+          axios.spread((userResponse, comicsResponse) => {
+            setUser(userResponse.data);
+            setComics(comicsResponse.data);
+            setDataLoaded(true);
+          })
+        )
+        .catch((error) => {
+          console.error(`Error fetching data:`, error);
+        });
+    }
+  }, [dataLoaded]);
 
   function sortByUploadDate() {
     comics.sort((a, b) => {
