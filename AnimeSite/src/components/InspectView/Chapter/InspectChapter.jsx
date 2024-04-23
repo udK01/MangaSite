@@ -1,9 +1,18 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import DropDown from "../../DropDown";
+import { useEffect, useState } from "react";
 
 export default function InspectChapter({ manga, chapter }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
   const currentPath = path.substring(0, path.lastIndexOf("/"));
+
+  const [changeChapter, setChangeChapter] = useState(chapter.chapterNumber);
+
+  const chapterNumbers = manga.chapters
+    .sort((a, b) => b.chapterNumber - a.chapterNumber)
+    .map((chapter) => chapter.chapterNumber);
 
   const previousChapter = manga.chapters.find(
     (c) => c.chapterNumber === chapter.chapterNumber - 1
@@ -12,10 +21,19 @@ export default function InspectChapter({ manga, chapter }) {
     (c) => c.chapterNumber === chapter.chapterNumber + 1
   );
 
+  useEffect(() => {
+    navigate(`${currentPath}/${changeChapter}`);
+  }, [changeChapter]);
+
   const NavigationInterface = () => {
     return (
       <div className="flex justify-between mt-4">
-        <div className="p-2">Dropdown</div>
+        <DropDown
+          options={chapterNumbers}
+          value={changeChapter}
+          func={setChangeChapter}
+          className={"w-[350px] px-4 rounded-2xl bg-tertiary"}
+        />
         <div className="flex items-center text-xs text-white">
           <Link
             to={
