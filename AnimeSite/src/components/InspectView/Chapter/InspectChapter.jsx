@@ -120,12 +120,13 @@ export default function InspectChapter({ manga, chapter }) {
           Chapter {chapter.chapterNumber}
         </Link>
       </div>
-      {/* Navigation */}
+      {/* Top Navigation */}
       <NavigationInterface />
       {/* Dummy "Content" */}
       <div className="w-full h-[1500px] flex justify-center items-center bg-quaternary text-[516px] mt-4">
         {chapter.chapterNumber}
       </div>
+      {/* Bottom Navigation */}
       <NavigationInterface />
       {/* Related Series */}
       <RelatedSeries manga={manga} chapter={chapter} />
