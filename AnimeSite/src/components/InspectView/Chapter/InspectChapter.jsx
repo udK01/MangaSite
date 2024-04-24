@@ -8,11 +8,20 @@ export default function InspectChapter({ manga, chapter }) {
   const path = location.pathname;
   const currentPath = path.substring(0, path.lastIndexOf("/"));
 
-  const [changeChapter, setChangeChapter] = useState(chapter.chapterNumber);
+  const [changeChapter, setChangeChapter] = useState(
+    `Chapter ${chapter.chapterNumber} ${
+      chapter.chapterTitle && `- ${chapter.chapterTitle}`
+    }`
+  );
 
   const chapterNumbers = manga.chapters
     .sort((a, b) => b.chapterNumber - a.chapterNumber)
-    .map((chapter) => chapter.chapterNumber);
+    .map(
+      (chapter) =>
+        `Chapter ${chapter.chapterNumber} ${
+          chapter.chapterTitle && `- ${chapter.chapterTitle}`
+        }`
+    );
 
   const previousChapter = manga.chapters.find(
     (c) => c.chapterNumber === chapter.chapterNumber - 1
@@ -22,7 +31,13 @@ export default function InspectChapter({ manga, chapter }) {
   );
 
   useEffect(() => {
-    navigate(`${currentPath}/${changeChapter}`);
+    // Fetch only the chapter number.
+    navigate(
+      `${currentPath}/${changeChapter
+        .split("-")[0]
+        .replace("Chapter ", "")
+        .trim()}`
+    );
   }, [changeChapter]);
 
   const NavigationInterface = () => {
@@ -32,7 +47,7 @@ export default function InspectChapter({ manga, chapter }) {
           options={chapterNumbers}
           value={changeChapter}
           func={setChangeChapter}
-          className={"w-[350px] px-4 rounded-2xl bg-tertiary"}
+          className={"w-[400px] px-4 rounded-2xl bg-tertiary"}
         />
         <div className="flex items-center text-xs text-white">
           <Link
