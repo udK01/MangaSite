@@ -857,6 +857,45 @@ export async function getAllGenres() {
   }
 }
 
+/**
+ *
+ * Takes a list of genres, compares it to the genres
+ * other mangas hold, and return a sorted list based on
+ * similarity between them.
+ *
+ * @param {string[]} genres A list of genre's the manga has.
+ * @returns A sorted list of all of our mangas based on similarity of genres.
+ */
+export async function findRelatesSeries(genres) {
+  try {
+    const allManga = await getMangas();
+    const matchCountMap = new Map();
+
+    for (let i = 0; i < allManga.length; i++) {
+      const manga = allManga[i];
+      manga.genres = await getGenres(manga.mangaID);
+      let matchCount = 0;
+      for (let j = 0; j < manga.genres.length; j++) {
+        const mangaGenreId = manga.genres[j];
+        if (genres.includes(mangaGenreId)) {
+          matchCount++;
+        }
+      }
+      matchCountMap.set(manga, matchCount);
+    }
+
+    const sortedManga = [...matchCountMap.keys()].sort((mangaA, mangaB) => {
+      const matchCountA = matchCountMap.get(mangaA);
+      const matchCountB = matchCountMap.get(mangaB);
+      return matchCountB - matchCountA;
+    });
+
+    return sortedManga;
+  } catch (error) {
+    console.error(`Failed to find related series:`, error);
+  }
+}
+
 ///////////
 //Ratings//
 ///////////

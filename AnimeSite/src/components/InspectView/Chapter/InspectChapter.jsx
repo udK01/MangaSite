@@ -1,6 +1,8 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import DropDown from "../../DropDown";
 import { useEffect, useState } from "react";
+
+import DropDown from "../../DropDown";
+import RelatedSeries from "./RelatedSeries";
 
 export default function InspectChapter({ manga, chapter }) {
   const location = useLocation();
@@ -126,7 +128,7 @@ export default function InspectChapter({ manga, chapter }) {
       </div>
       <NavigationInterface />
       {/* Related Series */}
-      <div></div>
+      <RelatedSeries manga={manga} chapter={chapter} />
       {/* Comments */}
       <div></div>
     </section>

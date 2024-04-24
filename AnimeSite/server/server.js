@@ -41,7 +41,6 @@ app.get("/api/user/:username", async (req, res) => {
   try {
     const username = req.params.username;
     const userData = await databaseFunctions.getUser(username);
-    console.log(userData);
     userData[0].bookmarks = await databaseFunctions.getBookmarks(
       userData[0].userID
     );
@@ -307,6 +306,17 @@ app.post("/api/deleteManga", async (req, res) => {
   } catch (error) {
     console.error(`Failed to delete manga:`, error);
     res.status(500).send(`Failed to delete manga`);
+  }
+});
+
+app.get("/api/relatedSeries", async (req, res) => {
+  try {
+    const genres = req.query.genres;
+    const mangas = await databaseFunctions.findRelatesSeries(genres);
+    res.status(200).json(mangas);
+  } catch (error) {
+    console.err(`Failed to get related series:`, error);
+    res.status(500).send(`Failed to get related series.`);
   }
 });
 
