@@ -1,12 +1,13 @@
 import InspectChapter from "./InspectView/Chapter/InspectChapter";
 import LatestUpdate from "./LatestUpdate/LatestUpdate";
 import PopularToday from "./PopularToday/PopularToday";
-import Carousel from "./Carousel";
-import Trending from "./Trending";
-import Create from "./CreateView/Create";
 import Inspect from "./InspectView/Manga/Inspect";
-import Popular from "./Popular/Popular";
 import Stored from "./BookmarkView/Bookmarks";
+import Comics from "./ComicsView/Comics";
+import Create from "./CreateView/Create";
+import Popular from "./Popular/Popular";
+import Trending from "./Trending";
+import Carousel from "./Carousel";
 
 export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
   let includeSidebar = true;
@@ -29,7 +30,7 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
         bodyContent = <Stored user={user} comics={comics} />;
         break;
       case "comics":
-        // bodyContent = <Comics />;
+        bodyContent = <Comics comics={comics} />;
         break;
       case "management":
         bodyContent = <Create />;
