@@ -4,7 +4,6 @@ import axios from "axios";
 import Separator from "../Separator";
 import ComicDropdown from "./ComicDropdown";
 import Card from "../PopularToday/PopularTodayCard";
-import { FaChessBishop } from "react-icons/fa";
 
 export default function Comics({ comics }) {
   const [mangas, setMangas] = useState(comics);
@@ -27,27 +26,42 @@ export default function Comics({ comics }) {
   // Filter according to genres.
   useEffect(() => {
     if (!Array.isArray(selectedGenres)) return;
-    setFilteredMangas(
-      mangas.filter((manga) =>
-        selectedGenres.every((genre) => manga.genres.includes(genre))
-      )
+
+    let filteredByGenres = mangas.filter((manga) =>
+      selectedGenres.every((genre) => manga.genres.includes(genre))
     );
-  }, [selectedGenres]);
 
-  useEffect(() => {
-    console.log(selectedStatus);
-  }, [selectedStatus]);
+    // Filter by status
+    if (defaultValue(selectedStatus, "Status")) {
+      filteredByGenres = filteredByGenres.filter(
+        (manga) => manga.status === selectedStatus
+      );
+    }
 
-  useEffect(() => {
-    console.log(selectedType);
-  }, [selectedType]);
+    // Filter by type
+    if (defaultValue(selectedType, "Type")) {
+      filteredByGenres = filteredByGenres.filter(
+        (manga) => manga.type === selectedType
+      );
+    }
+
+    setFilteredMangas(filteredByGenres);
+  }, [selectedGenres, selectedStatus, selectedType]);
 
   useEffect(() => {
     console.log(selectedOrder);
   }, [selectedOrder]);
 
-  const buttonFormatting =
-    "ml-[17px] flex justify-center w-[150px] bg-quinary rounded-sm";
+  function defaultValue(x, y) {
+    return x !== y && x !== "All";
+  }
+
+  function resetValues() {
+    setSelectedGenres([]);
+    setSelectedStatus("Status");
+    setSelectedType("Type");
+    setSelectedOrder("Order By");
+  }
 
   return (
     <section className="w-[854px] h-auto bg-quaternary rounded-sm font-poppins">
@@ -87,7 +101,12 @@ export default function Comics({ comics }) {
           func={setSelectedOrder}
           className={"-translate-x-[500px]"}
         />
-        <div className={buttonFormatting}>🔍 Search</div>
+        <div
+          className={`ml-[17px] flex justify-center w-[150px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
+          onClick={() => resetValues()}
+        >
+          Reset
+        </div>
       </div>
       <div className="flex flex-wrap pb-6">
         {filteredMangas.length > 0 ? (

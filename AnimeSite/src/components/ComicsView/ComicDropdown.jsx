@@ -84,7 +84,10 @@ const ComicDropdown = ({
   };
 
   return (
-    <div className="relative font-poppins" ref={dropdownRef}>
+    <div
+      className="relative font-poppins hover:cursor-pointer"
+      ref={dropdownRef}
+    >
       {/* Button */}
       <div
         className={`ml-[17px] flex items-center justify-between px-3 w-[150px] bg-quinary rounded-sm hover:bg-primary`}
