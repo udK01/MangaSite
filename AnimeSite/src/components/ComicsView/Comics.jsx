@@ -12,6 +12,26 @@ export default function Comics({ comics }) {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
 
+  const [status, setStatus] = useState([
+    "All",
+    "OnGoing",
+    "Completed",
+    "Hiatus",
+    "Dropped",
+    "Coming Soon",
+  ]);
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const [type, setType] = useState([
+    "All",
+    "Manga",
+    "Manhwa",
+    "Manhua",
+    "Comic",
+    "Novel",
+  ]);
+  const [selectedType, setSelectedType] = useState("");
+
   useEffect(() => {
     axios
       .get("/api/getGenres")
@@ -40,11 +60,15 @@ export default function Comics({ comics }) {
       <div className="flex text-white mb-3">
         <ComicDropdown
           options={genres}
-          value={"Genre All"}
+          value={"Genre"}
           func={setSelectedGenres}
         />
-        <div className={buttonFormatting}>Status All</div>
-        <div className={buttonFormatting}>Type All</div>
+        <ComicDropdown
+          options={status}
+          value={"Status"}
+          func={setSelectedStatus}
+        />
+        <ComicDropdown options={type} value={"Type"} func={setSelectedType} />
         <div className={buttonFormatting}>Order by Update</div>
         <div className={buttonFormatting}>🔍 Search</div>
       </div>

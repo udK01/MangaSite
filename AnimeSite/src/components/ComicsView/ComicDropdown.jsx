@@ -69,7 +69,7 @@ const ComicDropdown = ({ options, value, func }) => {
     <div className="relative font-poppins" ref={dropdownRef}>
       {/* Button */}
       <div
-        className={`ml-[17px] flex items-center justify-evenly w-[150px] bg-quinary rounded-sm hover:bg-primary`}
+        className={`ml-[17px] flex items-center justify-between px-3 w-[150px] bg-quinary rounded-sm hover:bg-primary`}
         onClick={toggleDropdown}
       >
         <div>{value}</div>
