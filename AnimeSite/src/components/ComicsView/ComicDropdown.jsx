@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const ComicDropdown = ({ options, value, func }) => {
+const ComicDropdown = ({
+  options,
+  value,
+  func,
+  multiOptional = false,
+  className,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [checkedBoxes, setCheckedBoxes] = useState([]);
   const dropdownRef = useRef();
@@ -24,12 +30,12 @@ const ComicDropdown = ({ options, value, func }) => {
   };
 
   // Function to toggle checkbox
-  const toggleCheckbox = (genreTag) => {
+  const toggleCheckbox = (genre) => {
     let updatedCheckedBoxes;
-    if (checkedBoxes.includes(genreTag)) {
-      updatedCheckedBoxes = checkedBoxes.filter((tag) => tag !== genreTag);
+    if (checkedBoxes.includes(genre)) {
+      updatedCheckedBoxes = checkedBoxes.filter((tag) => tag !== genre);
     } else {
-      updatedCheckedBoxes = [...checkedBoxes, genreTag];
+      updatedCheckedBoxes = [...checkedBoxes, genre];
     }
     setCheckedBoxes(updatedCheckedBoxes);
     func(updatedCheckedBoxes);
@@ -44,18 +50,30 @@ const ComicDropdown = ({ options, value, func }) => {
         <div key={i} className="flex items-center">
           {rowOptions.map((option, index) => (
             <div key={index} className="flex items-center mr-4 w-[150px]">
-              <input
-                type="checkbox"
-                id={`checkbox-${i + index}`}
-                checked={checkedBoxes.includes(option.genreTag)}
-                onChange={() => toggleCheckbox(option.genreTag)}
-                className="mr-2 ml-5"
-              />
+              {multiOptional ? (
+                <input
+                  type="checkbox"
+                  id={`checkbox-${i + index}`}
+                  checked={checkedBoxes.includes(option)}
+                  onChange={() => toggleCheckbox(option)}
+                  className="mr-2 ml-5"
+                />
+              ) : (
+                <input
+                  type="radio"
+                  name="type"
+                  id={`radio-${i + index}`}
+                  checked={value === option}
+                  onChange={() => func(option)}
+                  className="mr-2 ml-5"
+                />
+              )}
               <label
                 htmlFor={`checkbox-${i + index}`}
                 className="cursor-pointer hover:text-primary whitespace-nowrap overflow-hidden overflow-ellipsis"
+                onClick={() => func(option)}
               >
-                {option.genreTag}
+                {option}
               </label>
             </div>
           ))}
@@ -79,7 +97,7 @@ const ComicDropdown = ({ options, value, func }) => {
       {isOpen && (
         <div className="scrollbar-thumb-primary scrollbar-track-transparent">
           <div
-            className={`w-[854px] absolute mt-1 bg-secondary text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
+            className={`w-[854px] ${className} absolute mt-1 bg-secondary text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
           >
             {renderOptions()}
           </div>

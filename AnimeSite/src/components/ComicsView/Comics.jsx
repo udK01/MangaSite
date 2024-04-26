@@ -4,6 +4,7 @@ import axios from "axios";
 import Separator from "../Separator";
 import ComicDropdown from "./ComicDropdown";
 import Card from "../PopularToday/PopularTodayCard";
+import { FaChessBishop } from "react-icons/fa";
 
 export default function Comics({ comics }) {
   const [mangas, setMangas] = useState(comics);
@@ -12,25 +13,9 @@ export default function Comics({ comics }) {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
 
-  const [status, setStatus] = useState([
-    "All",
-    "OnGoing",
-    "Completed",
-    "Hiatus",
-    "Dropped",
-    "Coming Soon",
-  ]);
   const [selectedStatus, setSelectedStatus] = useState("");
-
-  const [type, setType] = useState([
-    "All",
-    "Manga",
-    "Manhwa",
-    "Manhua",
-    "Comic",
-    "Novel",
-  ]);
   const [selectedType, setSelectedType] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState("");
 
   useEffect(() => {
     axios
@@ -41,12 +26,25 @@ export default function Comics({ comics }) {
 
   // Filter according to genres.
   useEffect(() => {
+    if (!Array.isArray(selectedGenres)) return;
     setFilteredMangas(
       mangas.filter((manga) =>
         selectedGenres.every((genre) => manga.genres.includes(genre))
       )
     );
   }, [selectedGenres]);
+
+  useEffect(() => {
+    console.log(selectedStatus);
+  }, [selectedStatus]);
+
+  useEffect(() => {
+    console.log(selectedType);
+  }, [selectedType]);
+
+  useEffect(() => {
+    console.log(selectedOrder);
+  }, [selectedOrder]);
 
   const buttonFormatting =
     "ml-[17px] flex justify-center w-[150px] bg-quinary rounded-sm";
@@ -59,17 +57,36 @@ export default function Comics({ comics }) {
       <Separator />
       <div className="flex text-white mb-3">
         <ComicDropdown
-          options={genres}
+          options={genres.map((genre) => genre.genreTag)}
           value={"Genre"}
           func={setSelectedGenres}
+          multiOptional={true}
         />
         <ComicDropdown
-          options={status}
+          options={[
+            "All",
+            "OnGoing",
+            "Completed",
+            "Hiatus",
+            "Dropped",
+            "Coming Soon",
+          ]}
           value={"Status"}
           func={setSelectedStatus}
+          className={"-translate-x-[166px]"}
         />
-        <ComicDropdown options={type} value={"Type"} func={setSelectedType} />
-        <div className={buttonFormatting}>Order by Update</div>
+        <ComicDropdown
+          options={["All", "Manga", "Manhwa", "Manhua", "Comic", "Novel"]}
+          value={"Type"}
+          func={setSelectedType}
+          className={"-translate-x-[335px]"}
+        />
+        <ComicDropdown
+          options={["Default", "A-Z", "Z-A", "Update", "Added", "Popular"]}
+          value={"Order By"}
+          func={setSelectedOrder}
+          className={"-translate-x-[500px]"}
+        />
         <div className={buttonFormatting}>🔍 Search</div>
       </div>
       <div className="flex flex-wrap pb-6">
