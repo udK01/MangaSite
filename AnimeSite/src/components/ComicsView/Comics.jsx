@@ -13,9 +13,9 @@ export default function Comics({ comics }) {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
 
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedOrder, setSelectedOrder] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("Status");
+  const [selectedType, setSelectedType] = useState("Type");
+  const [selectedOrder, setSelectedOrder] = useState("Order By");
 
   useEffect(() => {
     axios
@@ -71,19 +71,19 @@ export default function Comics({ comics }) {
             "Dropped",
             "Coming Soon",
           ]}
-          value={"Status"}
+          value={selectedStatus}
           func={setSelectedStatus}
           className={"-translate-x-[166px]"}
         />
         <ComicDropdown
           options={["All", "Manga", "Manhwa", "Manhua", "Comic", "Novel"]}
-          value={"Type"}
+          value={selectedType}
           func={setSelectedType}
           className={"-translate-x-[335px]"}
         />
         <ComicDropdown
           options={["Default", "A-Z", "Z-A", "Update", "Added", "Popular"]}
-          value={"Order By"}
+          value={selectedOrder}
           func={setSelectedOrder}
           className={"-translate-x-[500px]"}
         />
