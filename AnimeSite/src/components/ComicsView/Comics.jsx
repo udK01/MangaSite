@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -16,12 +17,21 @@ export default function Comics({ comics }) {
   const [selectedType, setSelectedType] = useState("Type");
   const [selectedOrder, setSelectedOrder] = useState("Order By");
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("/api/getGenres")
       .then((response) => setGenres(response.data[0]))
       .catch((error) => console.error(`Failed to fetch genres:`, error));
   }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const genre = searchParams.get("genre");
+    setSelectedGenres(genre ? [genre] : []);
+  }, [location.search]);
 
   // Filter according to genres.
   useEffect(() => {
@@ -88,6 +98,7 @@ export default function Comics({ comics }) {
     setSelectedStatus("Status");
     setSelectedType("Type");
     setSelectedOrder("Order By");
+    navigate("/comics");
   }
 
   return (
@@ -102,6 +113,7 @@ export default function Comics({ comics }) {
           value={"Genre"}
           func={setSelectedGenres}
           multiOptional={true}
+          genresSelected={selectedGenres}
         />
         <ComicDropdown
           options={[

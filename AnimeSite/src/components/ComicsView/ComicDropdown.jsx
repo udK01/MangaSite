@@ -6,11 +6,18 @@ const ComicDropdown = ({
   value,
   func,
   multiOptional = false,
+  genresSelected,
   className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedBoxes, setCheckedBoxes] = useState([]);
+  const [checkedBoxes, setCheckedBoxes] = useState(genresSelected);
   const dropdownRef = useRef();
+
+  useEffect(() => {
+    if (Array.isArray(genresSelected)) {
+      setCheckedBoxes(genresSelected);
+    }
+  }, [genresSelected]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

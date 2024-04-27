@@ -12,6 +12,8 @@ import DropDown from "../../DropDown";
 import MangaChapters from "./MangaChapters";
 import InteractiveStarRating from "./InteractiveStarRating";
 
+import Comics from "../../ComicsView/Comics";
+
 // Icon
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
@@ -453,17 +455,19 @@ export default function Inspect({ user, inspect }) {
             <div className="text-[14px] mt-4">Genres</div>
             <div className="flex flex-wrap text-[14px]">
               {sortGenres(genres).map((genre, index) => (
-                <div
-                  key={index}
-                  className={`flex items-center ${
-                    editing ? "bg-secondary" : "bg-quinary"
-                  } rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
-                    index > 0 ? "ml-2" : "ml-0"
-                  }`}
-                >
-                  {genre}
-                </div>
+                <Link to={`/comics?genre=${genre}`} key={index}>
+                  <div
+                    className={`flex items-center ${
+                      editing ? "bg-secondary" : "bg-quinary"
+                    } rounded-md py-1 px-3 mt-2 transition-colors duration-300 hover:cursor-pointer hover:text-primary ${
+                      index > 0 ? "ml-2" : "ml-0"
+                    }`}
+                  >
+                    {genre}
+                  </div>
+                </Link>
               ))}
+
               {editing && (
                 <TagDropDown
                   initiallySelected={manga.genres}

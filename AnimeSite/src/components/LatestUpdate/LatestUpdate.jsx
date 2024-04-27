@@ -1,12 +1,16 @@
 import Separator from "../Separator";
 import Card from "./Card";
 
+import { Link } from "react-router-dom";
+
 export default function LatestUpdate({ comics }) {
   return (
     <section className="w-full bg-quaternary p-2 rounded-sm text-white font-poppins">
       <div className="flex justify-between">
         <p className="ml-1 mt-1">Latest Update</p>
-        <button className="bg-primary text-[8px] px-2">VIEW ALL</button>
+        <button className="bg-primary text-[8px] px-2">
+          <Link to={"/comics"}>VIEW ALL</Link>
+        </button>
       </div>
       <Separator />
       <ul>
