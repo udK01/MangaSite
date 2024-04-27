@@ -12,8 +12,6 @@ import DropDown from "../../DropDown";
 import MangaChapters from "./MangaChapters";
 import InteractiveStarRating from "./InteractiveStarRating";
 
-import Comics from "../../ComicsView/Comics";
-
 // Icon
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";

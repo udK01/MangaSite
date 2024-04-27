@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import StarRating from "../StarRating";
+import React from "react";
 
 export default function PopularCard({ manga, index }) {
   return (
@@ -25,12 +26,15 @@ export default function PopularCard({ manga, index }) {
           <b>Genres:</b>
           {manga.genres.map((genre, i) => (
             <div key={i}>
-              <a className="ml-1 hover:text-primary hover:cursor-pointer">
+              <Link
+                to={`/comics?genre=${genre}`}
+                className="ml-1 hover:text-primary hover:cursor-pointer"
+              >
                 {genre}
-              </a>
-              {i !== manga.genres.length - 1 ? (
+              </Link>
+              {i !== manga.genres.length - 1 && (
                 <span className="text-gray-500">,</span>
-              ) : null}
+              )}
             </div>
           ))}
         </span>
