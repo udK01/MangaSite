@@ -55,6 +55,24 @@ export default function Comics({ comics }) {
             b.mangaTitle.localeCompare(a.mangaTitle)
           );
           break;
+        case "Update":
+          filteredArr = filteredArr.sort((a, b) => {
+            if (a.chapters.length > 0 && b.chapters.length > 0) {
+              return a.chapters[0].uploadDate - b.chapters[0].uploadDate;
+            } else if (a.chapters.length === 0 && b.chapters.length === 0) {
+              return 0;
+            } else if (a.chapters.length === 0) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          break;
+        case "Added":
+          filteredArr = filteredArr.sort(
+            (a, b) => new Date(a.postedOn) - new Date(b.postedOn)
+          );
+          break;
       }
     }
 
