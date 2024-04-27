@@ -27,30 +27,39 @@ export default function Comics({ comics }) {
   useEffect(() => {
     if (!Array.isArray(selectedGenres)) return;
 
-    let filteredByGenres = mangas.filter((manga) =>
+    let filteredArr = mangas.filter((manga) =>
       selectedGenres.every((genre) => manga.genres.includes(genre))
     );
 
     // Filter by status
     if (defaultValue(selectedStatus, "Status")) {
-      filteredByGenres = filteredByGenres.filter(
+      filteredArr = filteredArr.filter(
         (manga) => manga.status === selectedStatus
       );
     }
 
     // Filter by type
     if (defaultValue(selectedType, "Type")) {
-      filteredByGenres = filteredByGenres.filter(
-        (manga) => manga.type === selectedType
-      );
+      filteredArr = filteredArr.filter((manga) => manga.type === selectedType);
     }
 
-    setFilteredMangas(filteredByGenres);
-  }, [selectedGenres, selectedStatus, selectedType]);
+    if (defaultValue(selectedOrder, "Order By")) {
+      switch (selectedOrder) {
+        case "A-Z":
+          filteredArr = filteredArr.sort((a, b) =>
+            a.mangaTitle.localeCompare(b.mangaTitle)
+          );
+          break;
+        case "Z-A":
+          filteredArr = filteredArr.sort((a, b) =>
+            b.mangaTitle.localeCompare(a.mangaTitle)
+          );
+          break;
+      }
+    }
 
-  useEffect(() => {
-    console.log(selectedOrder);
-  }, [selectedOrder]);
+    setFilteredMangas(filteredArr);
+  }, [selectedGenres, selectedStatus, selectedType, selectedOrder]);
 
   function defaultValue(x, y) {
     return x !== y && x !== "All";
