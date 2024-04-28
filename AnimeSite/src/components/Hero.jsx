@@ -2,7 +2,9 @@ import InspectChapter from "./InspectView/Chapter/InspectChapter";
 import LatestUpdate from "./LatestUpdate/LatestUpdate";
 import PopularToday from "./PopularToday/PopularToday";
 import Inspect from "./InspectView/Manga/Inspect";
+import Register from "./LoginRegister/Register";
 import Stored from "./BookmarkView/Bookmarks";
+import Login from "./LoginRegister/Login";
 import Comics from "./ComicsView/Comics";
 import Create from "./CreateView/Create";
 import Popular from "./Popular/Popular";
@@ -34,6 +36,14 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
         break;
       case "management":
         bodyContent = <Create />;
+        break;
+      case "login":
+        bodyContent = <Login />;
+        includeSidebar = false;
+        break;
+      case "register":
+        bodyContent = <Register />;
+        includeSidebar = false;
         break;
       default:
         bodyContent = (
