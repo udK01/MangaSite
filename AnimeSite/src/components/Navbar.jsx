@@ -17,7 +17,7 @@ export default function Navbar({ comics, user }) {
 
   return (
     <>
-      <Header />
+      <Header user={user} />
       <nav className="flex w-full bg-primary">
         <div className="flex justify-between mx-auto w-[1150px] font-poppins text-white text-[14.5px]">
           <div className="flex hover:cursor-pointer">
