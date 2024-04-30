@@ -6,7 +6,6 @@ import axios from "axios";
 export default function Home({
   comics,
   setComics,
-  user,
   view,
   mangaID,
   chapterNumber,
@@ -25,9 +24,8 @@ export default function Home({
 
   return (
     <section className="h-full bg-secondary flex flex-col items-center">
-      <Navbar user={user} comics={comics} />
+      <Navbar comics={comics} />
       <Hero
-        user={user}
         comics={comics}
         view={view}
         mangaID={mangaID}

@@ -5,6 +5,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { UserProvider } from "./components/UserContext";
 import Home from "./routes/Home";
 import axios from "axios";
 
@@ -19,7 +20,6 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const [user, setUser] = useState([]);
   const [comics, setComics] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -27,14 +27,11 @@ export default function App() {
     // Fetch users and mangas only if not already loaded
     if (!dataLoaded) {
       axios
-        .all([axios.get(`/api/user/${"udk"}`), axios.get(`/api/mangas`)])
-        .then(
-          axios.spread((userResponse, comicsResponse) => {
-            setUser(userResponse.data);
-            setComics(comicsResponse.data);
-            setDataLoaded(true);
-          })
-        )
+        .get(`/api/mangas`)
+        .then((response) => {
+          setComics(response.data);
+          setDataLoaded(true);
+        })
         .catch((error) => {
           console.error(`Error fetching data:`, error);
         });
@@ -58,7 +55,7 @@ export default function App() {
   }
 
   // Define common props
-  const commonProps = { comics, setComics, user };
+  const commonProps = { comics, setComics };
 
   // Define static routes
   const routes = [
@@ -92,34 +89,36 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      {dataLoaded && (
-        <Routes>
-          {sortByUploadDate()}
-          {/* Render static routes */}
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={<Home {...commonProps} view={route.view} />}
-            />
-          ))}
+      <UserProvider>
+        {dataLoaded && (
+          <Routes>
+            {sortByUploadDate()}
+            {/* Render static routes */}
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={<Home {...commonProps} view={route.view} />}
+              />
+            ))}
 
-          {/* Render dynamic routes */}
-          {dynamicRoutes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <Home
-                  {...commonProps}
-                  mangaID={route.mangaID}
-                  chapterNumber={route.chapterNumber}
-                />
-              }
-            />
-          ))}
-        </Routes>
-      )}
+            {/* Render dynamic routes */}
+            {dynamicRoutes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <Home
+                    {...commonProps}
+                    mangaID={route.mangaID}
+                    chapterNumber={route.chapterNumber}
+                  />
+                }
+              />
+            ))}
+          </Routes>
+        )}
+      </UserProvider>
     </Router>
   );
 }

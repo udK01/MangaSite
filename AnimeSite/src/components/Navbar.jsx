@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { navLinks } from "../constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Header from "./Header";
+import UserContext from "./UserContext";
 
-export default function Navbar({ comics, user }) {
+export default function Navbar({ comics }) {
+  const { user } = useContext(UserContext);
   const [path, setPath] = useState("");
 
   function randomPath() {
@@ -17,7 +19,7 @@ export default function Navbar({ comics, user }) {
 
   return (
     <>
-      <Header user={user} />
+      <Header />
       <nav className="flex w-full bg-primary">
         <div className="flex justify-between mx-auto w-[1150px] font-poppins text-white text-[14.5px]">
           <div className="flex hover:cursor-pointer">

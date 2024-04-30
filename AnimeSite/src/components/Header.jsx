@@ -1,16 +1,23 @@
 import { Link } from "react-router-dom";
 import { logo } from "../assets";
+import { useState, useContext } from "react";
 
 import SearchBar from "./SearchBar";
-import { useState } from "react";
+import UserContext from "./UserContext";
 
-export default function Header(user) {
+export default function Header() {
+  const { user, setUser } = useContext(UserContext);
   const [hover, setHover] = useState(false);
+
+  const Logout = () => {
+    setUser([]);
+  };
 
   const ListElement = ({ location, text }) => (
     <Link
       to={`/${location}`}
       className={`hover:text-primary hover:cursor-pointer mb-3`}
+      onClick={() => Logout()}
     >
       {text}
     </Link>
@@ -35,7 +42,7 @@ export default function Header(user) {
               hover ? "" : "hidden"
             }`}
           >
-            {user.user.length > 0 ? (
+            {user.length > 0 ? (
               <>
                 <ListElement location={"profile"} text={"Profile"} />
                 <ListElement location={""} text={"Logout"} />
