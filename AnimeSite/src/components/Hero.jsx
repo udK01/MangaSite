@@ -11,7 +11,7 @@ import Popular from "./Popular/Popular";
 import Trending from "./Trending";
 import Carousel from "./Carousel";
 
-export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
+export default function Hero({ comics, view, mangaID, chapterNumber }) {
   let includeSidebar = true;
   let bodyContent;
 
@@ -24,12 +24,12 @@ export default function Hero({ user, comics, view, mangaID, chapterNumber }) {
       bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
       includeSidebar = false;
     } else {
-      bodyContent = <Inspect user={user} inspect={manga} />;
+      bodyContent = <Inspect inspect={manga} />;
     }
   } else {
     switch (view) {
       case "bookmarks":
-        bodyContent = <Stored user={user} comics={comics} />;
+        bodyContent = <Stored comics={comics} />;
         break;
       case "comics":
         bodyContent = <Comics comics={comics} />;

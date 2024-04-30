@@ -1,6 +1,6 @@
 // Mandatory Imports
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 // Auxiliary Classes
@@ -11,12 +11,14 @@ import StarRating from "../../StarRating";
 import DropDown from "../../DropDown";
 import MangaChapters from "./MangaChapters";
 import InteractiveStarRating from "./InteractiveStarRating";
+import UserContext from "../../UserContext";
 
 // Icon
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
-export default function Inspect({ user, inspect }) {
+export default function Inspect({ inspect }) {
+  const { user } = useContext(UserContext);
   const [manga, setManga] = useState(inspect);
 
   const [editing, setEditing] = useState(false);

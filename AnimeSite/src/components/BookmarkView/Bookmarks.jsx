@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Separator from "../Separator";
 import Card from "./BookmarkCard";
+import UserContext from "../UserContext";
 
-export default function Bookmarks({ user, comics }) {
+export default function Bookmarks({ comics }) {
+  const { user } = useContext(UserContext);
   const [bookmarks, setBookmarks] = useState(user[0].bookmarks);
-
-  // Should make backend request for bookmarks instead of attaching it to user.
-  // If users bookmark and swap pages, it won't be correct.
 
   function findManga(id) {
     return comics.find((manga) => manga.mangaID === id);
