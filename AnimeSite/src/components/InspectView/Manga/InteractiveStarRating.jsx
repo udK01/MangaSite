@@ -1,41 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { FaStar } from "react-icons/fa";
 
 import axios from "axios";
 
-export default function InteractiveStarRating({ user, manga }) {
+import UserContext from "../../UserContext";
+
+export default function InteractiveStarRating({ manga }) {
+  const { user } = useContext(UserContext);
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("/api/rating", {
-        params: {
-          userID: user[0].userID,
-          mangaID: manga.mangaID,
-        },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setRating(response.data[0].rating);
-      })
-      .catch((error) => {
-        console.error(`Failed to fetch rating:`, error);
-      });
+    user.length > 0 &&
+      axios
+        .get("/api/rating", {
+          params: {
+            userID: user[0].userID,
+            mangaID: manga.mangaID,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setRating(response.data[0].rating);
+        })
+        .catch((error) => {
+          console.error(`Failed to fetch rating:`, error);
+        });
   }, [rating]);
 
   function handleRating(currentRating) {
-    axios
-      .post("/api/rating", {
-        userID: user[0].userID,
-        mangaID: manga.mangaID,
-        rating: currentRating,
-      })
-      .catch((error) => {
-        console.error(`Failed to handle rating:`, error);
-      });
+    user.length > 0
+      ? axios
+          .post("/api/rating", {
+            userID: user[0].userID,
+            mangaID: manga.mangaID,
+            rating: currentRating,
+          })
+          .catch((error) => {
+            console.error(`Failed to handle rating:`, error);
+          })
+      : console.log(`Add login request feature`);
   }
 
   return (

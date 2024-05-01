@@ -1,14 +1,16 @@
+import { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Separator from "../../Separator";
-import { useState, useEffect } from "react";
 import axios from "axios";
 
+import Separator from "../../Separator";
+import UserContext from "../../UserContext";
+
 export default function MangaChapters({
-  user,
   manga,
   reverseChapters,
   getFormattedDate,
 }) {
+  const { user } = useContext(UserContext);
   const [filteredChapters, setFilteredChapters] = useState([]);
 
   useEffect(() => {
@@ -107,7 +109,7 @@ export default function MangaChapters({
                             {getFormattedDate(chapter.uploadDate)}
                           </div>
                         </div>
-                        {user[0].accessLevel > 1 && (
+                        {user.length > 0 && user[0].accessLevel > 1 && (
                           <button
                             className="bg-red-600 hover:bg-red-700 px-2 h-[30px] rounded-md mr-2 text-[13px]"
                             onClick={() => handleDelete(chapter.chapterID)}

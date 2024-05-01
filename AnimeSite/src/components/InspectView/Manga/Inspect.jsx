@@ -42,11 +42,12 @@ export default function Inspect({ inspect }) {
   useEffect(() => {
     setManga(inspect);
     setBookmarked(false);
-    user[0].bookmarks.map((bookmark) => {
-      if (bookmark.mangaID === inspect.mangaID) {
-        setBookmarked(true);
-      }
-    });
+    user.length > 0 &&
+      user[0].bookmarks.map((bookmark) => {
+        if (bookmark.mangaID === inspect.mangaID) {
+          setBookmarked(true);
+        }
+      });
 
     axios
       .get("/api/bookmark", {
@@ -268,7 +269,7 @@ export default function Inspect({ inspect }) {
           </Link>
         </div>
         <div className="flex">
-          {user[0].accessLevel > 1 && (
+          {user.length > 0 && user[0].accessLevel > 1 && (
             <div>
               {editing && (
                 <button

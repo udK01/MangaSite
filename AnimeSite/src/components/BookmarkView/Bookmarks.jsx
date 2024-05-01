@@ -5,7 +5,8 @@ import UserContext from "../UserContext";
 
 export default function Bookmarks({ comics }) {
   const { user } = useContext(UserContext);
-  const [bookmarks, setBookmarks] = useState(user[0].bookmarks);
+  const [bookmarks, setBookmarks] =
+    user.length > 0 ? useState(user[0].bookmarks) : useState([]);
 
   function findManga(id) {
     return comics.find((manga) => manga.mangaID === id);
@@ -24,7 +25,7 @@ export default function Bookmarks({ comics }) {
         browser that you can use right now.
       </div>
       {bookmarks.length <= 0 ? (
-        <h4 className="flex items-center justify-center mt-7 font-bold text-dimWhite">
+        <h4 className="flex items-center justify-center mt-7 font-bold text-dimWhite mb-6">
           YOU HAVE NO BOOKMARKS, NOTHING TO SHOW
         </h4>
       ) : (
