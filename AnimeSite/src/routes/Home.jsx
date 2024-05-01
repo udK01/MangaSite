@@ -23,7 +23,7 @@ export default function Home({
   }, [currentPath]);
 
   return (
-    <section className="h-full bg-secondary flex flex-col items-center">
+    <section className="h-auto min-h-screen bg-secondary flex flex-col items-center">
       <Navbar comics={comics} />
       <Hero
         comics={comics}

@@ -62,9 +62,7 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
 
   return (
     <section className="flex mt-10">
-      <div id="body" className="flex flex-col">
-        {bodyContent}
-      </div>
+      <div className="flex flex-col">{bodyContent}</div>
       {includeSidebar ? (
         <div id="sidebar">
           <Popular comics={comics} />
