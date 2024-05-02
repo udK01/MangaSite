@@ -35,23 +35,6 @@ app.get("/api/mangas", async (req, res) => {
 });
 
 /**
- * Retrieve users.
- */
-app.get("/api/user/:username", async (req, res) => {
-  try {
-    const username = req.params.username;
-    const userData = await databaseFunctions.getUser(username);
-    userData[0].bookmarks = await databaseFunctions.getBookmarks(
-      userData[0].userID
-    );
-    res.status(200).json(userData);
-  } catch (error) {
-    console.error(`Couldn't fetch users:`, error);
-    res.status(500).json({ error: "Error fetching users." });
-  }
-});
-
-/**
  * Create new comics.
  */
 app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
@@ -106,6 +89,26 @@ app.post("/api/createUser", async (req, res) => {
 
     databaseFunctions.createUser(username, password, 0);
     res.status(200).send(`Success`);
+  } catch (error) {
+    console.error(`Failed to create user:`, error);
+    res.status(500).send(`Error`);
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (databaseFunctions.userExists(username, password)) {
+      const userData = await databaseFunctions.getUser(username);
+      userData[0].bookmarks = await databaseFunctions.getBookmarks(
+        userData[0].userID
+      );
+      res.status(200).json(userData);
+    } else {
+      res.status(200).send(`2`);
+    }
   } catch (error) {
     console.error(`Failed to create user:`, error);
     res.status(500).send(`Error`);

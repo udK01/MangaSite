@@ -45,7 +45,7 @@ export default function Register() {
           },
         }
       )
-      .then((response) => console.log(response.data))
+      .then(() => navigate("/login"))
       .catch((error) => console.error(`Failed to create user:`, error));
   }
 

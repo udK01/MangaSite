@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+
+import UserContext from "../UserContext";
+import axios from "axios";
 
 export default function Login() {
+  const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
   const navigate = useNavigate();
@@ -28,6 +32,23 @@ export default function Login() {
     return <input {...commonProps} type={type} />;
   }
 
+  function handleLogin() {
+    axios
+      .post(
+        "/api/login",
+        {
+          username: username,
+          password: password,
+        },
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((response) => {
+        setUser([response.data[0]]);
+        navigate("/");
+      })
+      .catch((error) => console.error(`Failed to login:`, error));
+  }
+
   return (
     <section className="w-[600px] h-[400px] my-[120px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
@@ -41,7 +62,10 @@ export default function Login() {
           >
             {<FaAngleLeft />}Register
           </button>
-          <button className="bg-primary p-1 px-2 rounded-md hover:bg-purple-700">
+          <button
+            className="bg-primary p-1 px-2 rounded-md hover:bg-purple-700"
+            onClick={handleLogin}
+          >
             Login
           </button>
         </div>

@@ -7,7 +7,8 @@ export default function Bookmarks({ comics }) {
   const { user } = useContext(UserContext);
   const [bookmarks, setBookmarks] =
     user.length > 0 ? useState(user[0].bookmarks) : useState([]);
-
+  console.log(user);
+  console.log(bookmarks);
   function findManga(id) {
     return comics.find((manga) => manga.mangaID === id);
   }

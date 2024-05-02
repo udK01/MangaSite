@@ -69,6 +69,34 @@ export async function createUser(username, password, accessLevel = 0) {
 
 /**
  *
+ * Checks the DB for an existing pair with the
+ * provided username and password combination, and
+ * returns true or false based on its findings.
+ *
+ * Example Usage.
+ *
+ * await userExists("udK", "password");
+ *
+ * @param {string} username The user's username.
+ * @param {string} password The user's password.
+ * @returns True if it finds a matching username and password, false otherwise.
+ */
+export async function userExists(username, password) {
+  try {
+    const exists = (
+      await db.query(
+        `SELECT * FROM users WHERE username = ? AND password = ?`,
+        [username, password]
+      )
+    )[0];
+    return exists.length > 0;
+  } catch (error) {
+    console.error(`Failed to find user:`, error);
+  }
+}
+
+/**
+ *
  * Deletes the user with the specified username.
  *
  * Example Usage.
