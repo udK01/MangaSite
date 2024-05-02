@@ -82,6 +82,23 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
   }
 });
 
+/**
+ * Retrieve users.
+ */
+app.get("/api/user/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const userData = await databaseFunctions.getUser(username);
+    userData[0].bookmarks = await databaseFunctions.getBookmarks(
+      userData[0].userID
+    );
+    res.status(200).json(userData);
+  } catch (error) {
+    console.error(`Couldn't fetch users:`, error);
+    res.status(500).json({ error: "Error fetching users." });
+  }
+});
+
 app.post("/api/createUser", async (req, res) => {
   try {
     const username = req.body.username;
