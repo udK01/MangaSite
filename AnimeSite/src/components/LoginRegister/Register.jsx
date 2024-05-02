@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa";
 import { useState } from "react";
 
+import axios from "axios";
+
 export default function Register() {
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
@@ -29,6 +31,24 @@ export default function Register() {
     return <input {...commonProps} type={type} />;
   }
 
+  function handleRegister() {
+    axios
+      .post(
+        "/api/createUser",
+        {
+          username: username,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => console.log(response.data))
+      .catch((error) => console.error(`Failed to create user:`, error));
+  }
+
   return (
     <section className="w-[600px] h-[400px] my-[120px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
@@ -49,7 +69,10 @@ export default function Register() {
           >
             {<FaAngleLeft />}Login
           </button>
-          <button className="bg-primary p-1 px-2 rounded-md hover:bg-purple-700">
+          <button
+            className="bg-primary p-1 px-2 rounded-md hover:bg-purple-700"
+            onClick={handleRegister}
+          >
             Register
           </button>
         </div>

@@ -99,6 +99,19 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
   }
 });
 
+app.post("/api/createUser", async (req, res) => {
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    databaseFunctions.createUser(username, password, 0);
+    res.status(200).send(`Success`);
+  } catch (error) {
+    console.error(`Failed to create user:`, error);
+    res.status(500).send(`Error`);
+  }
+});
+
 app.post("/api/createChapter", async (req, res) => {
   try {
     const mangaID = req.body.mangaID;
