@@ -9,7 +9,12 @@ export default function Login() {
   const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
+  const [keepSignedIn, setKeepSignedIn] = useState(false);
   const navigate = useNavigate();
+
+  function toggleSignedIn() {
+    setKeepSignedIn(!keepSignedIn);
+  }
 
   function customInputField(type, placeholder, value, func, mt = 0) {
     const commonProps = {
@@ -43,7 +48,9 @@ export default function Login() {
         { headers: { "Content-Type": "application/json" } }
       )
       .then((response) => {
-        setUser([response.data[0]]);
+        setUser(response.data);
+        keepSignedIn &&
+          localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/");
       })
       .catch((error) => console.error(`Failed to login:`, error));
@@ -55,6 +62,21 @@ export default function Login() {
         <div className="text-[20px]">Please login.</div>
         {customInputField("text", "Username", username, setUsername, 2)}
         {customInputField("password", "Password", password, setPassword, 2)}
+        <div className="w-full ml-4 mt-2 text-[12px]">
+          <label
+            htmlFor="stayLoggedIn"
+            className="cursor-pointer flex items-center"
+          >
+            <input
+              type="checkbox"
+              id="stayLoggedIn"
+              onChange={toggleSignedIn}
+            />
+            <span className="ml-2 text-sm text-dimWhite">
+              Keep me signed in.
+            </span>
+          </label>
+        </div>
         <div className="w-[250px] mt-3 flex justify-between items-center text-white">
           <button
             className="flex items-center bg-quinary p-1 pr-3 rounded-md hover:bg-primary"

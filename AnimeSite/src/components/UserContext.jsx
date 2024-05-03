@@ -1,22 +1,10 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
-
-  // Add stay logged in feature.
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/user/${"udk"}`)
-  //     .then((response) => {
-  //       setUser(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(`Error fetching user data:`, error);
-  //     });
-  // }, []);
+  const logged = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(logged ?? []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
