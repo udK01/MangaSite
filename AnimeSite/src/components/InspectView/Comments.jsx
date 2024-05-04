@@ -16,7 +16,7 @@ export default function Comments({ mangaID, chapterID = null }) {
   }
 
   function handleSubmit() {
-    const commentContent = document.getElementById("commentBox").value;
+    const commentContent = document.getElementById("commentBox");
     user &&
       axios
         .post(
@@ -25,11 +25,13 @@ export default function Comments({ mangaID, chapterID = null }) {
             userID: user[0].userID,
             mangaID: mangaID,
             chapterID: chapterID,
-            content: commentContent,
+            content: commentContent.value,
           },
-          { header: { "Content-Type": "application/json" } }
+          { headers: { "Content-Type": "application/json" } }
         )
-        .then(() => (document.getElementById("commentBox").value = ""))
+        .then(() => {
+          commentContent.value = "";
+        })
         .catch((error) => console.error(`Failed to post comment:`, error));
   }
 

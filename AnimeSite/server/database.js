@@ -1086,5 +1086,3 @@ export async function getComments(mangaID, chapterID = null) {
     console.error(`Failed to get comments:`, error);
   }
 }
-
-console.log(await getComments(1, 126));
