@@ -83,7 +83,7 @@ export default function Comments({ mangaID, chapterID = null }) {
     ];
 
     return (
-      <div className="flex mt-2">
+      <div className="flex mt-2 items-center">
         {icons.map((item, index) => (
           <div
             key={index}
