@@ -12,6 +12,7 @@ import DropDown from "../../DropDown";
 import MangaChapters from "./MangaChapters";
 import InteractiveStarRating from "./InteractiveStarRating";
 import UserContext from "../../UserContext";
+import Comments from "../Comments";
 
 // Icon
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
@@ -491,6 +492,7 @@ export default function Inspect({ inspect }) {
         reverseChapters={reverseChapters}
         getFormattedDate={getFormattedDate}
       />
+      <Comments />
     </section>
   );
 }
