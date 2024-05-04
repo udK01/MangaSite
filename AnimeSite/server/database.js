@@ -1037,7 +1037,7 @@ async function changeMangaRating(mangaID) {
 //Comments//
 ////////////
 
-async function createComment(
+export async function createComment(
   userID,
   mangaID,
   content,
@@ -1049,10 +1049,7 @@ async function createComment(
       `INSERT INTO comments (userID, mangaID, chapterID, parent, content) VALUES (?, ?, ?, ?, ?)`,
       [userID, mangaID, chapterID, parent, content]
     );
-    console.log("Comment created successfully.");
   } catch (error) {
     console.error(`Failed to create comment:`, error);
   }
 }
-
-await createComment(6, 30, "STEVIEEE was here.");

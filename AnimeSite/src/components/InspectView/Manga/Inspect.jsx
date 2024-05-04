@@ -492,7 +492,7 @@ export default function Inspect({ inspect }) {
         reverseChapters={reverseChapters}
         getFormattedDate={getFormattedDate}
       />
-      <Comments />
+      <Comments mangaID={manga.mangaID} />
     </section>
   );
 }

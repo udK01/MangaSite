@@ -353,6 +353,20 @@ app.get("/api/relatedSeries", async (req, res) => {
   }
 });
 
+app.post("/api/postComment", async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const mangaID = req.body.mangaID;
+    const chapterID = req.body.chapterID;
+    const content = req.body.content;
+
+    await databaseFunctions.createComment(userID, mangaID, content, chapterID);
+  } catch (error) {
+    console.error(`Failed to post comment:`, error);
+    res.status(500).send(`Failed to post comment.`);
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
