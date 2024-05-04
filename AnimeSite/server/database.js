@@ -1087,4 +1087,4 @@ export async function getComments(mangaID, chapterID = null) {
   }
 }
 
-console.log(await getComments(30));
+console.log(await getComments(1, 126));

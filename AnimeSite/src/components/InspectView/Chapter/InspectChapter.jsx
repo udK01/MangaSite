@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import DropDown from "../../DropDown";
 import RelatedSeries from "./RelatedSeries";
+import Comments from "../Comments";
 
 export default function InspectChapter({ manga, chapter }) {
   const location = useLocation();
@@ -131,7 +132,7 @@ export default function InspectChapter({ manga, chapter }) {
       {/* Related Series */}
       <RelatedSeries manga={manga} chapter={chapter} />
       {/* Comments */}
-      <div></div>
+      <Comments mangaID={manga.mangaID} chapterID={chapter.chapterID} />
     </section>
   );
 }
