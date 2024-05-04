@@ -116,21 +116,18 @@ export async function deleteUser(username) {
 
 /**
  *
- * Fetches the user based on username.
+ * Fetches all existing users.
  *
  * Example Usage.
  *
- * await getUser("udk");
+ * await getUser();
  *
- * @param {string} username The user's username.
- * @returns the user.
+ * @returns an array of users.
  *
  */
-export async function getUser(username) {
+export async function getUsers() {
   try {
-    return (
-      await db.query(`SELECT * FROM Users WHERE username = ?`, [username])
-    )[0];
+    return (await db.query(`SELECT * FROM users`))[0];
   } catch (error) {
     console.error(`Failed to fetch user:`, error);
   }

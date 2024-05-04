@@ -1,15 +1,42 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Separator from "../Separator";
 import UserContext from "../UserContext";
 
+import { AiFillLike } from "react-icons/ai";
+import { AiFillDislike } from "react-icons/ai";
+import { MdOutlineReply } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+
 export default function Comments({ mangaID, chapterID = null }) {
   const { user } = useContext(UserContext);
   const [comments, setComments] = useState([]);
+  const [users, setUsers] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  useEffect(() => {}, [refresh]);
+  // Fetch comments
+  useEffect(() => {
+    axios
+      .get("/api/getComments", {
+        params: {
+          mangaID: mangaID,
+          chapterID: chapterID,
+        },
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => setComments(response.data))
+      .catch((error) => console.error(`Failed to fetch comments:`, error));
+  }, [mangaID, chapterID, refresh]);
+
+  // Fetch users
+  useEffect(() => {
+    axios
+      .get(`/api/users`)
+      .then((response) => setUsers(response.data))
+      .catch((error) => console.error(`Failed to fetch users:`, error));
+  }, []);
 
   function toggleRefresh() {
     setRefresh(!refresh);
@@ -31,14 +58,55 @@ export default function Comments({ mangaID, chapterID = null }) {
         )
         .then(() => {
           commentContent.value = "";
+          toggleRefresh();
         })
         .catch((error) => console.error(`Failed to post comment:`, error));
   }
+
+  const DisplayUser = ({ id }) => {
+    const userToDisplay = users.find((u) => u.userID === id);
+    return (
+      <div className="flex items-center">
+        <img src={`${userToDisplay.profilePicture}`} />
+        <div className="pl-2">{userToDisplay.username}</div>
+      </div>
+    );
+  };
+
+  const DisplayOptions = (comment) => {
+    const icons = [
+      { icon: <AiFillLike />, count: 1, tooltip: "Like" },
+      { icon: <AiFillDislike />, count: 0, tooltip: "Dislike" },
+      { icon: <MdOutlineReply />, tooltip: "Reply" },
+      { icon: <FaEdit />, tooltip: "Edit" },
+      { icon: <MdDelete />, tooltip: "Delete" },
+    ];
+
+    return (
+      <div className="flex mt-2">
+        {icons.map((item, index) => (
+          <div
+            key={index}
+            className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
+            title={item.tooltip}
+          >
+            <div className="flex items-center">
+              {item.icon}
+              {item.count !== undefined && (
+                <span className="ml-1">{item.count}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section className="w-full bg-quaternary h-auto mt-10 p-4 font-poppins text-white">
       <div>Comments</div>
       <Separator />
+      {/* Input Area */}
       <textarea
         id="commentBox"
         placeholder="Share your thoughts..."
@@ -52,6 +120,18 @@ export default function Comments({ mangaID, chapterID = null }) {
           Post
         </button>
       </div>
+      {/* Display Area */}
+      {comments.length > 0 &&
+        comments.map((comment) => (
+          <div
+            key={comment.commentID}
+            className="border-2 border-primary rounded-md my-2 p-2"
+          >
+            {users.length > 0 && <DisplayUser id={comment.userID} />}
+            <div className="ml-1">{comment.content}</div>
+            <DisplayOptions comment={comment} />
+          </div>
+        ))}
     </section>
   );
 }

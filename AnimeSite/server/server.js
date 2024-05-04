@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import fs from "fs";
+import fs, { stat } from "fs";
 import * as databaseFunctions from "./database.js";
 
 const PORT = 8080;
@@ -85,14 +85,10 @@ app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
 /**
  * Retrieve users.
  */
-app.get("/api/user/:username", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
-    const username = req.params.username;
-    const userData = await databaseFunctions.getUser(username);
-    userData[0].bookmarks = await databaseFunctions.getBookmarks(
-      userData[0].userID
-    );
-    res.status(200).json(userData);
+    const users = await databaseFunctions.getUsers();
+    res.status(200).json(users);
   } catch (error) {
     console.error(`Couldn't fetch users:`, error);
     res.status(500).json({ error: "Error fetching users." });
@@ -365,6 +361,19 @@ app.post("/api/postComment", async (req, res) => {
   } catch (error) {
     console.error(`Failed to post comment:`, error);
     res.status(500).send(`Failed to post comment.`);
+  }
+});
+
+app.get("/api/getComments", async (req, res) => {
+  try {
+    const mangaID = req.query.mangaID;
+    const chapterID = req.query.chapterID ?? null;
+
+    const comments = await databaseFunctions.getComments(mangaID, chapterID);
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(`Failed to fetch comments:`, error);
+    res.status(500).send(`Failed to fetch comments.`);
   }
 });
 
