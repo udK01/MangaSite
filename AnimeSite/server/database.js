@@ -1070,3 +1070,21 @@ export async function createComment(
     console.error(`Failed to create comment:`, error);
   }
 }
+
+export async function getComments(mangaID, chapterID = null) {
+  try {
+    let sql = "SELECT * FROM comments WHERE mangaID = ?";
+    let params = [mangaID];
+
+    if (chapterID !== null) {
+      sql += " AND chapterID = ?";
+      params.push(chapterID);
+    }
+
+    return (await db.query(sql, params))[0];
+  } catch (error) {
+    console.error(`Failed to get comments:`, error);
+  }
+}
+
+console.log(await getComments(30));

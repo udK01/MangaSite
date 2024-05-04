@@ -6,6 +6,14 @@ import UserContext from "../UserContext";
 
 export default function Comments({ mangaID, chapterID = null }) {
   const { user } = useContext(UserContext);
+  const [comments, setComments] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {}, [refresh]);
+
+  function toggleRefresh() {
+    setRefresh(!refresh);
+  }
 
   function handleSubmit() {
     const commentContent = document.getElementById("commentBox").value;
