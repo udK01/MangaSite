@@ -1032,3 +1032,27 @@ async function changeMangaRating(mangaID) {
     console.error(`Failed to change manga rating:`, error);
   }
 }
+
+////////////
+//Comments//
+////////////
+
+async function createComment(
+  userID,
+  mangaID,
+  content,
+  chapterID = null,
+  parent = null
+) {
+  try {
+    await db.query(
+      `INSERT INTO comments (userID, mangaID, chapterID, parent, content) VALUES (?, ?, ?, ?, ?)`,
+      [userID, mangaID, chapterID, parent, content]
+    );
+    console.log("Comment created successfully.");
+  } catch (error) {
+    console.error(`Failed to create comment:`, error);
+  }
+}
+
+await createComment(6, 30, "STEVIEEE was here.");
