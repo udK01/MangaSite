@@ -1037,6 +1037,23 @@ async function changeMangaRating(mangaID) {
 //Comments//
 ////////////
 
+/**
+ *
+ * Creates a new comment.
+ *
+ * Usage Example
+ *
+ * await createComment(1, 12, "Hello...", 3);
+ *
+ * The example above automatically nulls "parent".
+ * Both chapterID and parent are nullable.
+ *
+ * @param {int} userID The user's unique identifier.
+ * @param {int} mangaID The manga's unique identifier.
+ * @param {string} content The comment's content.
+ * @param {int} chapterID The chapter's unique identifier.
+ * @param {int} parent The comment's parent comment's ID.
+ */
 export async function createComment(
   userID,
   mangaID,
