@@ -118,7 +118,7 @@ export default function Comments({ mangaID, chapterID = null }) {
           <div className="mt-2">
             <textarea
               id={`replyBox${comment.comment.commentID}`}
-              placeholder="Share your thoughts..."
+              placeholder="Reply..."
               className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
             />
             <div className="w-full flex justify-end">
