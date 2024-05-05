@@ -187,7 +187,7 @@ export default function Comments({ mangaID, chapterID = null }) {
               <div className="text-[16px] leading-2 mt-2 ml-2">
                 {comment.content}
               </div>
-
+              <DisplayOptions comment={comment} />
               {/* Recursively render replies */}
               {comment.replies &&
                 comment.replies.map((reply) => (
@@ -195,7 +195,6 @@ export default function Comments({ mangaID, chapterID = null }) {
                 ))}
             </>
           )}
-          <DisplayOptions comment={comment} />
         </div>
       );
     };
