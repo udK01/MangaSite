@@ -4,6 +4,7 @@ import axios from "axios";
 import Separator from "../Separator";
 import UserContext from "../UserContext";
 
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AiFillLike } from "react-icons/ai";
 import { AiFillDislike } from "react-icons/ai";
 import { MdOutlineReply } from "react-icons/md";
@@ -89,8 +90,13 @@ export default function Comments({ mangaID, chapterID = null }) {
     const userToDisplay = users.find((u) => u.userID === id);
     return (
       <div className="flex items-center">
-        <img src={`${userToDisplay.profilePicture}`} />
-        <div className="pl-2">{userToDisplay.username}</div>
+        <img
+          src={`${userToDisplay.profilePicture}`}
+          className="hover:cursor-pointer"
+        />
+        <div className="text-[18px] pl-2 hover:cursor-pointer hover:text-primary">
+          {userToDisplay.username}
+        </div>
       </div>
     );
   };
@@ -152,36 +158,85 @@ export default function Comments({ mangaID, chapterID = null }) {
     );
   };
 
+  const DisplayArea = ({ comments }) => {
+    const DisplayComment = ({ comment }) => {
+      const [collapsed, setCollapsed] = useState(false);
+
+      const handleToggleCollapse = () => {
+        setCollapsed(!collapsed);
+      };
+
+      return (
+        <div className="border-l-2 border-primary my-2 pl-6">
+          <div className="w-full flex justify-between">
+            {users.length > 0 && <DisplayUser id={comment.userID} />}
+            <button
+              onClick={handleToggleCollapse}
+              className="text-white -translate-x-[10px]"
+            >
+              {collapsed ? <FaChevronDown /> : <FaChevronUp />}
+            </button>
+          </div>
+
+          {collapsed ? (
+            <div className="text-[12px] font-bold leading-[2px] mt-2 ml-2 tracking-widest">
+              ...
+            </div>
+          ) : (
+            <>
+              <div className="text-[16px] leading-2 mt-2 ml-2">
+                {comment.content}
+              </div>
+
+              {/* Recursively render replies */}
+              {comment.replies &&
+                comment.replies.map((reply) => (
+                  <DisplayComment key={reply.commentID} comment={reply} />
+                ))}
+            </>
+          )}
+          <DisplayOptions comment={comment} />
+        </div>
+      );
+    };
+
+    return (
+      <div>
+        {comments.map((comment) => (
+          <DisplayComment key={comment.commentID} comment={comment} />
+        ))}
+      </div>
+    );
+  };
+
+  const InputArea = () => {
+    return (
+      <>
+        <textarea
+          id="commentBox"
+          placeholder="Share your thoughts..."
+          className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
+        />
+        <div className="w-full flex justify-end">
+          <button
+            className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
+            onClick={handleSubmit}
+          >
+            Post
+          </button>
+        </div>
+      </>
+    );
+  };
+
   return (
     <section className="w-full bg-quaternary h-auto mt-10 p-4 font-poppins text-white">
       <div>Comments</div>
       <Separator />
       {/* Input Area */}
-      <textarea
-        id="commentBox"
-        placeholder="Share your thoughts..."
-        className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
-      />
-      <div className="w-full flex justify-end">
-        <button
-          className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
-          onClick={handleSubmit}
-        >
-          Post
-        </button>
-      </div>
+      <InputArea />
       {/* Display Area */}
-      {comments.length > 0 &&
-        comments.map((comment) => (
-          <div
-            key={comment.commentID}
-            className="border-2 border-primary rounded-md my-2 p-2"
-          >
-            {users.length > 0 && <DisplayUser id={comment.userID} />}
-            <div className="ml-1">{comment.content}</div>
-            <DisplayOptions comment={comment} />
-          </div>
-        ))}
+      <DisplayArea comments={comments} />
     </section>
   );
 }

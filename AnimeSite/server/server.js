@@ -392,7 +392,32 @@ app.get("/api/getComments", async (req, res) => {
     const chapterID = req.query.chapterID ?? null;
 
     const comments = await databaseFunctions.getComments(mangaID, chapterID);
-    res.status(200).json(comments);
+
+    // Create a map to store comments by their IDs for easy retrieval
+    const commentsMap = new Map();
+    comments.forEach((comment) => {
+      commentsMap.set(comment.commentID, comment);
+      // Initialize replies field for each comment
+      comment.replies = [];
+    });
+
+    // Iterate through comments to add replies
+    comments.forEach((comment) => {
+      if (comment.parent) {
+        const parentComment = commentsMap.get(comment.parent);
+        if (parentComment) {
+          parentComment.replies.push(comment);
+        } else {
+          console.error(
+            `Parent comment not found for commentID: ${comment.commentID}`
+          );
+        }
+      }
+    });
+
+    const topLevelComments = comments.filter((comment) => !comment.parent);
+
+    res.status(200).json(topLevelComments);
   } catch (error) {
     console.error(`Failed to fetch comments:`, error);
     res.status(500).send(`Failed to fetch comments.`);
