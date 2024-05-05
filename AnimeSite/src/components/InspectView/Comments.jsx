@@ -119,7 +119,9 @@ export default function Comments({ mangaID, chapterID = null }) {
         icon: (
           <FaEdit
             className={`${
-              user.length > 0 && user[0].userID !== comment.comment.userID
+              user.length === 0 ||
+              (user[0].accessLevel === 0 &&
+                user[0].userID !== comment.comment.userID)
                 ? "hidden"
                 : ""
             }`}
@@ -131,7 +133,9 @@ export default function Comments({ mangaID, chapterID = null }) {
         icon: (
           <MdDelete
             className={`${
-              user.length > 0 && user[0].userID !== comment.comment.userID
+              user.length === 0 ||
+              (user[0].accessLevel === 0 &&
+                user[0].userID !== comment.comment.userID)
                 ? "hidden"
                 : ""
             }`}

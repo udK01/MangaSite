@@ -116,6 +116,27 @@ export async function deleteUser(username) {
 
 /**
  *
+ * Fetches the specified user.
+ *
+ * Example Usage.
+ *
+ * await getUser(udK);
+ *
+ * @returns the specified user.
+ *
+ */
+export async function getUser(username) {
+  try {
+    return (
+      await db.query(`SELECT * FROM users WHERE username = ?`, [username])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to fetch user:`, error);
+  }
+}
+
+/**
+ *
  * Fetches all existing users.
  *
  * Example Usage.
@@ -129,7 +150,7 @@ export async function getUsers() {
   try {
     return (await db.query(`SELECT * FROM users`))[0];
   } catch (error) {
-    console.error(`Failed to fetch user:`, error);
+    console.error(`Failed to fetch users:`, error);
   }
 }
 
