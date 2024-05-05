@@ -63,6 +63,11 @@ export default function Comments({ mangaID, chapterID = null }) {
         .catch((error) => console.error(`Failed to post comment:`, error));
   }
 
+  function handleReply(commentID) {
+    const replyContent = document.getElementById(`replyBox${commentID}`);
+    console.log(replyContent.value);
+  }
+
   const DisplayUser = ({ id }) => {
     const userToDisplay = users.find((u) => u.userID === id);
     return (
@@ -74,31 +79,59 @@ export default function Comments({ mangaID, chapterID = null }) {
   };
 
   const DisplayOptions = (comment) => {
+    const [showReplyBox, setShowReplyBox] = useState(false);
+
     const icons = [
-      { icon: <AiFillLike />, count: 1, tooltip: "Like" },
-      { icon: <AiFillDislike />, count: 0, tooltip: "Dislike" },
-      { icon: <MdOutlineReply />, tooltip: "Reply" },
+      { icon: <AiFillLike />, count: comment.comment.likes, tooltip: "Like" },
+      {
+        icon: <AiFillDislike />,
+        count: comment.comment.dislikes,
+        tooltip: "Dislike",
+      },
+      {
+        icon: <MdOutlineReply onClick={() => setShowReplyBox(!showReplyBox)} />,
+        tooltip: "Reply",
+      },
       { icon: <FaEdit />, tooltip: "Edit" },
       { icon: <MdDelete />, tooltip: "Delete" },
     ];
 
     return (
-      <div className="flex mt-2 items-center">
-        {icons.map((item, index) => (
-          <div
-            key={index}
-            className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
-            title={item.tooltip}
-          >
-            <div className="flex items-center">
-              {item.icon}
-              {item.count !== undefined && (
-                <span className="ml-1">{item.count}</span>
-              )}
+      <>
+        <div className="flex mt-2 items-center">
+          {icons.map((item, index) => (
+            <div
+              key={index}
+              className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
+              title={item.tooltip}
+            >
+              <div className="flex items-center">
+                {item.icon}
+                {item.count !== undefined && (
+                  <span className="ml-1">{item.count}</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        {showReplyBox && (
+          <div className="mt-2">
+            <textarea
+              id={`replyBox${comment.comment.commentID}`}
+              placeholder="Share your thoughts..."
+              className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
+            />
+            <div className="w-full flex justify-end">
+              <button
+                className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
+                onClick={() => handleReply(comment.comment.commentID)}
+              >
+                Post
+              </button>
             </div>
           </div>
-        ))}
-      </div>
+        )}
+      </>
     );
   };
 
