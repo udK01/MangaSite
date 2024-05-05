@@ -115,8 +115,30 @@ export default function Comments({ mangaID, chapterID = null }) {
         icon: <MdOutlineReply onClick={() => setShowReplyBox(!showReplyBox)} />,
         tooltip: "Reply",
       },
-      { icon: <FaEdit />, tooltip: "Edit" },
-      { icon: <MdDelete />, tooltip: "Delete" },
+      {
+        icon: (
+          <FaEdit
+            className={`${
+              user.length > 0 && user[0].userID !== comment.comment.userID
+                ? "hidden"
+                : ""
+            }`}
+          />
+        ),
+        tooltip: "Edit",
+      },
+      {
+        icon: (
+          <MdDelete
+            className={`${
+              user.length > 0 && user[0].userID !== comment.comment.userID
+                ? "hidden"
+                : ""
+            }`}
+          />
+        ),
+        tooltip: "Delete",
+      },
     ];
 
     return (
@@ -158,7 +180,7 @@ export default function Comments({ mangaID, chapterID = null }) {
     );
   };
 
-  const DisplayArea = ({ comments }) => {
+  const DisplayArea = () => {
     const DisplayComment = ({ comment }) => {
       const [collapsed, setCollapsed] = useState(false);
 
@@ -232,10 +254,8 @@ export default function Comments({ mangaID, chapterID = null }) {
     <section className="w-full bg-quaternary h-auto mt-10 p-4 font-poppins text-white">
       <div>Comments</div>
       <Separator />
-      {/* Input Area */}
       <InputArea />
-      {/* Display Area */}
-      <DisplayArea comments={comments} />
+      <DisplayArea />
     </section>
   );
 }
