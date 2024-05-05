@@ -65,7 +65,24 @@ export default function Comments({ mangaID, chapterID = null }) {
 
   function handleReply(commentID) {
     const replyContent = document.getElementById(`replyBox${commentID}`);
-    console.log(replyContent.value);
+    user &&
+      axios
+        .post(
+          "/api/postReply",
+          {
+            userID: user[0].userID,
+            mangaID: mangaID,
+            chapterID: chapterID,
+            content: replyContent.value,
+            parent: commentID,
+          },
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then(() => {
+          replyContent.value = "";
+          toggleRefresh();
+        })
+        .catch((error) => console.error(`Failed to post comment:`, error));
   }
 
   const DisplayUser = ({ id }) => {

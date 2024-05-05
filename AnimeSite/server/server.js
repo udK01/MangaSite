@@ -364,6 +364,28 @@ app.post("/api/postComment", async (req, res) => {
   }
 });
 
+app.post("/api/postReply", async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const mangaID = req.body.mangaID;
+    const chapterID = req.body.chapterID;
+    const content = req.body.content;
+    const parent = req.body.parent;
+
+    await databaseFunctions.createComment(
+      userID,
+      mangaID,
+      content,
+      chapterID,
+      parent
+    );
+    res.status(200).send(`success`);
+  } catch (error) {
+    console.error(`Failed to post comment:`, error);
+    res.status(500).send(`Failed to post comment.`);
+  }
+});
+
 app.get("/api/getComments", async (req, res) => {
   try {
     const mangaID = req.query.mangaID;
