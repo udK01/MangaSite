@@ -44,7 +44,7 @@ const db = mysql
 export async function createUser(username, password, accessLevel = 0) {
   try {
     // Temporary "Default" Profile Picture.
-    const defaultProfilePicture = "../public/vite.svg";
+    const defaultProfilePicture = "/vite.svg";
 
     // Sql Query.
     const query = `
@@ -1102,5 +1102,16 @@ export async function getComments(mangaID, chapterID = null) {
     return (await db.query(sql, params))[0];
   } catch (error) {
     console.error(`Failed to get comments:`, error);
+  }
+}
+
+export async function deleteComment(commentID) {
+  try {
+    await db.query(
+      `UPDATE comments SET userID = ?, content = ? WHERE commentID = ?`,
+      [0, "This comment has been removed.", commentID]
+    );
+  } catch (error) {
+    console.error(`Failed to delete comment:`, error);
   }
 }

@@ -86,13 +86,20 @@ export default function Comments({ mangaID, chapterID = null }) {
         .catch((error) => console.error(`Failed to post comment:`, error));
   }
 
+  function handleDelete(comment) {
+    axios
+      .delete(`/api/deleteComment/${comment.commentID}`)
+      .then(() => toggleRefresh())
+      .catch((error) => console.error(`Failed to delete comment:`, error));
+  }
+
   const DisplayUser = ({ id }) => {
     const userToDisplay = users.find((u) => u.userID === id);
     return (
       <div className="flex items-center">
         <img
           src={`${userToDisplay.profilePicture}`}
-          className="hover:cursor-pointer"
+          className="hover:cursor-pointer size-12"
         />
         <div className="text-[18px] pl-2 hover:cursor-pointer hover:text-primary">
           {userToDisplay.username}
@@ -139,6 +146,7 @@ export default function Comments({ mangaID, chapterID = null }) {
                 ? "hidden"
                 : ""
             }`}
+            onClick={() => handleDelete(comment.comment)}
           />
         ),
         tooltip: "Delete",
