@@ -1115,3 +1115,14 @@ export async function deleteComment(commentID) {
     console.error(`Failed to delete comment:`, error);
   }
 }
+
+export async function editComment(commentID, content) {
+  try {
+    await db.query(`UPDATE comments SET content = ? WHERE commentID = ?`, [
+      content,
+      commentID,
+    ]);
+  } catch (error) {
+    console.error(`Failed to delete comment:`, error);
+  }
+}

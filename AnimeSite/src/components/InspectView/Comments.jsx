@@ -10,6 +10,7 @@ import { AiFillDislike } from "react-icons/ai";
 import { MdOutlineReply } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
 export default function Comments({ mangaID, chapterID = null }) {
   const { user } = useContext(UserContext);
@@ -93,6 +94,20 @@ export default function Comments({ mangaID, chapterID = null }) {
       .catch((error) => console.error(`Failed to delete comment:`, error));
   }
 
+  function handleEdit(commentID) {
+    const editBox = document.getElementById(`editBox${commentID}`);
+    axios
+      .post(`/api/editComment`, {
+        commentID: commentID,
+        content: editBox.value,
+      })
+      .then(() => {
+        toggleRefresh();
+        editBox.value = "";
+      })
+      .catch((error) => console.error(`Failed to delete comment:`, error));
+  }
+
   const DisplayUser = ({ id }) => {
     const userToDisplay = users.find((u) => u.userID === id);
     return (
@@ -108,14 +123,13 @@ export default function Comments({ mangaID, chapterID = null }) {
     );
   };
 
-  const DisplayOptions = (comment) => {
+  const DisplayOptions = ({ comment, toggleEditing }) => {
     const [showReplyBox, setShowReplyBox] = useState(false);
-
     const icons = [
-      { icon: <AiFillLike />, count: comment.comment.likes, tooltip: "Like" },
+      { icon: <AiFillLike />, count: comment.likes, tooltip: "Like" },
       {
         icon: <AiFillDislike />,
-        count: comment.comment.dislikes,
+        count: comment.dislikes,
         tooltip: "Dislike",
       },
       {
@@ -127,11 +141,11 @@ export default function Comments({ mangaID, chapterID = null }) {
           <FaEdit
             className={`${
               user.length === 0 ||
-              (user[0].accessLevel === 0 &&
-                user[0].userID !== comment.comment.userID)
+              (user[0].accessLevel === 0 && user[0].userID !== comment.userID)
                 ? "hidden"
                 : ""
             }`}
+            onClick={() => toggleEditing()}
           />
         ),
         tooltip: "Edit",
@@ -141,12 +155,11 @@ export default function Comments({ mangaID, chapterID = null }) {
           <MdDelete
             className={`${
               user.length === 0 ||
-              (user[0].accessLevel === 0 &&
-                user[0].userID !== comment.comment.userID)
+              (user[0].accessLevel === 0 && user[0].userID !== comment.userID)
                 ? "hidden"
                 : ""
             }`}
-            onClick={() => handleDelete(comment.comment)}
+            onClick={() => handleDelete(comment)}
           />
         ),
         tooltip: "Delete",
@@ -195,9 +208,14 @@ export default function Comments({ mangaID, chapterID = null }) {
   const DisplayArea = () => {
     const DisplayComment = ({ comment }) => {
       const [collapsed, setCollapsed] = useState(false);
+      const [editing, setEditing] = useState(false);
 
       const handleToggleCollapse = () => {
         setCollapsed(!collapsed);
+      };
+
+      const toggleEditing = () => {
+        setEditing(!editing);
       };
 
       return (
@@ -218,10 +236,25 @@ export default function Comments({ mangaID, chapterID = null }) {
             </div>
           ) : (
             <>
-              <div className="text-[16px] leading-2 mt-2 ml-2">
-                {comment.content}
-              </div>
-              <DisplayOptions comment={comment} />
+              {editing ? (
+                <div className="flex items-center">
+                  <textarea
+                    id={`editBox${comment.commentID}`}
+                    className="w-full text-[16px] place-content-center px-2 mt-2 ml-2 bg-secondary border-2 border-primary rounded-md"
+                    placeholder={`${comment.content}`}
+                  />
+                  <IoIosCheckmarkCircle
+                    className="size-10 mx-4 transition-colors duration-200 hover:cursor-pointer hover:text-primary"
+                    onClick={() => handleEdit(comment.commentID)}
+                  />
+                </div>
+              ) : (
+                <div className="text-[16px] leading-2 mt-2 ml-2">
+                  {comment.content}
+                </div>
+              )}
+
+              <DisplayOptions comment={comment} toggleEditing={toggleEditing} />
               {/* Recursively render replies */}
               {comment.replies &&
                 comment.replies.map((reply) => (

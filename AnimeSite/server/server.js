@@ -435,6 +435,18 @@ app.delete("/api/deleteComment/:id", async (req, res) => {
   }
 });
 
+app.post("/api/editComment", async (req, res) => {
+  try {
+    const commentID = req.body.commentID;
+    const content = req.body.content;
+    databaseFunctions.editComment(commentID, content);
+    res.status(200).send(`success`);
+  } catch (error) {
+    console.error(`Failed to delete comment:`, error);
+    res.status(500).send(`error`);
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
