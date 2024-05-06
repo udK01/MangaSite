@@ -388,21 +388,41 @@ app.post("/api/postReply", async (req, res) => {
 
 app.get("/api/getComments", async (req, res) => {
   try {
+    const userID = req.query.userID;
     const mangaID = req.query.mangaID;
     const chapterID = req.query.chapterID ?? null;
 
     const comments = await databaseFunctions.getComments(mangaID, chapterID);
 
+    const updatedComments = [];
+
+    for (const comment of comments) {
+      const reaction = await databaseFunctions.getReaction(
+        userID,
+        comment.commentID
+      );
+      comment.reaction = reaction ?? "abstain";
+      comment.likes = await databaseFunctions.countReactions(
+        comment.commentID,
+        "like"
+      );
+      comment.dislikes = await databaseFunctions.countReactions(
+        comment.commentID,
+        "dislike"
+      );
+      updatedComments.push(comment);
+    }
+
     // Create a map to store comments by their IDs for easy retrieval
     const commentsMap = new Map();
-    comments.forEach((comment) => {
+    updatedComments.forEach((comment) => {
       commentsMap.set(comment.commentID, comment);
       // Initialize replies field for each comment
       comment.replies = [];
     });
 
     // Iterate through comments to add replies
-    comments.forEach((comment) => {
+    updatedComments.forEach((comment) => {
       if (comment.parent) {
         const parentComment = commentsMap.get(comment.parent);
         if (parentComment) {
@@ -415,7 +435,9 @@ app.get("/api/getComments", async (req, res) => {
       }
     });
 
-    const topLevelComments = comments.filter((comment) => !comment.parent);
+    const topLevelComments = updatedComments.filter(
+      (comment) => !comment.parent
+    );
 
     res.status(200).json(topLevelComments);
   } catch (error) {
@@ -443,6 +465,19 @@ app.post("/api/editComment", async (req, res) => {
     res.status(200).send(`success`);
   } catch (error) {
     console.error(`Failed to delete comment:`, error);
+    res.status(500).send(`error`);
+  }
+});
+
+app.post("/api/setReaction", async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const commentID = req.body.commentID;
+    const reaction = req.body.reaction;
+    await databaseFunctions.reactToComment(userID, commentID, reaction);
+    res.status(200).send(`success`);
+  } catch (error) {
+    console.error(`Failed to react to comment:`, error);
     res.status(500).send(`error`);
   }
 });

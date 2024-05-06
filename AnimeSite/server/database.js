@@ -1126,3 +1126,54 @@ export async function editComment(commentID, content) {
     console.error(`Failed to delete comment:`, error);
   }
 }
+
+export async function reactToComment(userID, commentID, reaction) {
+  try {
+    switch (reaction) {
+      case "like":
+      case "dislike":
+      case "abstain":
+        await db.query(
+          `
+          INSERT INTO user_likes_dislikes (userID, commentID, reaction)
+          VALUES (?, ?, ?)
+          ON DUPLICATE KEY UPDATE reaction = VALUES(reaction)
+        `,
+          [userID, commentID, reaction]
+        );
+        break;
+      default:
+        throw new Error(`Invalid reaction: ${reaction}`);
+    }
+  } catch (error) {
+    console.error(`Failed to react to comment:`, error);
+  }
+}
+
+export async function getReaction(userID, commentID) {
+  try {
+    const reaction = (
+      await db.query(
+        `SELECT reaction FROM user_likes_dislikes WHERE userID = ? AND commentID = ?`,
+        [userID, commentID]
+      )
+    )[0];
+    return reaction.length > 0 ? reaction[0].reaction : "";
+  } catch (error) {
+    console.error(`Failed to get reaction:`, error);
+  }
+}
+
+export async function countReactions(commentID, reaction) {
+  try {
+    const count = (
+      await db.query(
+        `SELECT COUNT(*) as c FROM user_likes_dislikes WHERE commentID = ? AND reaction = ?`,
+        [commentID, reaction]
+      )
+    )[0];
+    return count.length > 0 ? count[0].c : 0;
+  } catch (error) {
+    console.error(`Failed to count reactions:`, error);
+  }
+}

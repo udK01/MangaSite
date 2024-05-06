@@ -10,7 +10,10 @@ import { AiFillDislike } from "react-icons/ai";
 import { MdOutlineReply } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { IoIosCheckmarkCircle } from "react-icons/io";
+import {
+  IoIosCheckmarkCircleOutline,
+  IoIosCloseCircleOutline,
+} from "react-icons/io";
 
 export default function Comments({ mangaID, chapterID = null }) {
   const { user } = useContext(UserContext);
@@ -23,6 +26,7 @@ export default function Comments({ mangaID, chapterID = null }) {
     axios
       .get("/api/getComments", {
         params: {
+          userID: user[0].userID,
           mangaID: mangaID,
           chapterID: chapterID,
         },
@@ -108,6 +112,17 @@ export default function Comments({ mangaID, chapterID = null }) {
       .catch((error) => console.error(`Failed to delete comment:`, error));
   }
 
+  function handleReaction(commentID, reaction) {
+    axios
+      .post("/api/setReaction", {
+        userID: user[0].userID,
+        commentID: commentID,
+        reaction: reaction,
+      })
+      .then(() => toggleRefresh())
+      .catch((error) => console.error(`Failed to react:`, error));
+  }
+
   const DisplayUser = ({ id }) => {
     const userToDisplay = users.find((u) => u.userID === id);
     return (
@@ -125,10 +140,35 @@ export default function Comments({ mangaID, chapterID = null }) {
 
   const DisplayOptions = ({ comment, toggleEditing }) => {
     const [showReplyBox, setShowReplyBox] = useState(false);
+    const [reaction, setReaction] = useState(comment.reaction);
+
     const icons = [
-      { icon: <AiFillLike />, count: comment.likes, tooltip: "Like" },
       {
-        icon: <AiFillDislike />,
+        icon: (
+          <AiFillLike
+            className={`${reaction === "like" ? "text-primary" : ""}`}
+            onClick={() => {
+              const newReaction = reaction === "like" ? "abstain" : "like";
+              setReaction(newReaction);
+              handleReaction(comment.commentID, newReaction);
+            }}
+          />
+        ),
+        count: comment.likes,
+        tooltip: "Like",
+      },
+      {
+        icon: (
+          <AiFillDislike
+            className={`${reaction === "dislike" ? "text-primary" : ""}`}
+            onClick={() => {
+              const newReaction =
+                reaction === "dislike" ? "abstain" : "dislike";
+              setReaction(newReaction);
+              handleReaction(comment.commentID, newReaction);
+            }}
+          />
+        ),
         count: comment.dislikes,
         tooltip: "Dislike",
       },
@@ -187,14 +227,14 @@ export default function Comments({ mangaID, chapterID = null }) {
         {showReplyBox && (
           <div className="mt-2">
             <textarea
-              id={`replyBox${comment.comment.commentID}`}
+              id={`replyBox${comment.commentID}`}
               placeholder="Reply..."
               className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
             />
             <div className="w-full flex justify-end">
               <button
                 className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
-                onClick={() => handleReply(comment.comment.commentID)}
+                onClick={() => handleReply(comment.commentID)}
               >
                 Post
               </button>
@@ -209,6 +249,7 @@ export default function Comments({ mangaID, chapterID = null }) {
     const DisplayComment = ({ comment }) => {
       const [collapsed, setCollapsed] = useState(false);
       const [editing, setEditing] = useState(false);
+      const [content, setContent] = useState(comment.content);
 
       const handleToggleCollapse = () => {
         setCollapsed(!collapsed);
@@ -241,12 +282,19 @@ export default function Comments({ mangaID, chapterID = null }) {
                   <textarea
                     id={`editBox${comment.commentID}`}
                     className="w-full text-[16px] place-content-center px-2 mt-2 ml-2 bg-secondary border-2 border-primary rounded-md"
-                    placeholder={`${comment.content}`}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                   />
-                  <IoIosCheckmarkCircle
-                    className="size-10 mx-4 transition-colors duration-200 hover:cursor-pointer hover:text-primary"
-                    onClick={() => handleEdit(comment.commentID)}
-                  />
+                  <div className="mx-4 space-y-2">
+                    <IoIosCheckmarkCircleOutline
+                      className="size-7 mt-2 transition-colors duration-200 hover:cursor-pointer hover:text-primary"
+                      onClick={() => handleEdit(comment.commentID)}
+                    />
+                    <IoIosCloseCircleOutline
+                      className="size-7 transition-colors duration-200 hover:cursor-pointer hover:text-red-500"
+                      onClick={() => toggleEditing()}
+                    />
+                  </div>
                 </div>
               ) : (
                 <div className="text-[16px] leading-2 mt-2 ml-2">
