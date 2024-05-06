@@ -26,7 +26,7 @@ export default function Comments({ mangaID, chapterID = null }) {
     axios
       .get("/api/getComments", {
         params: {
-          userID: user[0].userID,
+          userID: user.length > 0 && user[0].userID,
           mangaID: mangaID,
           chapterID: chapterID,
         },
@@ -206,23 +206,96 @@ export default function Comments({ mangaID, chapterID = null }) {
       },
     ];
 
+    const signedOutIcons = [
+      {
+        icon: (
+          <AiFillLike
+            className={`hover:cursor-pointer hover:text-primary`}
+            onClick={() => console.log(`Add login request feature.`)}
+          />
+        ),
+        count: comment.likes,
+        tooltip: "Like",
+      },
+      {
+        icon: (
+          <AiFillDislike
+            className={`hover:cursor-pointer hover:text-primary`}
+            onClick={() => console.log(`Add login request feature.`)}
+          />
+        ),
+        count: comment.dislikes,
+        tooltip: "Dislike",
+      },
+      {
+        icon: (
+          <MdOutlineReply
+            className={`hover:cursor-pointer hover:text-primary`}
+            onClick={() => console.log(`Add login request feature.`)}
+          />
+        ),
+        tooltip: "Reply",
+      },
+      {
+        icon: (
+          <FaEdit
+            className={`hover:cursor-pointer hover:text-primary`}
+            onClick={() => console.log(`Add login request feature.`)}
+          />
+        ),
+        tooltip: "Edit",
+      },
+      {
+        icon: (
+          <MdDelete
+            className={`hover:cursor-pointer hover:text-primary`}
+            onClick={() => console.log(`Add login request feature.`)}
+          />
+        ),
+        tooltip: "Delete",
+      },
+    ];
+
     return (
       <>
         <div className="flex mt-2 items-center">
-          {icons.map((item, index) => (
-            <div
-              key={index}
-              className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
-              title={item.tooltip}
-            >
-              <div className="flex items-center">
-                {item.icon}
-                {item.count !== undefined && (
-                  <span className="ml-1">{item.count}</span>
-                )}
-              </div>
-            </div>
-          ))}
+          {user.length > 0 ? (
+            <>
+              {/* Logged In User POV */}
+              {icons.map((item, index) => (
+                <div
+                  key={index}
+                  className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
+                  title={item.tooltip}
+                >
+                  <div className="flex items-center">
+                    {item.icon}
+                    {item.count !== undefined && (
+                      <span className="ml-1">{item.count}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {/* Logged Out User POV */}
+              {signedOutIcons.map((item, index) => (
+                <div
+                  key={index}
+                  className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
+                  title={item.tooltip}
+                >
+                  <div className="flex items-center">
+                    {item.icon}
+                    {item.count !== undefined && (
+                      <span className="ml-1">{item.count}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
         {showReplyBox && (
           <div className="mt-2">
