@@ -405,12 +405,21 @@ export default function Comments({ mangaID, chapterID = null }) {
           className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
         />
         <div className="w-full flex justify-end">
-          <button
-            className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
-            onClick={handleSubmit}
-          >
-            Post
-          </button>
+          {user.length > 0 ? (
+            <button
+              className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
+              onClick={handleSubmit}
+            >
+              Post
+            </button>
+          ) : (
+            <button
+              className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
+              onClick={() => console.log(`Add login request feature.`)}
+            >
+              Post
+            </button>
+          )}
         </div>
       </>
     );
