@@ -147,30 +147,29 @@ export default function Comments({ mangaID, chapterID = null }) {
         icon: (
           <AiFillLike
             className={`${reaction === "like" ? "text-primary" : ""}`}
-            onClick={() => {
-              const newReaction = reaction === "like" ? "abstain" : "like";
-              setReaction(newReaction);
-              handleReaction(comment.commentID, newReaction);
-            }}
           />
         ),
         count: comment.likes,
         tooltip: "Like",
+        onClick: () => {
+          const newReaction = reaction === "like" ? "abstain" : "like";
+          setReaction(newReaction);
+          handleReaction(comment.commentID, newReaction);
+        },
       },
       {
         icon: (
           <AiFillDislike
             className={`${reaction === "dislike" ? "text-primary" : ""}`}
-            onClick={() => {
-              const newReaction =
-                reaction === "dislike" ? "abstain" : "dislike";
-              setReaction(newReaction);
-              handleReaction(comment.commentID, newReaction);
-            }}
           />
         ),
         count: comment.dislikes,
         tooltip: "Dislike",
+        onClick: () => {
+          const newReaction = reaction === "dislike" ? "abstain" : "dislike";
+          setReaction(newReaction);
+          handleReaction(comment.commentID, newReaction);
+        },
       },
       {
         icon: <MdOutlineReply onClick={() => setShowReplyBox(!showReplyBox)} />,
@@ -267,8 +266,13 @@ export default function Comments({ mangaID, chapterID = null }) {
                   key={index}
                   className="mx-1 icon-container hover:text-primary hover:cursor-pointer text-[20px] transition-colors duration-200"
                   title={item.tooltip}
+                  onClick={() => {
+                    if (item.onClick) {
+                      item.onClick();
+                    }
+                  }}
                 >
-                  <div className="flex items-center">
+                  <div className={`flex items-center`}>
                     {item.icon}
                     {item.count !== undefined && (
                       <span className="ml-1">{item.count}</span>
