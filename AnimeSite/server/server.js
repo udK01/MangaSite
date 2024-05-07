@@ -355,8 +355,15 @@ app.post("/api/postComment", async (req, res) => {
     const mangaID = req.body.mangaID;
     const chapterID = req.body.chapterID;
     const content = req.body.content;
+    const uploadDate = req.body.uploadDate;
 
-    await databaseFunctions.createComment(userID, mangaID, content, chapterID);
+    await databaseFunctions.createComment(
+      userID,
+      mangaID,
+      content,
+      uploadDate,
+      chapterID
+    );
     res.status(200).send(`success`);
   } catch (error) {
     console.error(`Failed to post comment:`, error);

@@ -1076,13 +1076,14 @@ export async function createComment(
   userID,
   mangaID,
   content,
+  uploadDate,
   chapterID = null,
   parent = null
 ) {
   try {
     await db.query(
-      `INSERT INTO comments (userID, mangaID, chapterID, parent, content) VALUES (?, ?, ?, ?, ?)`,
-      [userID, mangaID, chapterID, parent, content]
+      `INSERT INTO comments (userID, mangaID, chapterID, parent, content, uploadDate) VALUES (?, ?, ?, ?, ?, ?)`,
+      [userID, mangaID, chapterID, parent, content, uploadDate]
     );
   } catch (error) {
     console.error(`Failed to create comment:`, error);

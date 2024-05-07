@@ -1,9 +1,10 @@
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import dateFormatter from "../InspectView/DateFormatter";
 import Separator from "../Separator";
 import DropDown from "../DropDown";
 import Feedback from "./Feedback";
@@ -52,7 +53,7 @@ export default function AddChapter({ customInputField }) {
           mangaID: getMangaID(),
           chapterTitle: title === "Title" ? "" : title,
           chapterContent: chapterContent,
-          uploadDate: getFormattedDate(),
+          uploadDate: dateFormatter.createFormattedDate(),
         },
         {
           headers: {
@@ -82,24 +83,6 @@ export default function AddChapter({ customInputField }) {
     let options = [];
     mangas && mangas.map((manga) => options.push(manga.mangaTitle));
     return options.sort((a, b) => a.localeCompare(b));
-  }
-
-  function getFormattedDate() {
-    const date = new Date();
-
-    const year = padZero(date.getFullYear());
-    const month = padZero(date.getMonth() + 1);
-    const day = padZero(date.getDate());
-
-    const hours = padZero(date.getHours());
-    const minutes = padZero(date.getMinutes());
-    const seconds = padZero(date.getSeconds());
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
-
-  function padZero(n) {
-    return (n < 10 ? "0" : "") + n;
   }
 
   function getMangaID() {

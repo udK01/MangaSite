@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Separator from "../Separator";
 import UserContext from "../UserContext";
+import dateFormatter from "./DateFormatter";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AiFillLike } from "react-icons/ai";
@@ -59,6 +60,7 @@ export default function Comments({ mangaID, chapterID = null }) {
             mangaID: mangaID,
             chapterID: chapterID,
             content: commentContent.value,
+            uploadDate: dateFormatter.createFormattedDate(),
           },
           { headers: { "Content-Type": "application/json" } }
         )

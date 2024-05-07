@@ -20,6 +20,24 @@ const DateFormatter = {
       }
     }
   },
+
+  createFormattedDate() {
+    const date = new Date();
+
+    const year = this.padZero(date.getFullYear());
+    const month = this.padZero(date.getMonth() + 1);
+    const day = this.padZero(date.getDate());
+
+    const hours = this.padZero(date.getHours());
+    const minutes = this.padZero(date.getMinutes());
+    const seconds = this.padZero(date.getSeconds());
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  },
+
+  padZero(n) {
+    return (n < 10 ? "0" : "") + n;
+  },
 };
 
 export default DateFormatter;
