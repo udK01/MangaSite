@@ -21,7 +21,7 @@ export default function Comments({ mangaID, chapterID = null }) {
   const { user } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [users, setUsers] = useState([]);
-  const [sort, setSort] = useState("Newest");
+  const [sort, setSort] = useState("Oldest");
   const [refresh, setRefresh] = useState(false);
 
   // Fetch comments
@@ -46,6 +46,31 @@ export default function Comments({ mangaID, chapterID = null }) {
       .then((response) => setUsers(response.data))
       .catch((error) => console.error(`Failed to fetch users:`, error));
   }, []);
+
+  useEffect(() => {
+    let sortedComments = [...comments]; // Create a copy of the comments array
+
+    switch (sort) {
+      case "Newest":
+        sortedComments.sort(
+          (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
+        );
+        break;
+      case "Oldest":
+        sortedComments.sort(
+          (a, b) => new Date(a.uploadDate) - new Date(b.uploadDate)
+        );
+        break;
+      case "Most Liked":
+        sortedComments.sort((a, b) => b.likes - a.likes);
+        break;
+      case "Most Disliked":
+        sortedComments.sort((a, b) => b.dislikes - a.dislikes);
+        break;
+    }
+
+    setComments(sortedComments);
+  }, [sort]);
 
   function toggleRefresh() {
     setRefresh(!refresh);
@@ -449,7 +474,7 @@ export default function Comments({ mangaID, chapterID = null }) {
           options={["Newest", "Oldest", "Most Liked", "Most Disliked"]}
           value={sort}
           func={setSort}
-          className="w-[125px] justify-between px-2 -translate-y-1"
+          className="w-[150px] justify-between px-2 -translate-y-1"
         />
       </div>
       <Separator />
