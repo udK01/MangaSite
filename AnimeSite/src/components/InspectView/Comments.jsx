@@ -138,7 +138,7 @@ export default function Comments({ mangaID, chapterID = null }) {
           <div>{userToDisplay.username}</div>
           <div className="flex items-center text-dimWhite text-[14px]">
             <div className="size-1 rounded-full bg-dimWhite mx-2" />
-            {dateFormatter.getFormattedDate(comment.uploadDate)}
+            {dateFormatter.getFormattedDate(comment.uploadDate) ?? "now"}
           </div>
         </div>
       </div>
