@@ -483,13 +483,3 @@ export default function Comments({ mangaID, chapterID = null }) {
     </section>
   );
 }
-
-{
-  /* <DropDown
-options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
-value={status}
-func={setStatus}
-className="w-[118px] justify-evenly pb-2 pr-2 rounded-md"
-inspectWidth={"w-[150px] px-2 -translate-x-6"}
-/> */
-}
