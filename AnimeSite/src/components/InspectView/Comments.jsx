@@ -139,6 +139,9 @@ export default function Comments({ mangaID, chapterID = null }) {
           <div className="flex items-center text-dimWhite text-[14px]">
             <div className="size-1 rounded-full bg-dimWhite mx-2" />
             {dateFormatter.getFormattedDate(comment.uploadDate) ?? "now"}
+            {comment.edited === 1 && (
+              <div className="text-[12px] mx-1">(edited)</div>
+            )}
           </div>
         </div>
       </div>

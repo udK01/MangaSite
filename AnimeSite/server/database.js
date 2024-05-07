@@ -1119,10 +1119,10 @@ export async function deleteComment(commentID) {
 
 export async function editComment(commentID, content) {
   try {
-    await db.query(`UPDATE comments SET content = ? WHERE commentID = ?`, [
-      content,
-      commentID,
-    ]);
+    await db.query(
+      `UPDATE comments SET content = ?, edited = ? WHERE commentID = ?`,
+      [content, 1, commentID]
+    );
   } catch (error) {
     console.error(`Failed to delete comment:`, error);
   }
