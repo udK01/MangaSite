@@ -48,7 +48,7 @@ export default function Comments({ mangaID, chapterID = null }) {
   }, []);
 
   useEffect(() => {
-    let sortedComments = [...comments]; // Create a copy of the comments array
+    let sortedComments = [...comments];
 
     switch (sort) {
       case "Newest":
