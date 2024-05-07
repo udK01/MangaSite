@@ -4,6 +4,7 @@ import axios from "axios";
 import Separator from "../Separator";
 import UserContext from "../UserContext";
 import dateFormatter from "./DateFormatter";
+import DropDown from "../DropDown";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AiFillLike } from "react-icons/ai";
@@ -20,6 +21,7 @@ export default function Comments({ mangaID, chapterID = null }) {
   const { user } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [users, setUsers] = useState([]);
+  const [sort, setSort] = useState("Newest");
   const [refresh, setRefresh] = useState(false);
 
   // Fetch comments
@@ -441,10 +443,28 @@ export default function Comments({ mangaID, chapterID = null }) {
 
   return (
     <section className="w-full bg-quaternary h-auto mt-10 p-4 font-poppins text-white">
-      <div>Comments</div>
+      <div className="w-full flex justify-between items-center">
+        <div>Comments</div>
+        <DropDown
+          options={["Newest", "Oldest", "Most Liked", "Most Disliked"]}
+          value={sort}
+          func={setSort}
+          className="w-[125px] justify-between px-2 -translate-y-1"
+        />
+      </div>
       <Separator />
       <InputArea />
       <DisplayArea />
     </section>
   );
+}
+
+{
+  /* <DropDown
+options={["OnGoing", "Completed", "Hiatus", "Dropped", "Coming Soon"]}
+value={status}
+func={setStatus}
+className="w-[118px] justify-evenly pb-2 pr-2 rounded-md"
+inspectWidth={"w-[150px] px-2 -translate-x-6"}
+/> */
 }
