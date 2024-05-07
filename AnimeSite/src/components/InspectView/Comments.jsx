@@ -83,6 +83,7 @@ export default function Comments({ mangaID, chapterID = null }) {
             chapterID: chapterID,
             content: replyContent.value,
             parent: commentID,
+            uploadDate: dateFormatter.createFormattedDate(),
           },
           { headers: { "Content-Type": "application/json" } }
         )
@@ -125,16 +126,20 @@ export default function Comments({ mangaID, chapterID = null }) {
       .catch((error) => console.error(`Failed to react:`, error));
   }
 
-  const DisplayUser = ({ id }) => {
-    const userToDisplay = users.find((u) => u.userID === id);
+  const DisplayUser = ({ comment }) => {
+    const userToDisplay = users.find((u) => u.userID === comment.userID);
     return (
       <div className="flex items-center">
         <img
           src={`${userToDisplay.profilePicture}`}
           className="hover:cursor-pointer size-12"
         />
-        <div className="text-[18px] pl-2 hover:cursor-pointer hover:text-primary">
-          {userToDisplay.username}
+        <div className="flex text-[18px] pl-2 hover:cursor-pointer hover:text-primary">
+          <div>{userToDisplay.username}</div>
+          <div className="flex items-center text-dimWhite text-[14px]">
+            <div className="size-1 rounded-full bg-dimWhite mx-2" />
+            {dateFormatter.getFormattedDate(comment.uploadDate)}
+          </div>
         </div>
       </div>
     );
@@ -341,7 +346,7 @@ export default function Comments({ mangaID, chapterID = null }) {
       return (
         <div className="border-l-2 border-primary my-2 pl-6">
           <div className="w-full flex justify-between">
-            {users.length > 0 && <DisplayUser id={comment.userID} />}
+            {users.length > 0 && <DisplayUser comment={comment} />}
             <button
               onClick={handleToggleCollapse}
               className="text-white -translate-x-[10px]"

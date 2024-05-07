@@ -377,12 +377,14 @@ app.post("/api/postReply", async (req, res) => {
     const mangaID = req.body.mangaID;
     const chapterID = req.body.chapterID;
     const content = req.body.content;
+    const uploadDate = req.body.uploadDate;
     const parent = req.body.parent;
 
     await databaseFunctions.createComment(
       userID,
       mangaID,
       content,
+      uploadDate,
       chapterID,
       parent
     );
