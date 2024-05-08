@@ -217,19 +217,20 @@ export default function Inspect({ inspect }) {
   }
 
   function handleBookmark(action) {
-    toggleBookmarked();
-    axios
-      .post(
-        "/api/bookmark",
-        { userID: user[0].userID, mangaID: manga.mangaID, action: action },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error(`Failed to alter bookmarks:`, error));
+    user.length > 0
+      ? axios
+          .post(
+            "/api/bookmark",
+            { userID: user[0].userID, mangaID: manga.mangaID, action: action },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then(() => toggleBookmarked())
+          .catch((error) => console.error(`Failed to alter bookmarks:`, error))
+      : console.log(`Add login request feature.`);
   }
 
   // Handles deletion of comic.
