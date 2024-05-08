@@ -65,6 +65,7 @@ export default function App() {
     { path: "/management", view: "management" },
     { path: "/register", view: "register" },
     { path: "/login", view: "login" },
+    { path: "/profile", view: "profile" },
   ];
 
   // Generate dynamic routes based on comics & chapter data

@@ -170,7 +170,6 @@ export default function Inspect({ inspect }) {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then(() => console.log(`File replaced.`))
         .catch((error) => console.error(`Failed to replace file:`, error));
     }
 

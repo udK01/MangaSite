@@ -4,6 +4,7 @@ import PopularToday from "./PopularToday/PopularToday";
 import Inspect from "./InspectView/Manga/Inspect";
 import Register from "./LoginRegister/Register";
 import Stored from "./BookmarkView/Bookmarks";
+import Profile from "./ProfileView/Profile";
 import Login from "./LoginRegister/Login";
 import Comics from "./ComicsView/Comics";
 import Create from "./CreateView/Create";
@@ -44,6 +45,9 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
       case "register":
         bodyContent = <Register />;
         includeSidebar = false;
+        break;
+      case "profile":
+        bodyContent = <Profile />;
         break;
       default:
         bodyContent = (
