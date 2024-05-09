@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-import Separator from "../Separator";
-import UserContext from "../UserContext";
 import dateFormatter from "./DateFormatter";
+import UserContext from "../UserContext";
+import Separator from "../Separator";
 import DropDown from "../DropDown";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -162,7 +163,9 @@ export default function Comments({ mangaID, chapterID = null }) {
           className="hover:cursor-pointer size-12"
         />
         <div className="flex text-[18px] pl-2 hover:cursor-pointer hover:text-primary">
-          <div>{userToDisplay.username}</div>
+          <Link to={`/profile?user=${userToDisplay.username}`}>
+            {userToDisplay.username}
+          </Link>
           <div className="flex items-center text-dimWhite text-[14px]">
             <div className="size-1 rounded-full bg-dimWhite mx-2" />
             {dateFormatter.getFormattedDate(comment.uploadDate) ?? "now"}

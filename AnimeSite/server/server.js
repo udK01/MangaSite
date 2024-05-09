@@ -95,6 +95,20 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
+/**
+ * Retrieve user.
+ */
+app.get("/api/users/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const user = await databaseFunctions.getUser(username);
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(`Couldn't fetch user:`, error);
+    res.status(500).json({ error: "Error fetching user." });
+  }
+});
+
 app.post("/api/createUser", async (req, res) => {
   try {
     const username = req.body.username;

@@ -16,9 +16,13 @@ export default function Header() {
 
   const ListElement = ({ location, text }) => (
     <Link
-      to={`/${location}`}
+      to={
+        text === "Profile"
+          ? `/profile?user=${user[0].username}`
+          : `/${location}`
+      }
       className={`hover:text-primary hover:cursor-pointer mb-3`}
-      onClick={() => Logout()}
+      onClick={() => text !== "Profile" && Logout()}
     >
       {text}
     </Link>
