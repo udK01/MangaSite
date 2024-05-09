@@ -47,7 +47,7 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
         includeSidebar = false;
         break;
       case "profile":
-        bodyContent = <Profile />;
+        bodyContent = <Profile comics={comics} />;
         break;
       default:
         bodyContent = (

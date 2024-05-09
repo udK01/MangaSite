@@ -102,6 +102,7 @@ app.get("/api/users/:username", async (req, res) => {
   try {
     const username = req.params.username;
     const user = await databaseFunctions.getUser(username);
+    user[0].bookmarks = await databaseFunctions.getBookmarks(user[0].userID);
     res.status(200).json(user);
   } catch (error) {
     console.error(`Couldn't fetch user:`, error);
