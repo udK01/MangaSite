@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Card from "../PopularToday/PopularTodayCard";
+import dateFormatter from "../InspectView/DateFormatter";
 import UserContext from "../UserContext";
 import Separator from "../Separator";
 import axios from "axios";
@@ -10,6 +11,7 @@ export default function Profile({ comics }) {
   const { user } = useContext(UserContext);
   const [profileOwner, setProfileOwner] = useState();
   const [bookmarks, setBookmarks] = useState([]);
+  const [comments, setComments] = useState();
   const [editing, setEditing] = useState(false);
   const [image, setImage] = useState(null);
 
@@ -21,6 +23,7 @@ export default function Profile({ comics }) {
       .then((response) => {
         setProfileOwner(response.data[0]);
         setBookmarks(response.data[0].bookmarks);
+        setComments(response.data[0].comments);
       })
       .catch((error) => console.error(`Failed to get user:`, error));
   }, [location.search]);
@@ -142,6 +145,49 @@ export default function Profile({ comics }) {
           </div>
         </section>
         {/* Comments */}
+        <section className="w-[826px] h-auto rounded-sm font-poppins text-white">
+          <div className="p-4 bg-quaternary mt-10">
+            <div>Comments Posted</div>
+            <Separator />
+            {comments.length > 0 ? (
+              <div>
+                {comments.map((comment) => (
+                  <React.Fragment key={comment.commentID}>
+                    <div className="border-l-2 border-primary">
+                      <div className="flex justify-between mx-2 mt-5">
+                        <div className="flex">
+                          <div className="text-orange-400">
+                            {profileOwner.username}
+                          </div>
+                          <div className="mx-[6px]">commented under</div>
+                          <Link
+                            to={`/${findManga(
+                              comment.mangaID
+                            ).mangaTitle.replace(/\s+/g, "-")}`}
+                            className="text-orange-400 hover:text-primary hover:cursor-pointer transition-colors duration-200"
+                          >
+                            {findManga(comment.mangaID).mangaTitle}
+                          </Link>
+                        </div>
+
+                        <div>
+                          {dateFormatter.getFormattedDate(comment.uploadDate)}
+                        </div>
+                      </div>
+                      <div className="text-dimWhite ml-2">
+                        {comment.content}
+                      </div>
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            ) : (
+              <div className="w-full text-center text-[24px] font-bold my-4 hover:underline hover:text-primary hover:cursor-default">
+                This user has yet to comment anything. :c
+              </div>
+            )}
+          </div>
+        </section>
       </>
     )
   );

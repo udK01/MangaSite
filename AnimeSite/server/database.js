@@ -1106,6 +1106,16 @@ export async function getComments(mangaID, chapterID = null) {
   }
 }
 
+export async function getUserComments(userID) {
+  try {
+    return (
+      await db.query(`SELECT * FROM comments WHERE userID = ?`, [userID])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to get user's comments:`, error);
+  }
+}
+
 export async function deleteComment(commentID) {
   try {
     await db.query(
