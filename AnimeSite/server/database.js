@@ -1109,8 +1109,8 @@ export async function getComments(mangaID, chapterID = null) {
 export async function deleteComment(commentID) {
   try {
     await db.query(
-      `UPDATE comments SET userID = ?, content = ? WHERE commentID = ?`,
-      [0, "This comment has been removed.", commentID]
+      `UPDATE comments SET userID = ?, content = ?, edited = ? WHERE commentID = ?`,
+      [0, "This comment has been removed.", 0, commentID]
     );
   } catch (error) {
     console.error(`Failed to delete comment:`, error);
