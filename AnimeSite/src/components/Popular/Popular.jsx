@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Separator from "../Separator";
 import PopularCard from "./PopularCard";
 
-export default function Popular({ comics }) {
+import ComicsProvider from "../ComicsProvider";
+
+export default function Popular() {
+  const { comics } = useContext(ComicsProvider);
   const [current, setCurrent] = useState(0);
 
   return (

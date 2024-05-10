@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import InspectChapter from "./InspectView/Chapter/InspectChapter";
 import LatestUpdate from "./LatestUpdate/LatestUpdate";
 import PopularToday from "./PopularToday/PopularToday";
@@ -12,7 +14,11 @@ import Popular from "./Popular/Popular";
 import Trending from "./Trending";
 import Carousel from "./Carousel";
 
-export default function Hero({ comics, view, mangaID, chapterNumber }) {
+import ComicsProvider from "./ComicsProvider";
+
+export default function Hero({ view, mangaID, chapterNumber }) {
+  const { comics } = useContext(ComicsProvider);
+
   let includeSidebar = true;
   let bodyContent;
 
@@ -69,7 +75,7 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
       <div className="flex flex-col">{bodyContent}</div>
       {includeSidebar ? (
         <div id="sidebar">
-          <Popular comics={comics} />
+          <Popular />
         </div>
       ) : null}
     </section>
