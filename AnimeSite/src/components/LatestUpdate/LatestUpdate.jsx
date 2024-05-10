@@ -1,9 +1,14 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+
 import Separator from "../Separator";
 import Card from "./Card";
 
-import { Link } from "react-router-dom";
+import ComicsProvider from "../ComicsProvider";
 
-export default function LatestUpdate({ comics }) {
+export default function LatestUpdate() {
+  const { comics } = useContext(ComicsProvider);
+
   return (
     <section className="w-full bg-quaternary p-2 rounded-sm text-white font-poppins">
       <div className="flex justify-between">

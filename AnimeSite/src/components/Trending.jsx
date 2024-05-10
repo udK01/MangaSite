@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 
-export default function Trending({ comics }) {
+import ComicsProvider from "./ComicsProvider";
+
+export default function Trending() {
+  const { comics } = useContext(ComicsProvider);
+
   return (
     <div className="relative w-[200px] h-[280px] ml-3">
       <div className="absolute flex justify-center items-center w-full h-8 bg-primary shadow-2xl shadow-red-600 z-10">

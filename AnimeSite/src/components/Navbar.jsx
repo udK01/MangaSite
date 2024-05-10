@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { navLinks } from "../constants";
 import { useContext, useState } from "react";
+
 import Header from "./Header";
+
+import ComicsProvider from "./ComicsProvider";
 import UserContext from "./UserContext";
 
-export default function Navbar({ comics }) {
+export default function Navbar() {
+  const { comics } = useContext(ComicsProvider);
   const { user } = useContext(UserContext);
   const [path, setPath] = useState("");
 

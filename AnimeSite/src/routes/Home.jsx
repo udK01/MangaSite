@@ -25,7 +25,7 @@ export default function Home({
 
   return (
     <section className="h-auto min-h-screen bg-secondary flex flex-col items-center">
-      <Navbar comics={comics} />
+      <Navbar />
       <Hero
         comics={comics}
         view={view}

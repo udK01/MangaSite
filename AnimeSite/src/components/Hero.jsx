@@ -30,10 +30,10 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
   } else {
     switch (view) {
       case "bookmarks":
-        bodyContent = <Stored comics={comics} />;
+        bodyContent = <Stored />;
         break;
       case "comics":
-        bodyContent = <Comics comics={comics} />;
+        bodyContent = <Comics />;
         break;
       case "management":
         bodyContent = <Create />;
@@ -47,17 +47,17 @@ export default function Hero({ comics, view, mangaID, chapterNumber }) {
         includeSidebar = false;
         break;
       case "profile":
-        bodyContent = <Profile comics={comics} />;
+        bodyContent = <Profile />;
         break;
       default:
         bodyContent = (
           <div>
             <div className="flex justify-between">
-              <Carousel comics={comics} />
-              <Trending comics={comics} />
+              <Carousel />
+              <Trending />
             </div>
-            <PopularToday comics={comics} />
-            <LatestUpdate comics={comics} />
+            <PopularToday />
+            <LatestUpdate />
           </div>
         );
         break;

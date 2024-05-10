@@ -1,10 +1,14 @@
 import { useState, useContext } from "react";
+
 import Separator from "../Separator";
 import Card from "./BookmarkCard";
+
+import ComicsProvider from "../ComicsProvider";
 import UserContext from "../UserContext";
 
-export default function Bookmarks({ comics }) {
+export default function Bookmarks() {
   const { user } = useContext(UserContext);
+  const { comics } = useContext(ComicsProvider);
   const [bookmarks, setBookmarks] =
     user.length > 0 ? useState(user[0].bookmarks) : useState([]);
 

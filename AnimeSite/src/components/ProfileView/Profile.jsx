@@ -7,8 +7,12 @@ import UserContext from "../UserContext";
 import Separator from "../Separator";
 import axios from "axios";
 
-export default function Profile({ comics }) {
+import ComicsProvider from "../ComicsProvider";
+
+export default function Profile() {
   const { user } = useContext(UserContext);
+  const { comics } = useContext(ComicsProvider);
+
   const [profileOwner, setProfileOwner] = useState();
   const [bookmarks, setBookmarks] = useState([]);
   const [comments, setComments] = useState();

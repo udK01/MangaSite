@@ -1,12 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import Separator from "../Separator";
 import ComicDropdown from "./ComicDropdown";
 import Card from "../PopularToday/PopularTodayCard";
 
-export default function Comics({ comics }) {
+import ComicsProvider from "../ComicsProvider";
+
+export default function Comics() {
+  const { comics } = useContext(ComicsProvider);
   const [mangas, setMangas] = useState(comics);
   const [filteredMangas, setFilteredMangas] = useState(mangas);
 
