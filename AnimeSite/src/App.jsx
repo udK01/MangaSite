@@ -5,9 +5,12 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { UserProvider } from "./components/UserContext";
+
 import Home from "./routes/Home";
 import axios from "axios";
+
+import { UserProvider } from "./components/UserContext";
+import { ComicsProvider } from "./components/ComicsProvider";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -91,34 +94,36 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <UserProvider>
-        {dataLoaded && (
-          <Routes>
-            {sortByUploadDate()}
-            {/* Render static routes */}
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                element={<Home {...commonProps} view={route.view} />}
-              />
-            ))}
+        <ComicsProvider>
+          {dataLoaded && (
+            <Routes>
+              {sortByUploadDate()}
+              {/* Render static routes */}
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={<Home {...commonProps} view={route.view} />}
+                />
+              ))}
 
-            {/* Render dynamic routes */}
-            {dynamicRoutes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Home
-                    {...commonProps}
-                    mangaID={route.mangaID}
-                    chapterNumber={route.chapterNumber}
-                  />
-                }
-              />
-            ))}
-          </Routes>
-        )}
+              {/* Render dynamic routes */}
+              {dynamicRoutes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <Home
+                      {...commonProps}
+                      mangaID={route.mangaID}
+                      chapterNumber={route.chapterNumber}
+                    />
+                  }
+                />
+              ))}
+            </Routes>
+          )}
+        </ComicsProvider>
       </UserProvider>
     </Router>
   );

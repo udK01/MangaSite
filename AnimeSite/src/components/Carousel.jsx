@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { slides, slide_timer } from "../constants";
 import { Link } from "react-router-dom";
-import StarRating from "./StarRating";
 
-export default function Carousel({ comics }) {
+import StarRating from "./StarRating";
+import ComicsProvider from "./ComicsProvider";
+
+export default function Carousel() {
+  const { comics } = useContext(ComicsProvider);
   let [current, setCurrent] = useState(0);
 
   useEffect(() => {
