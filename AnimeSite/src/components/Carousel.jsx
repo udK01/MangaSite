@@ -52,7 +52,7 @@ export default function Carousel() {
                   {/* Title and Type */}
                   <div className="flex flex-col justify-center text-white">
                     <Link
-                      to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+                      to={`/inspect?manga=${manga.mangaID}`}
                       className="tracking-wide text-[24px] line-clamp-1 text-ellipsis hover:text-yellow-400 hover:cursor-pointer transition-all duration-300"
                     >
                       {manga.mangaTitle}
@@ -87,7 +87,7 @@ export default function Carousel() {
                   </div>
                 </div>
                 <div className="flex flex-col h-full">
-                  <Link to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}>
+                  <Link to={`/inspect?manga=${manga.mangaID}`}>
                     <img
                       src={manga.mangaImage}
                       alt="manga-img"

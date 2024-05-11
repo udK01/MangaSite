@@ -9,7 +9,7 @@ export default function PopularCard({ manga, index }) {
         {index + 1}
       </div>
       <Link
-        to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+        to={`/inspect?manga=${manga.mangaID}`}
         className="w-[60px] h-[100px] object-fit m-2 hover:cursor-pointer flex-shrink-0 flex-grow-0"
       >
         <img src={manga.mangaImage} alt="manga-img" className="w-full h-full" />
@@ -17,7 +17,7 @@ export default function PopularCard({ manga, index }) {
 
       <div className="flex flex-col">
         <Link
-          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+          to={`/inspect?manga=${manga.mangaID}`}
           className="font-poppins hover:text-primary hover:cursor-pointer line-clamp-2"
         >
           {manga.mangaTitle}

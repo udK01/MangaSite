@@ -15,7 +15,7 @@ export default function PopularTodayCard({ manga }) {
 
   return (
     <div className="w-[147px] font-poppins rounded-md overflow-hidden flex flex-col">
-      <Link to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}>
+      <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
@@ -27,7 +27,7 @@ export default function PopularTodayCard({ manga }) {
       <div className="flex-grow">
         <div className="flex flex-col justify-between h-full">
           <Link
-            to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+            to={`/inspect?manga=${manga.mangaID}`}
             className={`text-[14px] mt-1 hover:text-primary ${
               hover ? "text-primary" : "text-white"
             } mb-1 line-clamp-2`}

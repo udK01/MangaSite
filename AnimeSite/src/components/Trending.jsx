@@ -15,7 +15,7 @@ export default function Trending() {
       </div>
       {comics.length > 0 ? (
         <Link
-          to={`/${comics[3].mangaTitle.replace(/\s+/g, "-")}`}
+          to={`/inspect?manga=${comics[3].mangaID}`}
           className="hover:cursor-pointer"
         >
           <img

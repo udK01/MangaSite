@@ -9,7 +9,7 @@ export default function Card({ manga }) {
   return (
     <div className="flex w-[403px] h-[172px] p-2">
       <Link
-        to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+        to={`/inspect?manga=${manga.mangaID}`}
         className="hover:cursor-pointer"
       >
         <img
@@ -20,7 +20,7 @@ export default function Card({ manga }) {
       </Link>
       <div className="flex flex-col w-full">
         <Link
-          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+          to={`/inspect?manga=${manga.mangaID}`}
           className="ml-3 mt-1 hover:text-primary hover:cursor-pointer line-clamp-1 text-ellipsis"
         >
           {manga.mangaTitle}
