@@ -22,52 +22,52 @@ export default function Hero({ view, mangaID, chapterNumber }) {
   let includeSidebar = true;
   let bodyContent;
 
-  if (mangaID) {
-    const manga = comics.find((comic) => comic.mangaID === mangaID);
-    if (chapterNumber) {
-      const chapter = manga.chapters.find(
-        (c) => c.chapterNumber === chapterNumber
-      );
-      bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
+  // if (mangaID) {
+  //   const manga = comics.find((comic) => comic.mangaID === mangaID);
+  //   if (chapterNumber) {
+  //     const chapter = manga.chapters.find(
+  //       (c) => c.chapterNumber === chapterNumber
+  //     );
+  //     bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
+  //     includeSidebar = false;
+  //   }
+  // }
+  switch (view) {
+    case "bookmarks":
+      bodyContent = <Stored />;
+      break;
+    case "inspect":
+      bodyContent = <Inspect />;
+      break;
+    case "comics":
+      bodyContent = <Comics />;
+      break;
+    case "management":
+      bodyContent = <Create />;
+      break;
+    case "login":
+      bodyContent = <Login />;
       includeSidebar = false;
-    } else {
-      bodyContent = <Inspect inspect={manga} />;
-    }
-  } else {
-    switch (view) {
-      case "bookmarks":
-        bodyContent = <Stored />;
-        break;
-      case "comics":
-        bodyContent = <Comics />;
-        break;
-      case "management":
-        bodyContent = <Create />;
-        break;
-      case "login":
-        bodyContent = <Login />;
-        includeSidebar = false;
-        break;
-      case "register":
-        bodyContent = <Register />;
-        includeSidebar = false;
-        break;
-      case "profile":
-        bodyContent = <Profile />;
-        break;
-      default:
-        bodyContent = (
-          <div>
-            <div className="flex justify-between">
-              <Carousel />
-              <Trending />
-            </div>
-            <PopularToday />
-            <LatestUpdate />
+      break;
+    case "register":
+      bodyContent = <Register />;
+      includeSidebar = false;
+      break;
+    case "profile":
+      bodyContent = <Profile />;
+      break;
+    default:
+      bodyContent = (
+        <div>
+          <div className="flex justify-between">
+            <Carousel />
+            <Trending />
           </div>
-        );
-        break;
-    }
+          <PopularToday />
+          <LatestUpdate />
+        </div>
+      );
+      break;
   }
 
   return (

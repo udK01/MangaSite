@@ -63,6 +63,7 @@ export default function App() {
   // Define static routes
   const routes = [
     { path: "/", view: "home" },
+    { path: "/inspect", view: "inspect" },
     { path: "/bookmarks", view: "bookmarks" },
     { path: "/comics", view: "comics" },
     { path: "/management", view: "management" },

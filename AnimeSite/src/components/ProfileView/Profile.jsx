@@ -136,11 +136,8 @@ export default function Profile() {
             <div className="w-full flex flex-wrap">
               {bookmarks.length > 0 ? (
                 bookmarks.slice(0, 5).map((bookmark) => (
-                  <div className="flex ml-[11px]">
-                    <Card
-                      key={bookmark.bookmarkID}
-                      manga={findManga(bookmark.mangaID)}
-                    />
+                  <div key={bookmark.bookmarkID} className="flex ml-[11px]">
+                    <Card manga={findManga(bookmark.mangaID)} />
                   </div>
                 ))
               ) : (

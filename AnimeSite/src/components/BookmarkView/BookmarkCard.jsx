@@ -16,7 +16,7 @@ export default function BookmarkCard({ manga }) {
 
   return (
     <div className="w-[147px] h-full font-poppins rounded-md overflow-hidden flex flex-col ml-5 pb-5">
-      <Link to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}>
+      <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
@@ -28,7 +28,7 @@ export default function BookmarkCard({ manga }) {
       <div className="flex-grow">
         <div className="flex flex-col justify-between h-full">
           <Link
-            to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+            to={`/inspect?manga=${manga.mangaTitle}`}
             className={`text-[14px] mt-1 hover:text-primary ${
               hover ? "text-primary" : "text-white"
             } mb-1 line-clamp-2`}

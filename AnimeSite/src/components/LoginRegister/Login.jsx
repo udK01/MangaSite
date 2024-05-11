@@ -50,7 +50,10 @@ export default function Login() {
       .then((response) => {
         setUser(response.data);
         keepSignedIn &&
-          localStorage.setItem("user", JSON.stringify(response.data));
+          localStorage.setItem(
+            "username",
+            JSON.stringify(response.data[0].username)
+          );
         navigate("/");
       })
       .catch((error) => console.error(`Failed to login:`, error));

@@ -12,7 +12,6 @@ export const ComicsProvider = ({ children }) => {
       .get(`/api/mangas`)
       .then((response) => {
         setComics(response.data);
-        console.log(`Ran`);
       })
       .catch((error) => {
         console.error(`Error fetching data:`, error);
