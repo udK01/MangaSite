@@ -1,5 +1,3 @@
-import { useContext } from "react";
-
 import InspectChapter from "./InspectView/Chapter/InspectChapter";
 import LatestUpdate from "./LatestUpdate/LatestUpdate";
 import PopularToday from "./PopularToday/PopularToday";
@@ -14,11 +12,7 @@ import Popular from "./Popular/Popular";
 import Trending from "./Trending";
 import Carousel from "./Carousel";
 
-import ComicsProvider from "./ComicsProvider";
-
 export default function Hero({ view, mangaID, chapterNumber }) {
-  const { comics } = useContext(ComicsProvider);
-
   let includeSidebar = true;
   let bodyContent;
 
@@ -38,6 +32,9 @@ export default function Hero({ view, mangaID, chapterNumber }) {
       break;
     case "inspect":
       bodyContent = <Inspect />;
+      break;
+    case "chapter":
+      bodyContent = <InspectChapter />;
       break;
     case "comics":
       bodyContent = <Comics />;

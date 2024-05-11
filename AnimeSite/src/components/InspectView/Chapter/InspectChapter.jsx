@@ -1,53 +1,90 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import DropDown from "../../DropDown";
 import RelatedSeries from "./RelatedSeries";
 import Comments from "../Comments";
 
-export default function InspectChapter({ manga, chapter }) {
+import ComicsProvider from "../../ComicsProvider";
+
+export default function InspectChapter() {
   const location = useLocation();
+
   const navigate = useNavigate();
   const path = location.pathname;
+
   const currentPath = path.substring(0, path.lastIndexOf("/"));
 
-  const [changeChapter, setChangeChapter] = useState(
-    `Chapter ${chapter.chapterNumber} ${
-      chapter.chapterTitle && `- ${chapter.chapterTitle}`
-    }`
-  );
+  const { comics } = useContext(ComicsProvider);
 
-  const chapterNumbers = manga.chapters
-    .sort((a, b) => b.chapterNumber - a.chapterNumber)
-    .map(
-      (chapter) =>
-        `Chapter ${chapter.chapterNumber} ${
-          chapter.chapterTitle && `- ${chapter.chapterTitle}`
-        }`
+  const [manga, setManga] = useState([]);
+  const [chapter, setChapter] = useState([]);
+
+  const [changeChapter, setChangeChapter] = useState("");
+  const [chapterDisplay, setChapterDisplay] = useState([]);
+  const [previousChapter, setPreviousChapter] = useState(null);
+  const [nextChapter, setNextChapter] = useState(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const mID = parseInt(searchParams.get("manga"), 10);
+    const cNum = parseInt(searchParams.get("chapter"), 10);
+
+    const foundManga = comics.find((comic) => comic.mangaID === mID);
+    const foundChapter = foundManga.chapters.find(
+      (chapter) => chapter.chapterNumber === cNum
     );
 
-  const previousChapter = manga.chapters.find(
-    (c) => c.chapterNumber === chapter.chapterNumber - 1
-  );
-  const nextChapter = manga.chapters.find(
-    (c) => c.chapterNumber === chapter.chapterNumber + 1
-  );
+    setManga(foundManga);
+    setChapter(foundChapter);
+
+    setChangeChapter(
+      `Chapter ${foundChapter.chapterNumber} ${
+        foundChapter.chapterTitle && `- ${foundChapter.chapterTitle}`
+      }`
+    );
+
+    setChapterDisplay(
+      foundManga.chapters
+        .sort((a, b) => b.chapterNumber - a.chapterNumber)
+        .map(
+          (c) =>
+            `Chapter ${c.chapterNumber} ${
+              c.chapterTitle && `- ${c.chapterTitle}`
+            }`
+        )
+    );
+
+    setPreviousChapter(
+      foundChapter.chapterNumber - 1 > 0 ? foundChapter.chapterNumber - 1 : null
+    );
+
+    setNextChapter(
+      foundChapter.chapterNumber + 1 <= foundManga.chapters.length
+        ? foundChapter.chapterNumber + 1
+        : null
+    );
+  }, [location.search]);
 
   useEffect(() => {
     // Fetch only the chapter number.
-    navigate(
-      `${currentPath}/${changeChapter
-        .split("-")[0]
-        .replace("Chapter ", "")
-        .trim()}`
-    );
+    const newChapterNum = changeChapter
+      .split("-")[0]
+      .replace("Chapter ", "")
+      .trim();
+
+    const mangaID = manga.mangaID;
+    mangaID &&
+      navigate(
+        `${currentPath}/chapters?manga=${manga.mangaID}&chapter=${newChapterNum}`
+      );
   }, [changeChapter]);
 
   const NavigationInterface = () => {
     return (
       <div className="flex justify-between mt-4">
         <DropDown
-          options={chapterNumbers}
+          options={chapterDisplay}
           value={changeChapter}
           func={setChangeChapter}
           className={"w-[400px] px-4 rounded-2xl bg-tertiary"}
@@ -56,10 +93,10 @@ export default function InspectChapter({ manga, chapter }) {
           <Link
             to={
               previousChapter
-                ? `${currentPath}/${previousChapter.chapterNumber}`
-                : null
+                ? `${currentPath}/chapters?manga=${manga.mangaID}&chapter=${previousChapter}`
+                : `${currentPath}/chapters?manga=${manga.mangaID}&chapter=${chapter.chapterNumber}`
             }
-            className={` rounded-full px-5 py-2 font-bold ${
+            className={`rounded-full px-5 py-2 font-bold ${
               previousChapter ? "bg-primary" : "bg-gray-600"
             }`}
           >
@@ -67,7 +104,9 @@ export default function InspectChapter({ manga, chapter }) {
           </Link>
           <Link
             to={
-              nextChapter ? `${currentPath}/${nextChapter.chapterNumber}` : null
+              nextChapter
+                ? `${currentPath}/chapters?manga=${manga.mangaID}&chapter=${nextChapter}`
+                : `${currentPath}/chapters?manga=${manga.mangaID}&chapter=${chapter.chapterNumber}`
             }
             className={`rounded-full px-5 py-2 ml-3 font-bold ${
               nextChapter ? "bg-primary" : "bg-gray-600"
@@ -90,7 +129,7 @@ export default function InspectChapter({ manga, chapter }) {
       <p className="flex justify-center items-center text-dimWhite text-[14px]">
         All chapters are in
         <Link
-          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+          to={`/inspect?manga=${manga.mangaID}`}
           className="ml-1 text-primary"
         >
           {manga.mangaTitle}
@@ -106,16 +145,14 @@ export default function InspectChapter({ manga, chapter }) {
         </Link>
         <p>&gt;</p>
         <Link
-          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
+          to={`/inspect?manga=${manga.mangaID}`}
           className="hover:text-primary mx-2 transition-colors duration-300"
         >
           {manga.mangaTitle}
         </Link>
         <p>&gt;</p>
         <Link
-          to={`/${manga.mangaTitle.replace(/\s+/g, "-")}/${
-            chapter.chapterNumber
-          }`}
+          to={`${location.pathname}${location.search}`}
           className="hover:text-primary mx-2 transition-colors duration-300"
         >
           Chapter {chapter.chapterNumber}
@@ -130,7 +167,7 @@ export default function InspectChapter({ manga, chapter }) {
       {/* Bottom Navigation */}
       <NavigationInterface />
       {/* Related Series */}
-      <RelatedSeries manga={manga} chapter={chapter} />
+      {/* <RelatedSeries manga={manga} chapter={chapter} /> */}
       {/* Comments */}
       <Comments mangaID={manga.mangaID} chapterID={chapter.chapterID} />
     </section>

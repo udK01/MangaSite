@@ -64,6 +64,7 @@ export default function App() {
   const routes = [
     { path: "/", view: "home" },
     { path: "/inspect", view: "inspect" },
+    { path: "/inspect/chapters", view: "chapter" },
     { path: "/bookmarks", view: "bookmarks" },
     { path: "/comics", view: "comics" },
     { path: "/management", view: "management" },
