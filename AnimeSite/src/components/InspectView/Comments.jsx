@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import ComicsContext from "../ComicsProvider";
 import dateFormatter from "./DateFormatter";
 import UserContext from "../UserContext";
 import Separator from "../Separator";
@@ -18,35 +19,37 @@ import {
   IoIosCloseCircleOutline,
 } from "react-icons/io";
 
+// Remove mangaID and chapterID parameters.
 export default function Comments({ mangaID, chapterID = null }) {
-  const { user } = useContext(UserContext);
+  const { comics } = useContext(ComicsContext);
+  const { user, users } = useContext(UserContext);
   const [comments, setComments] = useState([]);
-  const [users, setUsers] = useState([]);
   const [sort, setSort] = useState("Oldest");
   const [refresh, setRefresh] = useState(false);
 
   // Fetch comments
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const mID = parseInt(searchParams.get("manga"), 10);
+    const cNum = parseInt(searchParams.get("chapter"), 10);
+
+    const foundManga = comics.find((comic) => comic.mangaID === mID);
+    const foundChapter = foundManga.chapters.find(
+      (chapter) => chapter.chapterNumber === cNum
+    );
+
     axios
       .get("/api/getComments", {
         params: {
           userID: user.length > 0 && user[0].userID,
-          mangaID: mangaID,
-          chapterID: chapterID,
+          mangaID: foundManga.mangaID,
+          chapterID: foundChapter !== undefined ? foundChapter.chapterID : null,
         },
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => setComments(response.data))
       .catch((error) => console.error(`Failed to fetch comments:`, error));
   }, [mangaID, chapterID, refresh]);
-
-  // Fetch users
-  useEffect(() => {
-    axios
-      .get(`/api/users`)
-      .then((response) => setUsers(response.data))
-      .catch((error) => console.error(`Failed to fetch users:`, error));
-  }, []);
 
   useEffect(() => {
     let sortedComments = [...comments];
