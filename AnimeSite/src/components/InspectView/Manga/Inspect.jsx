@@ -20,7 +20,7 @@ import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
 export default function Inspect() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { comics } = useContext(ComicsProvider);
   const [manga, setManga] = useState(null);
 
@@ -207,6 +207,23 @@ export default function Inspect() {
     setBookmarked(!bookmarked);
   }
 
+  // Handle bookmark UI until user reloads.
+  const alterBookmarks = (action) => {
+    setUser((prevUser) => {
+      const updatedUser = { ...prevUser[0] };
+      if (action === "add") {
+        updatedUser.bookmarks = [...updatedUser.bookmarks, manga];
+        comics.find((c) => c.mangaID === manga.mangaID).bookmarkCount += 1;
+      } else if (action === "remove") {
+        updatedUser.bookmarks = updatedUser.bookmarks.filter(
+          (bookmark) => bookmark.mangaID !== manga.mangaID
+        );
+        comics.find((c) => c.mangaID === manga.mangaID).bookmarkCount -= 1;
+      }
+      return [updatedUser];
+    });
+  };
+
   function handleBookmark(action) {
     user.length > 0
       ? axios
@@ -221,9 +238,16 @@ export default function Inspect() {
           )
           .then(() => {
             toggleBookmarked();
-            action === "add"
-              ? setBookmarkCount(bookmarkCount + 1)
-              : setBookmarkCount(bookmarkCount - 1);
+            switch (action) {
+              case "add":
+                setBookmarkCount(bookmarkCount + 1);
+                alterBookmarks("add");
+                break;
+              case "remove":
+                setBookmarkCount(bookmarkCount - 1);
+                alterBookmarks("remove");
+                break;
+            }
           })
           .catch((error) => console.error(`Failed to alter bookmarks:`, error))
       : console.log(`Add login request feature.`);
