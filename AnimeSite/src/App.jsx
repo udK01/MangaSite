@@ -4,7 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import { Navbar, Hero, Footer } from "./components";
 
