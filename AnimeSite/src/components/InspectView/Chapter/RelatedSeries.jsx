@@ -1,24 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import Card from "../../PopularToday/PopularTodayCard";
 import Separator from "../../Separator";
+import ComicsContext from "../../ComicsProvider";
 
-export default function RelatedSeries({ manga }) {
+export default function RelatedSeries() {
   const [mangas, setMangas] = useState([]);
+  const { comics } = useContext(ComicsContext);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const mID = parseInt(searchParams.get("manga"), 10);
+
+    const foundManga = comics.find((comic) => comic.mangaID === mID);
+
     axios
       .get("/api/relatedSeries", {
         params: {
-          genres: manga.genres,
+          genres: foundManga.genres,
         },
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        setMangas(response.data.filter((m) => m.mangaID !== manga.mangaID));
+        setMangas(
+          response.data.filter((m) => m.mangaID !== foundManga.mangaID)
+        );
       })
       .catch((error) => {
         console.error("Error fetching related series:", error);

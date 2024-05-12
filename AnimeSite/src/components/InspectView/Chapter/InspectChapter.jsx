@@ -167,7 +167,7 @@ export default function InspectChapter() {
       {/* Bottom Navigation */}
       <NavigationInterface />
       {/* Related Series */}
-      {/* <RelatedSeries manga={manga} chapter={chapter} /> */}
+      <RelatedSeries />
       {/* Comments */}
       <Comments mangaID={manga.mangaID} chapterID={chapter.chapterID} />
     </section>
