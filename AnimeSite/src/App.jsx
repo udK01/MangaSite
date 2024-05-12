@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import { useEffect } from "react";
 
-import Home from "./routes/Home";
 import { Navbar, Hero, Footer } from "./components";
 
 import { UserProvider } from "./components/UserContext";
@@ -25,7 +24,7 @@ function ScrollToTop() {
 export default function App() {
   // Define static routes
   const routes = [
-    { path: "/", view: "home" },
+    { path: "/", view: "" },
     { path: "/inspect", view: "inspect" },
     { path: "/inspect/chapters", view: "chapter" },
     { path: "/bookmarks", view: "bookmarks" },
