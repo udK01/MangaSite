@@ -19,10 +19,13 @@ import {
   IoIosCloseCircleOutline,
 } from "react-icons/io";
 
-// Remove mangaID and chapterID parameters.
-export default function Comments({ mangaID, chapterID = null }) {
+export default function Comments() {
   const { comics } = useContext(ComicsContext);
   const { user, users } = useContext(UserContext);
+
+  const [mangaID, setMangaID] = useState(null);
+  const [chapterID, setChapterID] = useState(null);
+
   const [comments, setComments] = useState([]);
   const [sort, setSort] = useState("Oldest");
   const [refresh, setRefresh] = useState(false);
@@ -38,6 +41,9 @@ export default function Comments({ mangaID, chapterID = null }) {
       (chapter) => chapter.chapterNumber === cNum
     );
 
+    setMangaID(foundManga.mangaID);
+    setChapterID(foundChapter !== undefined ? foundChapter.chapterID : null);
+
     axios
       .get("/api/getComments", {
         params: {
@@ -49,7 +55,7 @@ export default function Comments({ mangaID, chapterID = null }) {
       })
       .then((response) => setComments(response.data))
       .catch((error) => console.error(`Failed to fetch comments:`, error));
-  }, [mangaID, chapterID, refresh]);
+  }, [refresh, location.search]);
 
   useEffect(() => {
     let sortedComments = [...comments];

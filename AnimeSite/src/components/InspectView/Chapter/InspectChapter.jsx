@@ -169,7 +169,7 @@ export default function InspectChapter() {
       {/* Related Series */}
       <RelatedSeries />
       {/* Comments */}
-      <Comments mangaID={manga.mangaID} chapterID={chapter.chapterID} />
+      <Comments />
     </section>
   );
 }
