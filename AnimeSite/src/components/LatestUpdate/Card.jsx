@@ -28,11 +28,7 @@ export default function Card({ manga }) {
         {sortChapters(manga.chapters)
           .slice(0, 3)
           .map((chapter) => (
-            <Chapter
-              key={chapter.chapterID}
-              mangaTitle={manga.mangaTitle}
-              chapter={chapter}
-            />
+            <Chapter key={chapter.chapterID} manga={manga} chapter={chapter} />
           ))}
       </div>
     </div>

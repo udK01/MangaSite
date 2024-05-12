@@ -7,6 +7,7 @@ import {
 import { useEffect } from "react";
 
 import Home from "./routes/Home";
+import { Navbar, Hero, Footer } from "./components";
 
 import { UserProvider } from "./components/UserContext";
 import { ComicsProvider } from "./components/ComicsProvider";
@@ -47,7 +48,13 @@ export default function App() {
               <Route
                 key={index}
                 path={route.path}
-                element={<Home view={route.view} />}
+                element={
+                  <section className="h-auto min-h-screen bg-secondary flex flex-col items-center">
+                    <Navbar />
+                    <Hero view={route.view} />
+                    <Footer />
+                  </section>
+                }
               />
             ))}
           </Routes>

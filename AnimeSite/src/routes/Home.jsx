@@ -1,27 +1,11 @@
 import { Navbar, Hero, Footer } from "../components";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
-import axios from "axios";
-
-export default function Home({ setComics, view }) {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
-  // Helps ensure changes remain if users,
-  // change view then return to it.
-  useEffect(() => {
-    axios
-      .get(`/api/mangas`)
-      .then((response) => setComics(response.data))
-      .catch((error) => console.error(`Error fetching data:`, error));
-  }, [currentPath]);
-
+export default function Home({ view }) {
   return (
     <section className="h-auto min-h-screen bg-secondary flex flex-col items-center">
-      <Navbar />
+      {/* <Navbar />
       <Hero view={view} />
-      <Footer />
+      <Footer /> */}
     </section>
   );
 }
