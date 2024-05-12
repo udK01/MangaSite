@@ -25,6 +25,7 @@ export default function Hero({ view }) {
       break;
     case "chapter":
       bodyContent = <InspectChapter />;
+      includeSidebar = false;
       break;
     case "comics":
       bodyContent = <Comics />;
