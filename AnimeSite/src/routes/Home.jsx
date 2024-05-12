@@ -4,13 +4,7 @@ import { useEffect } from "react";
 
 import axios from "axios";
 
-export default function Home({
-  comics,
-  setComics,
-  view,
-  mangaID,
-  chapterNumber,
-}) {
+export default function Home({ setComics, view }) {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -26,12 +20,7 @@ export default function Home({
   return (
     <section className="h-auto min-h-screen bg-secondary flex flex-col items-center">
       <Navbar />
-      <Hero
-        comics={comics}
-        view={view}
-        mangaID={mangaID}
-        chapterNumber={chapterNumber}
-      />
+      <Hero view={view} />
       <Footer />
     </section>
   );

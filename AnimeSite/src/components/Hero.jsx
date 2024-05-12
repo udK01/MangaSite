@@ -12,20 +12,10 @@ import Popular from "./Popular/Popular";
 import Trending from "./Trending";
 import Carousel from "./Carousel";
 
-export default function Hero({ view, mangaID, chapterNumber }) {
+export default function Hero({ view }) {
   let includeSidebar = true;
   let bodyContent;
 
-  // if (mangaID) {
-  //   const manga = comics.find((comic) => comic.mangaID === mangaID);
-  //   if (chapterNumber) {
-  //     const chapter = manga.chapters.find(
-  //       (c) => c.chapterNumber === chapterNumber
-  //     );
-  //     bodyContent = <InspectChapter manga={manga} chapter={chapter} />;
-  //     includeSidebar = false;
-  //   }
-  // }
   switch (view) {
     case "bookmarks":
       bodyContent = <Stored />;

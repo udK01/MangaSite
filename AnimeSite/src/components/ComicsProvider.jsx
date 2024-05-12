@@ -18,6 +18,24 @@ export const ComicsProvider = ({ children }) => {
       });
   }, []);
 
+  function sortByUploadDate() {
+    comics.sort((a, b) => {
+      if (a.chapters.length > 0 && b.chapters.length > 0) {
+        const dateA = new Date(a.chapters[0].uploadDate);
+        const dateB = new Date(b.chapters[0].uploadDate);
+        return dateB - dateA;
+      } else if (a.chapters.length === 0 && b.chapters.length > 0) {
+        return 1;
+      } else if (a.chapters.length > 0 && b.chapters.length === 0) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  sortByUploadDate();
+
   return (
     <ComicsContext.Provider value={{ comics }}>
       {children}
