@@ -65,6 +65,7 @@ export default function MangaChapters({
             <div className="flex w-full text-white">
               <Link
                 to={`${currentPath}/chapters${currentSearch}&chapter=${
+                  manga.chapters.length > 0 &&
                   manga.chapters[manga.chapters.length - 1].chapterNumber
                 }`}
                 className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md mr-1 hover:bg-purple-800"
@@ -73,7 +74,9 @@ export default function MangaChapters({
                 <div className="font-semibold text-[20px]">Chapter 1</div>
               </Link>
               <Link
-                to={`${currentPath}/chapters${currentSearch}&chapter=${manga.chapters[0].chapterNumber}`}
+                to={`${currentPath}/chapters${currentSearch}&chapter=${
+                  manga.chapters.length > 0 && manga.chapters[0].chapterNumber
+                }`}
                 className="w-full flex flex-col flex-1 items-center py-3 bg-primary rounded-md ml-1 hover:bg-purple-800"
               >
                 <div>New Chapter</div>

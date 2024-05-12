@@ -14,10 +14,9 @@ export default function Navbar() {
 
   function randomPath() {
     setPath(
-      `/${comics[Math.floor(Math.random() * comics.length)].mangaTitle.replace(
-        /\s/g,
-        "-"
-      )}`
+      `/inspect?manga=${
+        comics[Math.floor(Math.random() * comics.length)].mangaID
+      }`
     );
   }
 
