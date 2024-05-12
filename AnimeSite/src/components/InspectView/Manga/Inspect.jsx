@@ -194,6 +194,10 @@ export default function Inspect() {
         setGenres(response.data.genres);
         setStatus(response.data.status);
         setType(response.data.type);
+        const index = comics.findIndex(
+          (manga) => manga.mangaID === response.data.mangaID
+        );
+        comics[index] = response.data;
         setEditing(false);
       })
       .catch((error) => {

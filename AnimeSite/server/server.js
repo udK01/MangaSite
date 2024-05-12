@@ -240,6 +240,11 @@ app.put("/api/:id", async (req, res) => {
     }
 
     const updatedManga = await databaseFunctions.getManga(mangaID);
+    updatedManga[0].genres = await databaseFunctions.getGenres(mangaID);
+    updatedManga[0].chapters = await databaseFunctions.getChapters(mangaID);
+    updatedManga[0].bookmarkCount = await databaseFunctions.getBookmarkCount(
+      mangaID
+    );
 
     res.status(200).json(updatedManga[0]);
   } catch (error) {
@@ -290,17 +295,6 @@ app.post("/api/deleteTag", async (req, res) => {
     res.status(500).send("Failed to remove tag.");
   }
 });
-
-// app.get("/api/bookmark", async (req, res) => {
-//   try {
-//     const mangaID = req.query.mangaID;
-//     const bookmarkCount = await databaseFunctions.getBookmarkCount(mangaID);
-//     res.status(200).json({ count: bookmarkCount });
-//   } catch (error) {
-//     console.error(`Failed to fetch bookmarks:`, error);
-//     res.status(500).send(`error`);
-//   }
-// });
 
 app.post("/api/bookmark", async (req, res) => {
   try {
