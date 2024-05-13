@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { logo } from "../assets";
 import { useState, useContext } from "react";
 
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar/SearchBar";
 import UserContext from "./UserContext";
 
 export default function Header() {
