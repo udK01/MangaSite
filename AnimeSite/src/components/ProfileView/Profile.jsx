@@ -62,34 +62,37 @@ export default function Profile() {
           <Separator />
           {comments.length > 0 ? (
             <div>
-              {comments.map((comment) => (
-                <React.Fragment key={comment.commentID}>
-                  <div className="border-l-2 border-primary">
-                    <div className="flex justify-between mx-2 mt-5">
-                      <div className="flex">
-                        <div className="text-orange-400">
-                          {profileOwner.username}
+              {comments
+                .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
+                .map((comment) => (
+                  <React.Fragment key={comment.commentID}>
+                    <div className="border-l-2 border-primary">
+                      <div className="flex justify-between mx-2 mt-5">
+                        <div className="flex">
+                          <div className="text-orange-400">
+                            {profileOwner.username}
+                          </div>
+                          <div className="mx-[6px]">commented under</div>
+                          <Link
+                            to={`/inspect?manga=${
+                              findManga(comment.mangaID).mangaID
+                            }`}
+                            className="text-orange-400 hover:text-primary hover:cursor-pointer transition-colors duration-200"
+                          >
+                            {findManga(comment.mangaID).mangaTitle}
+                          </Link>
                         </div>
-                        <div className="mx-[6px]">commented under</div>
-                        <Link
-                          to={`/${findManga(comment.mangaID).mangaTitle.replace(
-                            /\s+/g,
-                            "-"
-                          )}`}
-                          className="text-orange-400 hover:text-primary hover:cursor-pointer transition-colors duration-200"
-                        >
-                          {findManga(comment.mangaID).mangaTitle}
-                        </Link>
-                      </div>
 
-                      <div>
-                        {dateFormatter.getFormattedDate(comment.uploadDate)}
+                        <div>
+                          {dateFormatter.getFormattedDate(comment.uploadDate)}
+                        </div>
+                      </div>
+                      <div className="text-dimWhite ml-2">
+                        {comment.content}
                       </div>
                     </div>
-                    <div className="text-dimWhite ml-2">{comment.content}</div>
-                  </div>
-                </React.Fragment>
-              ))}
+                  </React.Fragment>
+                ))}
             </div>
           ) : (
             <div className="w-full text-center text-[24px] font-bold my-4 hover:underline hover:text-primary hover:cursor-default">
