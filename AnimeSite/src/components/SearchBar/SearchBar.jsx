@@ -11,7 +11,10 @@ export default function SearchBar() {
   useEffect(() => {
     setSearchedComics(
       comics.filter((comic) =>
-        comic.mangaTitle.trim().toLowerCase().includes(search.toLowerCase())
+        comic.mangaTitle
+          .trim()
+          .toLowerCase()
+          .includes(search.trim().toLowerCase())
       )
     );
   }, [search]);

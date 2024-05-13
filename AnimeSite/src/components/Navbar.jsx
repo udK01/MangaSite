@@ -10,7 +10,11 @@ import UserContext from "./UserContext";
 export default function Navbar() {
   const { comics } = useContext(ComicsProvider);
   const { user } = useContext(UserContext);
-  const [path, setPath] = useState("");
+  const [path, setPath] = useState(
+    `/inspect?manga=${
+      comics[Math.floor(Math.random() * comics.length)].mangaID
+    }`
+  );
 
   function randomPath() {
     setPath(
