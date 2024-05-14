@@ -30,6 +30,8 @@ export default function Comments() {
   const [sort, setSort] = useState("Oldest");
   const [refresh, setRefresh] = useState(false);
 
+  const [empty, setEmpty] = useState(false);
+
   // Fetch comments
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -88,6 +90,7 @@ export default function Comments() {
 
   function handleSubmit() {
     const commentContent = document.getElementById("commentBox");
+
     user &&
       axios
         .post(
@@ -110,7 +113,11 @@ export default function Comments() {
 
   function handleReply(commentID) {
     const replyContent = document.getElementById(`replyBox${commentID}`);
+
+    const replyEmpty = replyContent.value.trim().length === 0;
+
     user &&
+      !replyEmpty &&
       axios
         .post(
           "/api/postReply",
@@ -455,16 +462,29 @@ export default function Comments() {
         <textarea
           id="commentBox"
           placeholder="Share your thoughts..."
-          className="w-full min-h-[25px] max-h-[300px] border-2 border-primary rounded-md bg-secondary place-content-center px-2"
+          className={`w-full min-h-[25px] max-h-[300px] border-2 ${
+            empty ? "border-red-500" : "border-primary"
+          } rounded-md bg-secondary place-content-center px-2 transition-colors duration-150`}
         />
         <div className="w-full flex justify-end">
           {user.length > 0 ? (
-            <button
-              className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
-              onClick={handleSubmit}
-            >
-              Post
-            </button>
+            <>
+              <div className={`${empty ? "" : "opacity-0"} text-red-500 ml-1`}>
+                *Please ensure that your comment contains some text.
+              </div>
+              <button
+                className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
+                onClick={() => {
+                  setEmpty(false);
+                  const commentValue =
+                    document.getElementById("commentBox").value;
+                  const empty = commentValue.trim().length === 0;
+                  !empty ? handleSubmit() : setEmpty(true);
+                }}
+              >
+                Post
+              </button>
+            </>
           ) : (
             <button
               className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"

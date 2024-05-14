@@ -377,6 +377,7 @@ app.post("/api/postComment", async (req, res) => {
       uploadDate,
       chapterID
     );
+
     res.status(200).send(`success`);
   } catch (error) {
     console.error(`Failed to post comment:`, error);
