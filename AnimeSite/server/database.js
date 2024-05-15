@@ -60,7 +60,7 @@ export async function createUser(username, password, accessLevel = 0) {
   } catch (error) {
     // Error Handling For Duplicate Usernames.
     if (error.code === "ER_DUP_ENTRY") {
-      console.error(`Username "${username}" already exists.`);
+      return `Username "${username}" already exists.`;
     } else {
       console.error("Failed to create new user:", error);
     }

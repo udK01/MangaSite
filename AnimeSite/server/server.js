@@ -119,8 +119,8 @@ app.post("/api/createUser", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    databaseFunctions.createUser(username, password, 0);
-    res.status(200).send(`Success`);
+    const message = await databaseFunctions.createUser(username, password, 0);
+    res.status(200).send(message);
   } catch (error) {
     console.error(`Failed to create user:`, error);
     res.status(500).send(`Error`);

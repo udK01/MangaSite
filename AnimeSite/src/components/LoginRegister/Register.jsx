@@ -10,6 +10,9 @@ export default function Register() {
   const [passwordConfirm, setPasswordConfirm] = useState("Password");
   const navigate = useNavigate();
 
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   function customInputField(type, placeholder, value, func, mt = 0) {
     const commonProps = {
       placeholder: placeholder,
@@ -31,7 +34,40 @@ export default function Register() {
     return <input {...commonProps} type={type} />;
   }
 
+  function validatePassword() {
+    if (password !== passwordConfirm) {
+      setPasswordError("Passwords do not match!");
+      return false;
+    }
+
+    if (password.length <= 8) {
+      setPasswordError("Password must be longer than 8 characters!");
+      return false;
+    }
+
+    if (!/(?=.*\d)(?=.*[A-Z])/.test(password)) {
+      setPasswordError(
+        "Password must include at least one digit and one uppercase letter."
+      );
+      return false;
+    }
+
+    return true;
+  }
+
   function handleRegister() {
+    setUsernameError("");
+    setPasswordError("");
+
+    if (username === `Username` || password === `Password`) {
+      setUsernameError(`You must fill in all fields!`);
+      return null;
+    }
+
+    if (!validatePassword()) {
+      return null;
+    }
+
     axios
       .post(
         "/api/createUser",
@@ -45,7 +81,11 @@ export default function Register() {
           },
         }
       )
-      .then(() => navigate("/login"))
+      .then((response) =>
+        response.data.length > 0
+          ? setUsernameError(response.data)
+          : navigate("/login")
+      )
       .catch((error) => console.error(`Failed to create user:`, error));
   }
 
@@ -54,7 +94,9 @@ export default function Register() {
       <div className="flex flex-col justify-center mx-4 text-white items-center">
         <div className="text-[20px]">Register an account.</div>
         {customInputField("text", "Username", username, setUsername, 2)}
+        <div className="text-red-500 text-[14px] mt-1">{usernameError}</div>
         {customInputField("password", "Password", password, setPassword, 2)}
+        <div className="text-red-500 text-[14px] mt-1">{passwordError}</div>
         {customInputField(
           "password",
           "Password",
