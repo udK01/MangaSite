@@ -6,10 +6,11 @@ import UserContext from "../UserContext";
 import axios from "axios";
 
 export default function Login() {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   function toggleSignedIn() {
@@ -38,6 +39,11 @@ export default function Login() {
   }
 
   function handleLogin() {
+    if (username === "Username" || password === "Password") {
+      setErrorMessage(`You must fill in all fields!`);
+      return null;
+    }
+
     axios
       .post(
         "/api/login",
@@ -48,13 +54,19 @@ export default function Login() {
         { headers: { "Content-Type": "application/json" } }
       )
       .then((response) => {
-        setUser(response.data);
-        keepSignedIn &&
-          localStorage.setItem(
-            "username",
-            JSON.stringify(response.data[0].username)
-          );
-        navigate("/");
+        switch (response.data) {
+          case "2":
+            setErrorMessage(`Wrong username or password!`);
+            break;
+          default:
+            setUser(response.data);
+            keepSignedIn &&
+              localStorage.setItem(
+                "username",
+                JSON.stringify(response.data[0].username)
+              );
+            navigate("/");
+        }
       })
       .catch((error) => console.error(`Failed to login:`, error));
   }
@@ -63,6 +75,7 @@ export default function Login() {
     <section className="w-[600px] h-[400px] my-[120px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
         <div className="text-[20px]">Please login.</div>
+        <div className="text-red-500 text-[14px] mt-1">{errorMessage}</div>
         {customInputField("text", "Username", username, setUsername, 2)}
         {customInputField("password", "Password", password, setPassword, 2)}
         <div className="w-full ml-4 mt-2 text-[12px]">
