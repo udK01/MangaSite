@@ -16,7 +16,7 @@ export default function StarRating({ rating, includeText = true }) {
     return (
       <div key={index} className="flex items-center">
         <svg
-          className={`h-5 fill-current ${
+          className={`2xs:h-[30px] md:h-5 fill-current ${
             partialFill === null ? "text-gray-400" : "text-yellow-400"
           }`}
           viewBox={`0 0 ${
@@ -27,7 +27,7 @@ export default function StarRating({ rating, includeText = true }) {
         </svg>
         {remainingFill !== null && (
           <svg
-            className="h-5 fill-current text-gray-400 scale-x-[-1]"
+            className="2xs:h-[30px] md:h-5 fill-current text-gray-400 scale-x-[-1]"
             viewBox={`0 0 ${(remainingFill / 100) * 24} 24`}
           >
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -38,12 +38,14 @@ export default function StarRating({ rating, includeText = true }) {
   };
 
   return (
-    <div className="flex mt-1">
+    <div className="flex md:justify-start 2xs:justify-center mt-1">
       <div className="flex items-center">
         {[...Array(5).keys()].map((index) => renderStar(index + 1))}
       </div>
       {includeText ? (
-        <p className="font-poppins text-[14px] ml-2 text-dimWhite">{rating}</p>
+        <p className="font-poppins md:text-[14px] 2xs:text-[20px] ml-2 text-dimWhite">
+          {rating}
+        </p>
       ) : null}
     </div>
   );
