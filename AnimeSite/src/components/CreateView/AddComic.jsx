@@ -27,9 +27,17 @@ export default function AddComic({ customInputField }) {
   const navigate = useNavigate();
 
   const [image, setImage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleAddComic(event) {
     event.preventDefault();
+
+    if (title === "Title" || description === "Description" || image === null) {
+      setErrorMessage(
+        `Please fill out 'Title', 'Description' and upload an 'Image'!`
+      );
+      return null;
+    }
 
     const formData = new FormData();
     formData.append("mangaTitle", title);
@@ -131,6 +139,9 @@ export default function AddComic({ customInputField }) {
             className="my-4 mx-4 p-2 rounded-md text-[13px]"
           >
             {/* Input Fields */}
+            <div className={`text-red-500 text-[14px] text-center mb-1`}>
+              {errorMessage}
+            </div>
             <div className="w-full flex flex-col items-center justify-center">
               {customInputField("text", "Title", title, setTitle)}
               {customInputField(
