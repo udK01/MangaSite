@@ -21,7 +21,7 @@ import { FaEdit } from "react-icons/fa";
 
 export default function Inspect() {
   const { user, setUser } = useContext(UserContext);
-  const { comics } = useContext(ComicsProvider);
+  const { comics, setComics } = useContext(ComicsProvider);
   const [manga, setManga] = useState(null);
 
   const [editing, setEditing] = useState(false);
@@ -271,7 +271,10 @@ export default function Inspect() {
           },
         }
       )
-      .then(() => navigate("/"))
+      .then(() => {
+        setComics(comics.filter((c) => c.mangaID !== manga.mangaID));
+        navigate("/");
+      })
       .catch((error) => console.error(`Failed to delete manga:`, error));
   }
 

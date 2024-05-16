@@ -45,7 +45,7 @@ export const ComicsProvider = ({ children }) => {
   }
 
   return (
-    <ComicsContext.Provider value={{ comics }}>
+    <ComicsContext.Provider value={{ comics, setComics }}>
       {children}
     </ComicsContext.Provider>
   );

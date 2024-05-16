@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import fs, { stat } from "fs";
+import fs from "fs";
 import * as databaseFunctions from "./database.js";
 
 const PORT = 8080;
@@ -343,6 +343,14 @@ app.post("/api/rating", async (req, res) => {
 app.post("/api/deleteManga", async (req, res) => {
   try {
     const mangaID = req.body.mangaID;
+
+    const manga = await databaseFunctions.getManga(mangaID);
+    const imgPath = `../public/${manga[0].mangaImage.replace(
+      /\.\.\/\.\.\//g,
+      ""
+    )}`;
+    console.log(imgPath);
+    await fs.promises.unlink(imgPath);
 
     await databaseFunctions.deleteManga(mangaID);
 
