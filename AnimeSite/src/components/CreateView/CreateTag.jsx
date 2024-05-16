@@ -35,6 +35,13 @@ export default function CreateTag({ customInputField, toggleRefresh }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (tag === "Tag" || tag.length === 0) {
+      setColor(`bg-red-600`);
+      setText(`You must enter a tag!`);
+      handleTransition();
+      return null;
+    }
+
     axios
       .post(
         "/api/createTag",
@@ -50,8 +57,8 @@ export default function CreateTag({ customInputField, toggleRefresh }) {
           case "success":
             setColor(`bg-green-600`);
             setText(`Successfully created ${capitalizeWords(tag)}!`);
-            setTag(""); // Clean-up input field.
-            toggleRefresh(); // Refresh delete list.
+            setTag("");
+            toggleRefresh();
             break;
           case "error":
             setColor(`bg-red-600`);

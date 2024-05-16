@@ -132,10 +132,6 @@ app.post("/api/login", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    console.log(username);
-    console.log(password);
-    console.log(await databaseFunctions.userExists(username, password));
-
     if (await databaseFunctions.userExists(username, password)) {
       const userData = await databaseFunctions.getUser(username);
       userData[0].bookmarks = await databaseFunctions.getBookmarks(
