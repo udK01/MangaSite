@@ -48,7 +48,7 @@ export default function App() {
                 key={index}
                 path={route.path}
                 element={
-                  <section className="h-auto min-h-screen bg-secondary flex flex-col items-center">
+                  <section className="lg:w-full md:w-fit 2xs:w-fit bg-secondary h-auto min-h-screen flex flex-col items-center">
                     <Navbar />
                     <Hero view={route.view} />
                     <Footer />

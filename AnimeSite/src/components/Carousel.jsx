@@ -23,8 +23,8 @@ export default function Carousel() {
   };
 
   return (
-    <div className="w-[620px]">
-      <div className="h-[280px] overflow-hidden relative">
+    <div className="w-auto h-full md:max-w-[620px] 2xs:max-w-[1100px]">
+      <div className="md:h-[280px] 2xs:h-[400px] overflow-hidden relative">
         <div
           className={`flex transition ease-out duration-40`}
           style={{
@@ -42,28 +42,28 @@ export default function Carousel() {
               />
             );
           })}
-          <div className="flex justify-evenly w-[3100px] absolute font-poppins">
+          <div className="flex justify-evenly md:w-[3100px] 2xs:w-[5500px] h-full absolute font-poppins">
             {comics.slice(0, 5).map((manga) => (
               <div
                 key={manga.mangaID}
-                className="flex items-center justify-center w-full h-full m-10"
+                className="flex items-center justify-center w-full m-10"
               >
                 <div className="flex flex-col w-full h-full">
                   {/* Title and Type */}
                   <div className="flex flex-col justify-center text-white">
                     <Link
                       to={`/inspect?manga=${manga.mangaID}`}
-                      className="tracking-wide text-[24px] line-clamp-1 text-ellipsis hover:text-yellow-400 hover:cursor-pointer transition-all duration-300"
+                      className="tracking-wide md:text-[24px] 2xs:text-[48px] line-clamp-1 hover:text-yellow-400 hover:cursor-pointer transition-all duration-300"
                     >
                       {manga.mangaTitle}
                     </Link>
-                    <h2 className="text-[20px] text-yellow-400">
+                    <h2 className="md:text-[20px] 2xs:text-[40px] text-yellow-400">
                       {manga.type}
                     </h2>
                   </div>
                   {/* Genres */}
-                  <div className="flex w-[250px]">
-                    <p className="text-dimWhite overflow-hidden whitespace-nowrap overflow-ellipsis">
+                  <div className="flex md:w-[250px] 2xs:w-[500px]">
+                    <p className="md:text-[14px] 2xs:text-[30px] text-dimWhite overflow-hidden whitespace-nowrap overflow-ellipsis">
                       {manga.genres.map((genre, i) => (
                         <React.Fragment key={i}>
                           {i !== 0 && <span className="mr-1">,</span>}
@@ -75,11 +75,13 @@ export default function Carousel() {
                     </p>
                   </div>
                   {/* Summary */}
-                  <h2 className="text-white font-semibold mt-3">SUMMARY</h2>
-                  <span className="text-dimWhite line-clamp-1 text-ellipsis">
+                  <h2 className="text-white font-semibold mt-3 md:text-[14px] 2xs:text-[20px]">
+                    SUMMARY
+                  </h2>
+                  <span className="text-dimWhite line-clamp-1 text-ellipsis md:text-[14px] 2xs:text-[20px]">
                     {manga.description}
                   </span>
-                  <div className="flex flex-col text-dimWhite mt-2">
+                  <div className="flex flex-col text-dimWhite mt-2 md:text-[14px] 2xs:text-[20px]">
                     {/* Status */}
                     <div>Status: {manga.status}</div>
                     {/* Author */}
@@ -91,7 +93,7 @@ export default function Carousel() {
                     <img
                       src={manga.mangaImage}
                       alt="manga-img"
-                      className="w-[140px] h-full hover:cursor-pointer"
+                      className="md:w-[140px] 2xs:w-[250px] h-full hover:cursor-pointer"
                     />
                   </Link>
                   <StarRating rating={manga.rating} />

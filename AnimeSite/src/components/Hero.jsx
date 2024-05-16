@@ -46,10 +46,12 @@ export default function Hero({ view }) {
       break;
     default:
       bodyContent = (
-        <div>
-          <div className="flex justify-between">
+        <div className="2xs:flex 2xs:flex-col 2xs:items-center md:inline md:items-start">
+          <div className="flex">
             <Carousel />
-            <Trending />
+            <div className="2xs:hidden md:inline">
+              <Trending />
+            </div>
           </div>
           <PopularToday />
           <LatestUpdate />
@@ -59,13 +61,13 @@ export default function Hero({ view }) {
   }
 
   return (
-    <section className="flex mt-10">
-      <div className="flex flex-col">{bodyContent}</div>
-      {includeSidebar ? (
-        <div id="sidebar">
+    <section className="flex mt-10 md:w-auto 2xs:w-full 2xs:flex-col md:flex-row">
+      <div className="flex flex-col justify-center">{bodyContent}</div>
+      {includeSidebar && (
+        <div id="sidebar" className="mx-auto">
           <Popular />
         </div>
-      ) : null}
+      )}
     </section>
   );
 }

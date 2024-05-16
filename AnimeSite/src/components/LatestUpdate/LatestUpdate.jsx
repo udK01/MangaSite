@@ -18,7 +18,7 @@ export default function LatestUpdate() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <section className="w-full bg-quaternary p-2 rounded-sm text-white font-poppins">
+    <section className="w-auto max-w-[825px] bg-quaternary p-2 rounded-sm text-white font-poppins">
       <div className="flex justify-between">
         <p className="ml-1 mt-1">Latest Update</p>
         <button className="bg-primary text-[8px] px-2">
