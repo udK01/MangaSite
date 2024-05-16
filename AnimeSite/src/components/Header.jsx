@@ -11,7 +11,7 @@ export default function Header() {
 
   const Logout = () => {
     setUser([]);
-    localStorage.removeItem("user");
+    localStorage.removeItem("username");
   };
 
   const ListElement = ({ location, text }) => (
