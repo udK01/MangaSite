@@ -6,6 +6,7 @@ import SearchCard from "./SearchCard";
 export default function SearchBar() {
   const [search, setSearch] = useState("Search");
   const [searchedComics, setSearchedComics] = useState([]);
+  const [displayResults, setDisplayResults] = useState(false);
   const { comics } = useContext(ComicsContext);
 
   useEffect(() => {
@@ -34,11 +35,13 @@ export default function SearchBar() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onFocus={(e) => {
+            setDisplayResults(true);
             if (e.target.value === "Search") {
               setSearch("");
             }
           }}
           onBlur={(e) => {
+            setDisplayResults(false);
             if (e.target.value === "") {
               setSearch("Search");
             }
@@ -46,7 +49,11 @@ export default function SearchBar() {
           className={`w-[300px] h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white`}
         />
         {displaySearch() && (
-          <div className="scrollbar-thumb-primary scrollbar-track-transparent">
+          <div
+            className={`scrollbar-thumb-primary scrollbar-track-transparent ${
+              !displayResults && "hidden"
+            }`}
+          >
             <div
               className={`absolute w-[300px] h-[auto] max-h-[310px] border-2 border-primary bg-secondary overflow-y-auto scrollbar-thin`}
             >
