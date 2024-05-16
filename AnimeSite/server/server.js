@@ -349,7 +349,7 @@ app.post("/api/deleteManga", async (req, res) => {
       /\.\.\/\.\.\//g,
       ""
     )}`;
-    console.log(imgPath);
+
     await fs.promises.unlink(imgPath);
 
     await databaseFunctions.deleteManga(mangaID);

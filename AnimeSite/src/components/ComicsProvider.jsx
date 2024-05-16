@@ -11,7 +11,8 @@ export const ComicsProvider = ({ children }) => {
     axios
       .get(`/api/mangas`)
       .then((response) => {
-        sortByUploadDate(response.data);
+        setComics(response.data);
+        sortByUploadDate();
         setLoading(false);
       })
       .catch((error) => {
@@ -20,12 +21,12 @@ export const ComicsProvider = ({ children }) => {
       });
   }, []);
 
-  function sortByUploadDate(mangas) {
-    setComics(() => {
-      return mangas.slice().sort((a, b) => {
+  function sortByUploadDate() {
+    setComics((prevComics) => {
+      return prevComics.sort((a, b) => {
         if (a.chapters.length > 0 && b.chapters.length > 0) {
-          const dateA = new Date(a.chapters[0].uploadDate);
-          const dateB = new Date(b.chapters[0].uploadDate);
+          const dateA = new Date(a.chapters[a.chapters.length - 1].uploadDate);
+          const dateB = new Date(b.chapters[b.chapters.length - 1].uploadDate);
           return dateB - dateA;
         } else if (a.chapters.length === 0 && b.chapters.length > 0) {
           return 1;
