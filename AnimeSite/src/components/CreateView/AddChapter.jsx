@@ -46,6 +46,13 @@ export default function AddChapter({ customInputField }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (manga === "Please Select") {
+      setColor(`bg-red-600`);
+      setText(`Please Select A Manga!`);
+      handleTransition();
+      return null;
+    }
+
     axios
       .post(
         "/api/createChapter",
