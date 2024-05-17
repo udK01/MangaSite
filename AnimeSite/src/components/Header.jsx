@@ -21,7 +21,7 @@ export default function Header() {
           ? `/profile?user=${user[0].username}`
           : `/${location}`
       }
-      className={`hover:text-primary hover:cursor-pointer mb-3`}
+      className={`hover:text-primary hover:cursor-pointer mb-3 md:text-[16px] 2xs:text-[24px]`}
       onClick={() => text !== "Profile" && Logout()}
     >
       {text}
@@ -43,7 +43,7 @@ export default function Header() {
             />
           </Link>
           <div
-            className={`flex flex-col absolute w-[120px] px-5 py-2 border-2 border-tertiary bg-secondary ${
+            className={`flex flex-col absolute w-[120px] z-10 px-5 py-2 border-2 border-tertiary bg-secondary ${
               hover ? "" : "hidden"
             }`}
           >
