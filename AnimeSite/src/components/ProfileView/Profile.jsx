@@ -56,7 +56,7 @@ export default function Profile() {
 
   const DisplayComment = () => {
     return (
-      <section className="w-[826px] h-auto rounded-sm font-poppins text-white">
+      <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[24px]">
         <div className="p-4 bg-quaternary mt-10">
           <div>Comments Posted</div>
           <Separator />
@@ -106,7 +106,7 @@ export default function Profile() {
 
   const DisplayBookmarks = () => {
     return (
-      <section className="w-[826px] h-auto rounded-sm font-poppins text-white">
+      <section className="w-full h-auto rounded-sm font-poppins text-white">
         <div className="p-4 bg-quaternary mt-10">
           <div>Top Bookmarks</div>
           <Separator />
@@ -130,9 +130,9 @@ export default function Profile() {
 
   const DisplayUser = () => {
     return (
-      <section className="w-[826px] h-auto rounded-sm font-poppins text-white">
+      <section className="w-full h-auto rounded-sm font-poppins text-white">
         {/* Route */}
-        <div className="flex justify-between text-[14px] w-full bg-quaternary rounded-sm text-white p-2">
+        <div className="flex justify-between md:text-[14px] 2xs:text-[24px] w-full bg-quaternary rounded-sm text-white p-2">
           <div className="flex">
             <Link
               to={"/"}
@@ -150,7 +150,7 @@ export default function Profile() {
           </div>
         </div>
         {/* Body */}
-        <div className="flex w-full h-auto bg-quaternary mt-10 p-4">
+        <div className="flex w-full h-auto bg-quaternary mt-10 p-4 md:text-[16px] 2xs:text-[20px]">
           {/* Left */}
           <div className="flex flex-col w-[180px] flex-shrink-0">
             {/* Image Selector */}
@@ -204,7 +204,7 @@ export default function Profile() {
   };
 
   return (
-    <section className="w-[826px]">
+    <section className="w-full md:max-w-[826px] 2xs:max-w-[1100px] md:mb-0 2xs:mb-10">
       {profileOwner && (
         <>
           {/* Basic Profile Info */}
