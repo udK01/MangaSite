@@ -10,7 +10,9 @@ export default function PopularToday() {
   return (
     <section className="w-full h-auto mb-10">
       <div className="w-auto md:max-w-[832px] 2xs:max-w-[1100px] h-auto flex flex-col mx-auto bg-quaternary p-2 rounded-sm mt-10">
-        <p className="font-poppins text-white ml-1 mt-1">Popular Today</p>
+        <p className="font-poppins text-white ml-1 mt-1 md:text-[16px] 2xs:text-[20px]">
+          Popular Today
+        </p>
         <Separator />
         <div className="flex w-full justify-evenly">
           {comics &&

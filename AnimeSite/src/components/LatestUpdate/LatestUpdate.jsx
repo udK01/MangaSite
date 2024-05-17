@@ -18,10 +18,12 @@ export default function LatestUpdate() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <section className="w-auto max-w-[825px] bg-quaternary p-2 rounded-sm text-white font-poppins">
+    <section className="w-full md:max-w-[825px] 2xs:max-w-[1100px] bg-quaternary 2xs:mb-10 md:mb-0 p-2 rounded-sm text-white font-poppins">
       <div className="flex justify-between">
-        <p className="ml-1 mt-1">Latest Update</p>
-        <button className="bg-primary text-[8px] px-2">
+        <p className="ml-1 mt-1 md:text-[16px] 2xs:text-[20px]">
+          Latest Update
+        </p>
+        <button className="bg-primary md:text-[8px] 2xs:text-[12px] px-2">
           <Link to={"/comics"}>VIEW ALL</Link>
         </button>
       </div>
