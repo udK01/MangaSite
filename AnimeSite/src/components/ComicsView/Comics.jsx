@@ -105,7 +105,7 @@ export default function Comics() {
   }
 
   return (
-    <section className="w-[854px] h-auto bg-quaternary rounded-sm font-poppins">
+    <section className="w-full md:max-w-[825px] 2xs:max-w-[1100px] md:mb-0 2xs:mb-10 h-auto bg-quaternary rounded-sm font-poppins">
       <div className="flex justify-between my-4 mx-4 text-white">
         Manga Lists
       </div>
@@ -129,22 +129,22 @@ export default function Comics() {
           ]}
           value={selectedStatus}
           func={setSelectedStatus}
-          className={"-translate-x-[166px]"}
+          className={"md:-translate-x-[162px] 2xs:-translate-x-[220px]"}
         />
         <ComicDropdown
           options={["All", "Manga", "Manhwa", "Manhua", "Comic", "Novel"]}
           value={selectedType}
           func={setSelectedType}
-          className={"-translate-x-[335px]"}
+          className={"md:-translate-x-[325px] 2xs:-translate-x-[432px]"}
         />
         <ComicDropdown
           options={["Default", "A-Z", "Z-A", "Update", "Added", "Popular"]}
           value={selectedOrder}
           func={setSelectedOrder}
-          className={"-translate-x-[500px]"}
+          className={"md:-translate-x-[490px] 2xs:-translate-x-[650px]"}
         />
         <div
-          className={`ml-[17px] flex justify-center w-[150px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
+          className={`ml-[18px] md:text-[16px] 2xs:text-[20px] flex justify-center md:w-[145px] 2xs:w-[200px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
           onClick={() => resetValues()}
         >
           Reset
@@ -153,7 +153,7 @@ export default function Comics() {
       <div className="flex flex-wrap pb-6">
         {filteredMangas.length > 0 ? (
           filteredMangas.map((manga, index) => (
-            <div key={index} className="flex mt-2 ml-5">
+            <div key={index} className="flex mt-2 ml-[18px]">
               <Card manga={manga} />
             </div>
           ))

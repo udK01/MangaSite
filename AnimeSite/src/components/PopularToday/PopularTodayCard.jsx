@@ -14,7 +14,7 @@ export default function PopularTodayCard({ manga }) {
   };
 
   return (
-    <div className="md:w-[147px] 2xs:w-[200px] font-poppins rounded-md overflow-hidden flex flex-col">
+    <div className="md:w-[145px] 2xs:w-[200px] font-poppins rounded-md overflow-hidden flex flex-col">
       <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}

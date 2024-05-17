@@ -56,7 +56,10 @@ const ComicDropdown = ({
       rows.push(
         <div key={i} className="flex items-center">
           {rowOptions.map((option, index) => (
-            <div key={index} className="flex items-center mr-4 w-[150px]">
+            <div
+              key={index}
+              className="flex items-center mr-4 md:w-[150px] 2xs:w-[210px]"
+            >
               {multiOptional ? (
                 <input
                   type="checkbox"
@@ -97,7 +100,7 @@ const ComicDropdown = ({
     >
       {/* Button */}
       <div
-        className={`ml-[17px] flex items-center justify-between px-3 w-[150px] bg-quinary rounded-sm hover:bg-primary`}
+        className={`ml-[18px] md:text-[16px] 2xs:text-[20px] flex items-center justify-between px-3 md:w-[145px] 2xs:w-[200px] bg-quinary rounded-sm hover:bg-primary`}
         onClick={toggleDropdown}
       >
         <div>{value}</div>
@@ -107,7 +110,7 @@ const ComicDropdown = ({
       {isOpen && (
         <div className="scrollbar-thumb-primary scrollbar-track-transparent">
           <div
-            className={`w-[854px] ${className} absolute mt-1 bg-secondary text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
+            className={`w-auto md:max-w-[825px] 2xs:max-w-[1100px] ${className} absolute mt-1 bg-secondary text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
           >
             {renderOptions()}
           </div>
