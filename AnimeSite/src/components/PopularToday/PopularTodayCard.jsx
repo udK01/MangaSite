@@ -14,12 +14,12 @@ export default function PopularTodayCard({ manga }) {
   };
 
   return (
-    <div className="w-[147px] font-poppins rounded-md overflow-hidden flex flex-col">
+    <div className="md:w-[147px] 2xs:w-[200px] font-poppins rounded-md overflow-hidden flex flex-col">
       <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
-          className="w-full h-[240px] object-cover transition-transform duration-300 hover:brightness-75"
+          className="w-full h-auto object-cover transition-transform duration-300 hover:brightness-75"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
@@ -28,14 +28,14 @@ export default function PopularTodayCard({ manga }) {
         <div className="flex flex-col justify-between h-full">
           <Link
             to={`/inspect?manga=${manga.mangaID}`}
-            className={`text-[14px] mt-1 hover:text-primary ${
+            className={`md:text-[14px] 2xs:text-[20px] mt-1 hover:text-primary ${
               hover ? "text-primary" : "text-white"
             } mb-1 line-clamp-2`}
           >
             {manga.mangaTitle}
           </Link>
           <div className="flex flex-col">
-            <p className="text-dimWhite text-[12px] mt-1">
+            <p className="text-dimWhite md:text-[12px] 2xs:text-[16px] mt-1">
               Chapter {manga.totalChapters}
             </p>
             <StarRating rating={manga.rating} />
