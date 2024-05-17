@@ -64,7 +64,10 @@ export default function Hero({ view }) {
     <section className="flex mt-10 md:w-auto 2xs:w-full 2xs:flex-col md:flex-row">
       <div className="flex flex-col justify-center">{bodyContent}</div>
       {includeSidebar && (
-        <div id="sidebar" className="mx-auto">
+        <div
+          id="sidebar"
+          className="2xs:w-full 2xs:flex 2xs:justify-center md:w-auto md:inline-block"
+        >
           <Popular />
         </div>
       )}

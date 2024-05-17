@@ -9,15 +9,15 @@ export default function Popular() {
   const [current, setCurrent] = useState(0);
 
   return (
-    <div className="w-auto max-w-[340px] p-3 ml-3 bg-quaternary rounded-sm text-white">
+    <div className="w-auto md:max-w-[340px] 2xs:max-w-[1100px] bg-quaternary p-3 ml-3 rounded-sm text-white">
       {/* "Popular" text */}
       <div>
-        <p className="font-poppins">Popular</p>
+        <p className="font-poppins md:text-[16px] 2xs:text-[24px]">Popular</p>
       </div>
       {/* Separator */}
       <Separator />
       {/* Button Container */}
-      <div className="flex justify-between bg-quinary p-2 rounded-sm mb-4">
+      <div className="flex justify-between bg-quinary p-2 rounded-sm mb-4 md:text-[16px] 2xs:text-[24px]">
         <div
           className={`${
             current === 0 ? "bg-primary transition-all duration-300" : ""
