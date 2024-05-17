@@ -17,7 +17,7 @@ export default function Bookmarks() {
   }
 
   return (
-    <section className="w-[854px] h-auto bg-quaternary rounded-sm font-poppins">
+    <section className="w-auto md:max-w-[825px] 2xs:max-w-[1100px] mb-10 2xs:h-auto bg-quaternary rounded-sm font-poppins">
       <div className="flex justify-between my-4 mx-4 text-white">
         <p>Bookmarks</p>
         <button className="px-5 py-0.5 bg-red-600 rounded-md">Delete</button>
