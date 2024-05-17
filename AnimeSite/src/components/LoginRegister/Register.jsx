@@ -90,7 +90,7 @@ export default function Register() {
   }
 
   return (
-    <section className="w-[600px] h-[400px] my-[120px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
+    <section className="w-auto h-auto min-w-[600px] min-h-[400px] max-w-[800px] max-h-[600px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
         <div className="text-[20px]">Register an account.</div>
         {customInputField("text", "Username", username, setUsername, 2)}

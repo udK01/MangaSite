@@ -50,7 +50,9 @@ export default function App() {
                 element={
                   <section className="lg:w-full md:w-fit 2xs:w-fit bg-secondary h-auto min-h-screen flex flex-col items-center">
                     <Navbar />
-                    <Hero view={route.view} />
+                    <div className="flex items-center flex-grow">
+                      <Hero view={route.view} />
+                    </div>
                     <Footer />
                   </section>
                 }

@@ -72,7 +72,7 @@ export default function Login() {
   }
 
   return (
-    <section className="w-[600px] h-[400px] my-[120px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
+    <section className="w-[600px] h-[400px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
         <div className="text-[20px]">Please login.</div>
         <div className="text-red-500 text-[14px] mt-1">{errorMessage}</div>
