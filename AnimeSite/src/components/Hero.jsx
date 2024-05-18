@@ -53,8 +53,8 @@ export default function Hero({ view }) {
               <Trending />
             </div>
           </div>
-          {/* <PopularToday />
-          <LatestUpdate /> */}
+          <PopularToday />
+          {/* <LatestUpdate /> */}
         </div>
       );
       break;

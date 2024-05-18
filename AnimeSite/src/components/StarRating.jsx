@@ -45,7 +45,7 @@ export default function StarRating({ rating, size, includeText = true }) {
       {includeText ? (
         <p
           className={`font-poppins md:text-[14px] 2xs:text-[${
-            size - size / 3
+            size - size / 2
           }px] ml-2 text-dimWhite`}
         >
           {rating}

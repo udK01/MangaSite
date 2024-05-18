@@ -7,24 +7,6 @@ function sortChapters(chapters) {
 }
 
 export default function Card({ manga }) {
-  const [sliceCount, setSliceCount] = useState(3);
-
-  useEffect(() => {
-    const updateSliceCount = () => {
-      if (window.outerWidth <= 767) {
-        setSliceCount(4);
-      } else {
-        setSliceCount(3);
-      }
-    };
-
-    updateSliceCount();
-
-    window.addEventListener("resize", updateSliceCount);
-
-    return () => window.removeEventListener("resize", updateSliceCount);
-  }, []);
-
   return (
     <div className="flex w-full md:max-w-[405px] 2xs:max-w-[542px] h-auto p-2">
       <Link
@@ -45,7 +27,7 @@ export default function Card({ manga }) {
           {manga.mangaTitle}
         </Link>
         {sortChapters(manga.chapters)
-          .slice(0, sliceCount)
+          .slice(0, 3)
           .map((chapter) => (
             <Chapter key={chapter.chapterID} manga={manga} chapter={chapter} />
           ))}
