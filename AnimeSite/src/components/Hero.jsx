@@ -53,22 +53,22 @@ export default function Hero({ view }) {
               <Trending />
             </div>
           </div>
-          <PopularToday />
-          <LatestUpdate />
+          {/* <PopularToday />
+          <LatestUpdate /> */}
         </div>
       );
       break;
   }
 
   return (
-    <section className="flex mt-10 md:w-auto 2xs:w-full 2xs:flex-col md:flex-row">
+    <section className="flex mt-10 2xs:flex-col md:flex-row">
       <div className="flex flex-col 2xs:justify-center md:justify-normal items-center">
         {bodyContent}
       </div>
       {includeSidebar && (
         <div
           id="sidebar"
-          className="2xs:w-full 2xs:flex 2xs:justify-center md:w-auto md:inline-block"
+          className="2xs:flex 2xs:justify-center md:inline-block"
         >
           <Popular />
         </div>

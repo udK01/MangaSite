@@ -10,10 +10,11 @@ export const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`/api/users/${username}`)
-      .then((response) => setUser(response.data))
-      .catch((error) => console.error(`Failed to fetch user:`, error));
+    username &&
+      axios
+        .get(`/api/users/${username}`)
+        .then((response) => setUser(response.data))
+        .catch((error) => console.error(`Failed to fetch user:`, error));
 
     axios
       .get(`/api/users`)
