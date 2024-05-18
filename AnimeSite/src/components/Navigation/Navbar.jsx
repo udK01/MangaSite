@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { navLinks } from "../constants";
+import { navLinks } from "../../constants";
 import { useContext, useState } from "react";
 
-import Header from "./Header";
+import Header from "../Header";
 
-import ComicsProvider from "./ComicsProvider";
-import UserContext from "./UserContext";
+import ComicsProvider from "../ComicsProvider";
+import UserContext from "../UserContext";
 
 export default function Navbar() {
   const { comics } = useContext(ComicsProvider);
@@ -27,8 +27,8 @@ export default function Navbar() {
   return (
     <>
       <Header />
-      <nav className="flex w-full bg-primary">
-        <div className="flex justify-between mx-auto w-full font-poppins text-white md:text-[14.5px]">
+      <nav className="flex w-full bg-primary 2xs:hidden md:inline">
+        <div className="flex justify-between w-[78%] mx-auto font-poppins text-white md:text-[14.5px]">
           <div className="flex hover:cursor-pointer">
             {navLinks.slice(0, -1).map((link, index) => (
               <Link

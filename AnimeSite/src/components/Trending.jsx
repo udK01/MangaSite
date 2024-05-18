@@ -20,7 +20,7 @@ export default function Trending() {
         >
           <img
             src={comics[3].mangaImage}
-            className="w-full h-full brightness-75 z-0"
+            className="w-full h-full brightness-75"
             alt="Trending"
           />
         </Link>

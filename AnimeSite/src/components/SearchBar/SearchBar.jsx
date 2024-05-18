@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
+import { Link } from "react-router-dom";
+
 import ComicsContext from "../ComicsProvider";
 import SearchCard from "./SearchCard";
 
@@ -41,12 +43,11 @@ export default function SearchBar() {
             }
           }}
           onBlur={(e) => {
-            setDisplayResults(false);
             if (e.target.value === "") {
               setSearch("Search");
             }
           }}
-          className={`w-[300px] h-[34px] px-4 rounded-sm border-2 border-primary bg-secondary text-white`}
+          className={`md:w-[300px] 2xs:w-[200px] h-[34px] px-4 rounded-sm border-2 md:border-primary 2xs:border-quaternary bg-secondary text-white`}
         />
         {displaySearch() && (
           <div
@@ -55,10 +56,16 @@ export default function SearchBar() {
             }`}
           >
             <div
-              className={`absolute w-[300px] h-[auto] max-h-[310px] border-2 border-primary bg-secondary overflow-y-auto scrollbar-thin z-10`}
+              className={`absolute w-[300px] 2xs:-translate-x-10 md:-translate-x-0 max-h-[310px] border-2 border-primary bg-secondary overflow-y-auto scrollbar-thin z-20`}
             >
               {searchedComics.map((comic) => (
-                <SearchCard key={comic.mangaID} comic={comic} />
+                <Link
+                  key={comic.mangaID}
+                  to={`/inspect?manga=${comic.mangaID}`}
+                  onClick={() => setSearch("")}
+                >
+                  <SearchCard comic={comic} />
+                </Link>
               ))}
             </div>
           </div>

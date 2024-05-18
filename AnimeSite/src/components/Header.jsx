@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { logo } from "../assets";
 import { useState, useContext } from "react";
 
+import VerticalNavbar from "./Navigation/VerticalNavbar";
 import SearchBar from "./SearchBar/SearchBar";
 import UserContext from "./UserContext";
 
@@ -29,8 +30,8 @@ export default function Header() {
   );
 
   return (
-    <div className="flex w-full bg-tertiary font-poppins text-white">
-      <div className="flex items-center justify-between px-5 py-1.5 w-[1200px] mx-auto">
+    <div className="flex w-full md:bg-tertiary 2xs:bg-primary font-poppins text-white">
+      <div className="flex items-center justify-between px-5 py-1.5 md:w-[80%] 2xs:w-full mx-auto">
         <div
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -61,6 +62,9 @@ export default function Header() {
           </div>
         </div>
         <SearchBar />
+        <div className="md:hidden 2xs:inline">
+          <VerticalNavbar />
+        </div>
       </div>
     </div>
   );
