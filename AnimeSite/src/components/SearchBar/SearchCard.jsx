@@ -11,10 +11,13 @@ export default function SearchCard({ comic }) {
         className="w-1/3 h-[auto] my-2 mx-2 border-2 border-primary"
       />
       <div className="mt-3">
-        <div className="flex justify-center line-clamp-2">
-          {comic.mangaTitle}
+        <div className="flex line-clamp-2">{comic.mangaTitle}</div>
+        <div className="line-clamp-3 text-dimWhite text-[12px]">
+          {comic.description}
         </div>
-        <StarRating rating={comic.rating} />
+        <div className="flex">
+          <StarRating rating={comic.rating} size={20} />
+        </div>
       </div>
     </Link>
   );

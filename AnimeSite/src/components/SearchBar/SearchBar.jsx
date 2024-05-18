@@ -46,7 +46,7 @@ export default function SearchBar() {
               setSearch("Search");
             }
           }}
-          className={`w-[300px] h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white`}
+          className={`w-[300px] h-[34px] px-4 rounded-sm border-2 border-primary bg-secondary text-white`}
         />
         {displaySearch() && (
           <div
@@ -55,7 +55,7 @@ export default function SearchBar() {
             }`}
           >
             <div
-              className={`absolute w-[300px] h-[auto] max-h-[310px] border-2 border-primary bg-secondary overflow-y-auto scrollbar-thin`}
+              className={`absolute w-[300px] h-[auto] max-h-[310px] border-2 border-primary bg-secondary overflow-y-auto scrollbar-thin z-10`}
             >
               {searchedComics.map((comic) => (
                 <SearchCard key={comic.mangaID} comic={comic} />
