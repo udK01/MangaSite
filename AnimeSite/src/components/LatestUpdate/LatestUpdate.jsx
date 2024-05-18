@@ -1,3 +1,4 @@
+import { useMediaQuery } from "react-responsive";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,10 +16,12 @@ export default function LatestUpdate() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentComics = comics.slice(indexOfFirstItem, indexOfLastItem);
 
+  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <section className="w-full md:max-w-[825px] 2xs:max-w-[1100px] bg-quaternary 2xs:mb-10 md:mb-0 p-2 rounded-sm text-white font-poppins">
+    <section className="w-full max-w-[825px] bg-quaternary p-2 rounded-sm text-white font-poppins">
       <div className="flex justify-between">
         <p className="ml-1 mt-1 md:text-[16px] 2xs:text-[20px]">
           Latest Update
@@ -30,22 +33,36 @@ export default function LatestUpdate() {
       <Separator />
       <ul>
         {currentComics.map((manga, index) =>
-          index % 2 === 0 ? (
+          isDesktopOrLaptop ? (
+            index % 2 === 0 && (
+              <li key={manga.mangaID} className="flex flex-col">
+                <div className="flex justify-between">
+                  <Card manga={manga} />
+                  {currentComics.length > index + 1 ? (
+                    <Card manga={currentComics[index + 1]} />
+                  ) : null}
+                </div>
+                {comics.length > index + 1 && <Separator />}
+              </li>
+            )
+          ) : (
             <li key={manga.mangaID} className="flex flex-col">
               <div className="flex justify-between">
                 <Card manga={manga} />
-                {currentComics.length > index + 1 ? (
-                  <Card manga={currentComics[index + 1]} />
-                ) : null}
               </div>
-              {comics.length > index + 1 ? <Separator /> : null}
+              {comics.length > index + 1 && <Separator />}
             </li>
-          ) : null
+          )
         )}
       </ul>
       <div className="flex justify-center space-x-2 items-center">
         <button
-          onClick={() => paginate(currentPage - 1)}
+          onClick={() => {
+            paginate(currentPage - 1);
+            isDesktopOrLaptop
+              ? window.scrollTo(0, 878)
+              : window.scrollTo(0, 1375);
+          }}
           className={`px-6 py-1 mb-2 bg-primary ${
             currentPage === 1 && "hidden"
           }`}
@@ -53,7 +70,12 @@ export default function LatestUpdate() {
           &lt; Previous
         </button>
         <button
-          onClick={() => paginate(currentPage + 1)}
+          onClick={() => {
+            paginate(currentPage + 1);
+            isDesktopOrLaptop
+              ? window.scrollTo(0, 878)
+              : window.scrollTo(0, 1375);
+          }}
           className={`px-12 py-1 mb-2 bg-primary ${
             indexOfLastItem >= comics.length && "hidden"
           }`}

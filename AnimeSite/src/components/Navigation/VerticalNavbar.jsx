@@ -35,19 +35,34 @@ export default function VerticalNavbar() {
       <FiAlignJustify size={32} color="white" onClick={() => toggleShow()} />
       {show && (
         <div className="w-[150px] h-auto flex flex-col space-y-1 p-2 items-center -translate-x-[98px] border-2 border-primary bg-secondary absolute z-20">
-          <Link to={"/"}>Home</Link>
+          <Link to={"/"} onClick={() => toggleShow()}>
+            Home
+          </Link>
           <Separator />
-          <Link to={"/bookmarks"}>Bookmarks</Link>
+          <Link to={"/bookmarks"} onClick={() => toggleShow()}>
+            Bookmarks
+          </Link>
           <Separator />
-          <Link to={"/comics"}>Comics</Link>
+          <Link to={"/comics"} onClick={() => toggleShow()}>
+            Comics
+          </Link>
           <Separator />
-          <Link to={path} onClick={randomPath} className="text-orange-500">
+          <Link
+            to={path}
+            onClick={() => {
+              randomPath();
+              toggleShow();
+            }}
+            className="text-orange-500"
+          >
             Surprise Me
           </Link>
           {user.length > 0 && user[0].accessLevel > 0 && (
             <>
               <Separator />
-              <Link to={"/management"}>Management</Link>
+              <Link to={"/management"} onClick={() => toggleShow()}>
+                Management
+              </Link>
             </>
           )}
         </div>

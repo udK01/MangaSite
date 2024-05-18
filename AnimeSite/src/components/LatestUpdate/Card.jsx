@@ -8,7 +8,7 @@ function sortChapters(chapters) {
 
 export default function Card({ manga }) {
   return (
-    <div className="flex w-full md:max-w-[405px] 2xs:max-w-[542px] h-auto p-2">
+    <div className="flex w-full max-w-[405px] h-auto p-2">
       <Link
         to={`/inspect?manga=${manga.mangaID}`}
         className="hover:cursor-pointer"
@@ -16,7 +16,7 @@ export default function Card({ manga }) {
         <img
           src={manga.mangaImage}
           alt="manga-img"
-          className="md:w-[150px] 2xs:w-[250px] h-full hover:cursor-pointer"
+          className="w-[150px] h-full hover:cursor-pointer"
         />
       </Link>
       <div className="flex flex-col w-full">
