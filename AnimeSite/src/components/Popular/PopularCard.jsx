@@ -41,7 +41,7 @@ export default function PopularCard({ manga, index }) {
           ))}
         </span>
         <div className="flex">
-          <StarRating rating={manga.rating} />
+          <StarRating rating={manga.rating} size={20} />
         </div>
       </div>
     </div>

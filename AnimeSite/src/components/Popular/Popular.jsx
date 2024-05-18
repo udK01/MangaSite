@@ -9,7 +9,7 @@ export default function Popular() {
   const [current, setCurrent] = useState(0);
 
   return (
-    <div className="w-full md:max-w-[340px] bg-quaternary p-3 md:ml-3 2xs:ml-0 rounded-sm text-white">
+    <div className="w-full lg:max-w-[340px] bg-quaternary p-3 lg:ml-3 2xs:ml-0 2xs:mt-10 lg:mt-0 rounded-sm text-white">
       {/* "Popular" text */}
       <div>
         <p className="font-poppins text-[16px]">Popular</p>

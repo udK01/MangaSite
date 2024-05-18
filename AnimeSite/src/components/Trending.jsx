@@ -7,7 +7,7 @@ export default function Trending() {
   const { comics } = useContext(ComicsProvider);
 
   return (
-    <div className="relative w-full max-w-[200px] h-[280px] ml-3">
+    <div className="relative w-full min-w-[200px] max-w-[200px] h-[280px] ml-3">
       <div className="absolute flex justify-center items-center w-full h-8 bg-primary shadow-2xl shadow-red-600 z-10">
         <h2 className="font-bold tracking-widest text-white font-poppins">
           &lt; Trending &gt;

@@ -61,7 +61,7 @@ export default function Hero({ view }) {
   }
 
   return (
-    <section className="flex mt-10 2xs:flex-col md:flex-row">
+    <section className="flex mt-10 2xs:flex-col md:flex-col lg:flex-row">
       <div className="flex flex-col 2xs:justify-center md:justify-normal items-center">
         {bodyContent}
       </div>
