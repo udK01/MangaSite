@@ -104,49 +104,55 @@ export default function Comics() {
   }
 
   return (
-    <section className="w-full md:max-w-[825px] 2xs:max-w-[1100px] md:mb-0 2xs:mb-10 h-auto bg-quaternary rounded-sm font-poppins">
+    <section className="w-full md:max-w-[825px] mb-10 h-auto bg-quaternary rounded-sm font-poppins">
       <div className="flex justify-between my-4 mx-4 text-white">
         Manga Lists
       </div>
       <Separator />
-      <div className="flex text-white mb-3">
-        <ComicDropdown
-          options={genres.map((genre) => genre.genreTag)}
-          value={"Genre"}
-          func={setSelectedGenres}
-          multiOptional={true}
-          genresSelected={selectedGenres}
-        />
-        <ComicDropdown
-          options={[
-            "All",
-            "OnGoing",
-            "Completed",
-            "Hiatus",
-            "Dropped",
-            "Coming Soon",
-          ]}
-          value={selectedStatus}
-          func={setSelectedStatus}
-          className={"md:-translate-x-[162px] 2xs:-translate-x-[220px]"}
-        />
-        <ComicDropdown
-          options={["All", "Manga", "Manhwa", "Manhua", "Comic", "Novel"]}
-          value={selectedType}
-          func={setSelectedType}
-          className={"md:-translate-x-[325px] 2xs:-translate-x-[432px]"}
-        />
-        <ComicDropdown
-          options={["Default", "A-Z", "Z-A", "Update", "Added", "Popular"]}
-          value={selectedOrder}
-          func={setSelectedOrder}
-          className={"md:-translate-x-[490px] 2xs:-translate-x-[650px]"}
-        />
-        <div
-          className={`ml-[18px] md:text-[16px] 2xs:text-[20px] flex justify-center md:w-[145px] 2xs:w-[200px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
-          onClick={() => resetValues()}
-        >
-          Reset
+      {/* Button Container */}
+      <div className="flex 2xs:flex-col md:flex-row  text-white">
+        <div className="flex md:flex-row 2xs:flex-col 2xs:space-y-3 md:space-y-0 mb-2 px-4 w-full">
+          {/* Genres and Status */}
+          <ComicDropdown
+            options={genres.map((genre) => genre.genreTag)}
+            value={"Genre"}
+            func={setSelectedGenres}
+            multiOptional={true}
+            genresSelected={selectedGenres}
+          />
+          <ComicDropdown
+            options={[
+              "All",
+              "OnGoing",
+              "Completed",
+              "Hiatus",
+              "Dropped",
+              "Coming Soon",
+            ]}
+            value={selectedStatus}
+            func={setSelectedStatus}
+            className={"md:-translate-x-[162px]"}
+          />
+          {/* Type and Sort */}
+          <ComicDropdown
+            options={["All", "Manga", "Manhwa", "Manhua", "Comic", "Novel"]}
+            value={selectedType}
+            func={setSelectedType}
+            className={"md:-translate-x-[325px]"}
+          />
+          <ComicDropdown
+            options={["Default", "A-Z", "Z-A", "Update", "Added", "Popular"]}
+            value={selectedOrder}
+            func={setSelectedOrder}
+            className={"md:-translate-x-[490px]"}
+          />
+          {/* Reset */}
+          <div
+            className={`text-[16px] flex justify-center 2xs:w-full md:w-[145px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
+            onClick={() => resetValues()}
+          >
+            Reset
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap pb-6">

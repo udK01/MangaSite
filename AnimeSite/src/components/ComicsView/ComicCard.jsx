@@ -19,7 +19,7 @@ export default function ComicCard({ manga }) {
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
-          className="w-full min-h-[210px] transition-transform duration-300 hover:brightness-75"
+          className="w-full md:max-w-full 2xs:w-[150px] transition-transform duration-300 hover:brightness-75"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
@@ -28,14 +28,14 @@ export default function ComicCard({ manga }) {
         <div className="flex flex-col justify-between h-full">
           <Link
             to={`/inspect?manga=${manga.mangaID}`}
-            className={`md:text-[14px] 2xs:text-[20px] mt-1 hover:text-primary ${
+            className={`md:text-[14px] mt-1 hover:text-primary ${
               hover ? "text-primary" : "text-white"
             } mb-1 line-clamp-2`}
           >
             {manga.mangaTitle}
           </Link>
           <div className="flex flex-col">
-            <p className="text-dimWhite md:text-[12px] 2xs:text-[16px] mt-1">
+            <p className="text-dimWhite md:text-[12px] mt-1">
               Chapter {manga.totalChapters}
             </p>
             <div className="flex">
