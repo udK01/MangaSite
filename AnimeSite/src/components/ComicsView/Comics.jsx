@@ -167,9 +167,12 @@ export default function Comics() {
             </div>
           ))
         ) : (
-          <h2 className="w-full flex justify-center text-white font-poppins text-[32px] mt-5">
-            There are no comics found.
-          </h2>
+          <>
+            <Separator />
+            <h2 className="w-full flex justify-center text-white font-poppins md:text-[32px] 2xs:text-[24px] my-6">
+              There are no comics found.
+            </h2>
+          </>
         )}
       </div>
     </section>

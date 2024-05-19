@@ -87,9 +87,9 @@ export default function InspectChapter() {
           options={chapterDisplay}
           value={changeChapter}
           func={setChangeChapter}
-          className={"w-[400px] px-4 rounded-2xl bg-tertiary"}
+          className={"md:w-[400px] 2xs:w-[200px] px-4 rounded-2xl bg-tertiary"}
         />
-        <div className="flex items-center text-xs text-white">
+        <div className="flex items-center text-xs text-white mx-4">
           <Link
             to={
               previousChapter
@@ -120,13 +120,13 @@ export default function InspectChapter() {
   };
 
   return (
-    <section className="w-[1200px] h-auto font-poppins">
+    <section className="w-full 2xs:min-w-[410px] md:min-w-[768px] lg:min-w-[1060px] xl:min-w-[1200px] h-auto font-poppins">
       {/* Title */}
-      <h2 className="flex justify-center font-semibold text-white text-[20px]">
+      <h2 className="flex justify-center text-center font-semibold text-white text-[20px]">
         {manga.mangaTitle} Chapter {chapter.chapterNumber}
       </h2>
       {/* All Chapters */}
-      <p className="flex justify-center items-center text-dimWhite text-[14px]">
+      <p className="flex flex-row 2xs:flex-col justify-center items-center text-dimWhite text-[14px]">
         All chapters are in
         <Link
           to={`/inspect?manga=${manga.mangaID}`}
@@ -146,7 +146,7 @@ export default function InspectChapter() {
         <p>&gt;</p>
         <Link
           to={`/inspect?manga=${manga.mangaID}`}
-          className="hover:text-primary mx-2 transition-colors duration-300"
+          className="w-full 2xs:w-[220px] line-clamp-1 hover:text-primary mx-2 transition-colors duration-300"
         >
           {manga.mangaTitle}
         </Link>
