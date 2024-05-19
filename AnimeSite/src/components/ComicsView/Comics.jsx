@@ -159,7 +159,10 @@ export default function Comics() {
       <div className="flex flex-wrap pb-6">
         {filteredMangas.length > 0 ? (
           filteredMangas.map((manga, index) => (
-            <div key={index} className="w-1/2 flex mt-2 md:ml-[18px] 2xs:ml-0">
+            <div
+              key={index}
+              className="2xs:w-1/2 md:w-auto flex mt-2 md:ml-[18px] 2xs:ml-0"
+            >
               <Card manga={manga} />
             </div>
           ))

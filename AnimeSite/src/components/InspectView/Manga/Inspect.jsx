@@ -294,8 +294,8 @@ export default function Inspect() {
               </Link>
               <p className="transition-colors duration-300">&gt;</p>
               <Link
-                to={`/${manga.mangaTitle.replace(/\s+/g, "-")}`}
-                className="hover:text-primary mx-2 transition-colors duration-300"
+                to={`/inspect?manga=${manga.mangaID}`}
+                className="hover:text-primary mx-2 line-clamp-1 transition-colors duration-300"
               >
                 {manga.mangaTitle}
               </Link>
