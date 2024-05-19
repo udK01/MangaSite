@@ -32,7 +32,7 @@ export default function Login() {
           func(placeholder);
         }
       },
-      className: `w-[250px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
+      className: `w-full min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
     };
 
     return <input {...commonProps} type={type} />;
@@ -72,7 +72,7 @@ export default function Login() {
   }
 
   return (
-    <section className="w-[600px] h-[400px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
+    <section className="w-full h-full 2xs:p-12 md:p-24 lg:p-32 flex justify-center border-2 border-primary font-poppins bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
         <div className="text-[20px]">Please login.</div>
         <div className="text-red-500 text-[14px] mt-1">{errorMessage}</div>
