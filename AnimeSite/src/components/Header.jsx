@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 import VerticalNavbar from "./Navigation/VerticalNavbar";
 import SearchBar from "./SearchBar/SearchBar";
 import UserContext from "./UserContext";
+import Separator from "./Separator";
 
 export default function Header() {
   const { user, setUser } = useContext(UserContext);
@@ -22,7 +23,7 @@ export default function Header() {
           ? `/profile?user=${user[0].username}`
           : `/${location}`
       }
-      className={`hover:text-primary hover:cursor-pointer mb-3 md:text-[16px] 2xs:text-[24px]`}
+      className={`hover:text-primary hover:cursor-pointer text-[16px]`}
       onClick={() => text !== "Profile" && Logout()}
     >
       {text}
@@ -35,27 +36,29 @@ export default function Header() {
         <div
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
+          onClick={() => setHover(true)}
+          onBlur={() => setHover(false)}
         >
-          <Link to="/" className="hover:cursor-pointer">
-            <img
-              src={logo}
-              alt="logo"
-              className="w-[50px] h-[50px] object-contain"
-            />
-          </Link>
+          <img
+            src={logo}
+            alt="logo"
+            className="w-[50px] h-[50px] object-contain hover:cursor-pointer"
+          />
           <div
-            className={`flex flex-col absolute w-[120px] z-10 px-5 py-2 border-2 border-tertiary bg-secondary ${
+            className={`flex flex-col absolute w-[120px] z-10 items-center p-2 border-2 border-primary bg-secondary ${
               hover ? "" : "hidden"
             }`}
           >
             {user.length > 0 ? (
               <>
                 <ListElement location={"profile"} text={"Profile"} />
+                <Separator />
                 <ListElement location={""} text={"Logout"} />
               </>
             ) : (
               <>
                 <ListElement location={"login"} text={"Login"} />
+                <Separator />
                 <ListElement location={"register"} text={"Register"} />
               </>
             )}

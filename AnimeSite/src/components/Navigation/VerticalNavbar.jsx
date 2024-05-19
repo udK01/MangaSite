@@ -32,7 +32,14 @@ export default function VerticalNavbar() {
 
   return (
     <div>
-      <FiAlignJustify size={32} color="white" onClick={() => toggleShow()} />
+      <div
+        tabIndex="0"
+        onClick={() => toggleShow()}
+        onBlur={() => toggleShow()}
+        style={{ display: "inline-block" }}
+      >
+        <FiAlignJustify size={32} color="white" />
+      </div>
       {show && (
         <div className="w-[150px] h-auto flex flex-col space-y-1 p-2 items-center -translate-x-[98px] border-2 border-primary bg-secondary absolute z-20">
           <Link to={"/"} onClick={() => toggleShow()}>

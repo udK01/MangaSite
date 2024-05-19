@@ -4,14 +4,13 @@ import axios from "axios";
 
 import Separator from "../Separator";
 import ComicDropdown from "./ComicDropdown";
-import Card from "../PopularToday/PopularTodayCard";
+import Card from "./ComicCard";
 
 import ComicsProvider from "../ComicsProvider";
 
 export default function Comics() {
   const { comics } = useContext(ComicsProvider);
-  const [mangas, setMangas] = useState(comics);
-  const [filteredMangas, setFilteredMangas] = useState(mangas);
+  const [filteredMangas, setFilteredMangas] = useState(comics);
 
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -40,7 +39,7 @@ export default function Comics() {
   useEffect(() => {
     if (!Array.isArray(selectedGenres)) return;
 
-    let filteredArr = mangas.filter((manga) =>
+    let filteredArr = comics.filter((manga) =>
       selectedGenres.every((genre) => manga.genres.includes(genre))
     );
 

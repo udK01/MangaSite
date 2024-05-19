@@ -279,12 +279,12 @@ export default function Inspect() {
   }
 
   return (
-    <section className="w-[826px] h-auto font-poppins">
+    <section className="w-full max-w-[826px] h-auto font-poppins">
       {manga && (
         // Helps ensure the space is allocated already.
         <>
           {/* Route */}
-          <div className="flex justify-between text-[14px] w-full bg-quaternary rounded-sm text-white p-2">
+          <div className="flex justify-between items-center md:text-[14px] 2xs:text-[10px] w-full bg-quaternary rounded-sm text-white p-2">
             <div className="flex">
               <Link
                 to={"/"}
@@ -302,7 +302,7 @@ export default function Inspect() {
             </div>
             <div className="flex">
               {user.length > 0 && user[0].accessLevel > 1 && (
-                <div>
+                <div className="flex items-center">
                   {editing && (
                     <button
                       className="mr-2 bg-gray-500 px-4 rounded-md"
@@ -338,9 +338,12 @@ export default function Inspect() {
             </div>
           </div>
           {/* Body */}
-          <div className="flex w-full h-auto bg-quaternary mt-10 p-4">
+          <div className="flex md:flex-row 2xs:flex-col items-center w-full h-auto bg-quaternary mt-10 p-4">
             {/* Left Side */}
-            <div id="left" className="flex flex-col w-[180px] flex-shrink-0">
+            <div
+              id="left"
+              className="flex flex-col w-full md:max-w-[180px] 2xs:max-w-[250px] items-center md:mb-0 2xs:mb-5 flex-shrink-0"
+            >
               {/* Image Selector */}
               <div className="relative inline-block">
                 <img
@@ -375,52 +378,58 @@ export default function Inspect() {
                   </div>
                 )}
               </div>
-              {/* Bookmark Button */}
-              <button
-                className={`w-full flex items-center justify-center text-white p-2 rounded-md mt-2 text-[14px] transition-all duration-300 ${
-                  bookmarked
-                    ? "bg-red-700 hover:bg-red-800"
-                    : "bg-primary hover:bg-purple-800"
-                } `}
-                onClick={() => handleBookmark(bookmarked ? "remove" : "add")}
-              >
-                {bookmarked ? <FaBookmark /> : <FaRegBookmark />} Bookmark
-              </button>
-              {/* Bookmark Count */}
-              <p className="flex justify-center text-dimWhite text-[12px] my-1">
-                Followed by {bookmarkCount} people
-              </p>
-              {/* Manga Rating */}
-              <div>
-                <div
-                  className="w-full flex justify-between items-center bg-quinary px-2 p-[2px] rounded-md text-dimWhite"
-                  onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)}
+              <div className="2xs:w-[300px] md:w-full">
+                {/* Bookmark Button */}
+                <button
+                  className={`w-full flex items-center justify-center text-white p-2 rounded-md mt-2 text-[14px] transition-all duration-300 ${
+                    bookmarked
+                      ? "bg-red-700 hover:bg-red-800"
+                      : "bg-primary hover:bg-purple-800"
+                  } `}
+                  onClick={() => handleBookmark(bookmarked ? "remove" : "add")}
                 >
-                  <div className="h-full pb-1 flex flex-col items-center">
-                    {hover ? (
-                      <InteractiveStarRating manga={manga} />
-                    ) : (
-                      <StarRating rating={manga.rating} includeText={false} />
-                    )}
+                  {bookmarked ? <FaBookmark /> : <FaRegBookmark />} Bookmark
+                </button>
+                {/* Bookmark Count */}
+                <p className="flex justify-center text-dimWhite text-[12px] my-1">
+                  Followed by {bookmarkCount} people
+                </p>
+                {/* Manga Rating */}
+                <div>
+                  <div
+                    className="w-full flex justify-between items-center bg-quinary px-2 p-[2px] rounded-md text-dimWhite"
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                  >
+                    <div className="h-full pb-1 flex flex-col items-center">
+                      {hover ? (
+                        <InteractiveStarRating manga={manga} />
+                      ) : (
+                        <StarRating
+                          rating={manga.rating}
+                          size={20}
+                          includeText={false}
+                        />
+                      )}
+                    </div>
+                    {manga.rating}
                   </div>
-                  {manga.rating}
+                  {/* Status / Type */}
+                  {editing ? (
+                    <>
+                      <SideInfoInput label1={"Status"} label2={"Type"} />
+                    </>
+                  ) : (
+                    <>
+                      <SideInfo label="Status" value={manga.status} />
+                      <SideInfo
+                        label="Type"
+                        value={manga.type}
+                        isHoverable={true}
+                      />
+                    </>
+                  )}
                 </div>
-                {/* Status / Type */}
-                {editing ? (
-                  <>
-                    <SideInfoInput label1={"Status"} label2={"Type"} />
-                  </>
-                ) : (
-                  <>
-                    <SideInfo label="Status" value={manga.status} />
-                    <SideInfo
-                      label="Type"
-                      value={manga.type}
-                      isHoverable={true}
-                    />
-                  </>
-                )}
               </div>
             </div>
             {/* Right Side */}

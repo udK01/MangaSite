@@ -499,7 +499,7 @@ export default function Comments() {
   };
 
   return (
-    <section className="w-full bg-quaternary h-auto mt-10 p-4 font-poppins text-white">
+    <section className="w-full bg-quaternary h-auto my-10 p-4 font-poppins text-white">
       <div className="w-full flex justify-between items-center">
         <div>Comments</div>
         <DropDown
