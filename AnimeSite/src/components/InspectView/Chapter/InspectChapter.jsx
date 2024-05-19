@@ -89,7 +89,7 @@ export default function InspectChapter() {
           func={setChangeChapter}
           className={"md:w-[400px] 2xs:w-[200px] px-4 rounded-2xl bg-tertiary"}
         />
-        <div className="flex items-center text-xs text-white mx-4">
+        <div className="flex items-center text-xs text-white 2xs:mx-4">
           <Link
             to={
               previousChapter
@@ -120,7 +120,7 @@ export default function InspectChapter() {
   };
 
   return (
-    <section className="w-full 2xs:min-w-[410px] md:min-w-[768px] lg:min-w-[1060px] xl:min-w-[1200px] h-auto font-poppins">
+    <section className="w-full md:min-w-[768px] lg:min-w-[1060px] xl:min-w-[1200px] h-auto font-poppins">
       {/* Title */}
       <h2 className="flex justify-center text-center font-semibold text-white text-[20px]">
         {manga.mangaTitle} Chapter {chapter.chapterNumber}
@@ -161,7 +161,7 @@ export default function InspectChapter() {
       {/* Top Navigation */}
       <NavigationInterface />
       {/* Dummy "Content" */}
-      <div className="w-full h-[1500px] flex justify-center items-center bg-quaternary text-[516px] mt-4">
+      <div className="w-full h-[1500px] flex justify-center items-center bg-quaternary md:text-[516px] 2xs:text-[256px] mt-4">
         {chapter.chapterNumber}
       </div>
       {/* Bottom Navigation */}
