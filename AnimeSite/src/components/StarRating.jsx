@@ -1,4 +1,4 @@
-export default function StarRating({ rating, size, includeText = true }) {
+export default function StarRating({ rating, size = 20, includeText = true }) {
   const renderStar = (index) => {
     const integerPart = Math.floor(rating);
     const fractionalPart = rating - integerPart;
@@ -44,7 +44,9 @@ export default function StarRating({ rating, size, includeText = true }) {
       </div>
       {includeText ? (
         <p
-          className={`font-poppins md:text-[14px] 2xs:text-[${size}px] ml-2 text-dimWhite`}
+          className={`font-poppins md:text-[14px] 2xs:text-[${
+            size - Math.floor(size / 3)
+          }px] ml-2 text-dimWhite`}
         >
           {rating}
         </p>

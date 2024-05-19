@@ -279,12 +279,12 @@ export default function Inspect() {
   }
 
   return (
-    <section className="w-full max-w-[826px] h-auto font-poppins">
+    <section className="w-full max-w-[826px] md:min-w-[826px] h-auto font-poppins">
       {manga && (
         // Helps ensure the space is allocated already.
         <>
           {/* Route */}
-          <div className="flex justify-between items-center md:text-[14px] 2xs:text-[10px] w-full bg-quaternary rounded-sm text-white p-2">
+          <div className="flex justify-between items-center text-[14px] w-full bg-quaternary rounded-sm text-white p-2">
             <div className="flex">
               <Link
                 to={"/"}
@@ -338,7 +338,7 @@ export default function Inspect() {
             </div>
           </div>
           {/* Body */}
-          <div className="flex md:flex-row 2xs:flex-col items-center w-full h-auto bg-quaternary mt-10 p-4">
+          <div className="flex md:flex-row 2xs:flex-col 2xs:items-center md:items-start w-full h-auto bg-quaternary mt-10 p-4">
             {/* Left Side */}
             <div
               id="left"
