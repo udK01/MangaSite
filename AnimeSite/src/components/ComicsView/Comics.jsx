@@ -119,6 +119,7 @@ export default function Comics() {
             func={setSelectedGenres}
             multiOptional={true}
             genresSelected={selectedGenres}
+            className={"md:-translate-x-[15px]"}
           />
           <ComicDropdown
             options={[
@@ -131,20 +132,20 @@ export default function Comics() {
             ]}
             value={selectedStatus}
             func={setSelectedStatus}
-            className={"md:-translate-x-[162px]"}
+            className={"md:-translate-x-[177px]"}
           />
           {/* Type and Sort */}
           <ComicDropdown
             options={["All", "Manga", "Manhwa", "Manhua", "Comic", "Novel"]}
             value={selectedType}
             func={setSelectedType}
-            className={"md:-translate-x-[325px]"}
+            className={"md:-translate-x-[340px]"}
           />
           <ComicDropdown
             options={["Default", "A-Z", "Z-A", "Update", "Added", "Popular"]}
             value={selectedOrder}
             func={setSelectedOrder}
-            className={"md:-translate-x-[490px]"}
+            className={"md:-translate-x-[505px]"}
           />
           {/* Reset */}
           <div

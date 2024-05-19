@@ -50,44 +50,41 @@ const ComicDropdown = ({
 
   // Function to render checkboxes and options
   const renderOptions = () => {
-    const rows = [];
-    for (let i = 0; i < options.length; i += 5) {
-      const rowOptions = options.slice(i, i + 5);
-      rows.push(
-        <div key={i} className="flex items-center">
-          {rowOptions.map((option, index) => (
-            <div key={index} className="flex items-center mr-4 w-full">
-              {multiOptional ? (
-                <input
-                  type="checkbox"
-                  id={`checkbox-${i + index}`}
-                  checked={checkedBoxes.includes(option)}
-                  onChange={() => toggleCheckbox(option)}
-                  className="mr-2 ml-5"
-                />
-              ) : (
-                <input
-                  type="radio"
-                  name="type"
-                  id={`radio-${i + index}`}
-                  checked={value === option}
-                  onChange={() => func(option)}
-                  className="mr-2 ml-5"
-                />
-              )}
-              <label
-                htmlFor={`checkbox-${i + index}`}
-                className="cursor-pointer hover:text-primary whitespace-nowrap overflow-hidden overflow-ellipsis"
-                onClick={() => func(option)}
-              >
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return rows;
+    return (
+      <div className="flex flex-wrap items-center">
+        {options.map((option, index) => (
+          <div
+            key={index}
+            className="flex items-center md:w-1/6 md:ml-[25px] 2xs:ml-0 2xs:w-1/2 mb-1"
+          >
+            {multiOptional ? (
+              <input
+                type="checkbox"
+                id={`checkbox-${index}`}
+                checked={checkedBoxes.includes(option)}
+                onChange={() => toggleCheckbox(option)}
+              />
+            ) : (
+              <input
+                type="radio"
+                name="type"
+                id={`radio-${index}`}
+                checked={value === option}
+                onChange={() => func(option)}
+                className="ml-2"
+              />
+            )}
+            <label
+              htmlFor={`checkbox-${index}`}
+              className="ml-2 cursor-pointer hover:text-primary whitespace-nowrap overflow-hidden overflow-ellipsis"
+              onClick={() => func(option)}
+            >
+              {option}
+            </label>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -107,7 +104,7 @@ const ComicDropdown = ({
       {isOpen && (
         <div className="scrollbar-thumb-primary scrollbar-track-transparent">
           <div
-            className={`w-full md:max-w-[825px] ${className} absolute mt-1 bg-secondary text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
+            className={`md:w-screen 2xs:w-fit md:max-w-[825px] ${className} absolute mt-1 bg-secondary text-white border-2 border-primary scrollbar-thin max-h-[200px] overflow-y-auto z-10`}
           >
             {renderOptions()}
           </div>
