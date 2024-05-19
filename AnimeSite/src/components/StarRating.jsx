@@ -1,4 +1,4 @@
-export default function StarRating({ rating, size = 20, includeText = true }) {
+export default function StarRating({ rating, includeText = true }) {
   const renderStar = (index) => {
     const integerPart = Math.floor(rating);
     const fractionalPart = rating - integerPart;
@@ -16,7 +16,7 @@ export default function StarRating({ rating, size = 20, includeText = true }) {
     return (
       <div key={index} className="flex items-center">
         <svg
-          className={`2xs:h-[${size}px] md:h-5 fill-current ${
+          className={`2xs:h-[20px] md:h-5 fill-current ${
             partialFill === null ? "text-gray-400" : "text-yellow-400"
           }`}
           viewBox={`0 0 ${
@@ -27,7 +27,7 @@ export default function StarRating({ rating, size = 20, includeText = true }) {
         </svg>
         {remainingFill !== null && (
           <svg
-            className={`2xs:h-[${size}px] md:h-5 fill-current text-gray-400 scale-x-[-1]`}
+            className={`2xs:h-[20px] md:h-5 fill-current text-gray-400 scale-x-[-1]`}
             viewBox={`0 0 ${(remainingFill / 100) * 24} 24`}
           >
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -43,11 +43,7 @@ export default function StarRating({ rating, size = 20, includeText = true }) {
         {[...Array(5).keys()].map((index) => renderStar(index + 1))}
       </div>
       {includeText ? (
-        <p
-          className={`font-poppins md:text-[14px] 2xs:text-[${
-            size - Math.floor(size / 3)
-          }px] ml-2 text-dimWhite`}
-        >
+        <p className={`font-poppins md:text-[14px] ml-2 text-dimWhite`}>
           {rating}
         </p>
       ) : null}

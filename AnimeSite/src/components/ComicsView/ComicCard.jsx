@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import StarRating from "../StarRating";
 import { useState } from "react";
+
+import StarRating from "../StarRating";
 
 export default function ComicCard({ manga }) {
   const [hover, setHover] = useState(false);
@@ -19,7 +20,7 @@ export default function ComicCard({ manga }) {
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
-          className="w-full md:max-w-full 2xs:w-[150px] transition-transform duration-300 hover:brightness-75"
+          className="w-full md:max-w-full 2xs:w-[95%] transition-transform duration-300 hover:brightness-75"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
@@ -39,7 +40,7 @@ export default function ComicCard({ manga }) {
               Chapter {manga.totalChapters}
             </p>
             <div className="flex">
-              <StarRating rating={manga.rating} size={25} />
+              <StarRating rating={manga.rating} />
             </div>
           </div>
         </div>
