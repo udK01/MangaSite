@@ -14,7 +14,7 @@ export default function BodyInfo({
           <input
             id={lLabel}
             placeholder={lValue}
-            className="w-[250px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+            className="md:w-[250px] 2xs:w-full min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
           />
         ) : (
           <div className="text-dimWhite">{lValue}</div>
@@ -26,7 +26,7 @@ export default function BodyInfo({
           <input
             id={rLabel}
             placeholder={rValue}
-            className="w-[250px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+            className="md:w-[250px] 2xs:w-full min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
           />
         ) : (
           <div className="text-dimWhite">{rValue}</div>

@@ -15,12 +15,12 @@ export default function ComicCard({ manga }) {
   };
 
   return (
-    <div className="md:w-[145px] 2xs:w-full font-poppins rounded-md overflow-hidden flex flex-col">
+    <div className="lg:w-[145px] md:w-[120px] 2xs:w-[95%] font-poppins rounded-md overflow-hidden flex flex-col 2xs:ml-1 md:ml-0">
       <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
-          className="w-full md:max-w-full 2xs:w-[95%] transition-transform duration-300 hover:brightness-75"
+          className="w-full md:max-w-full 2xs:w-full 2xs:min-h-[300px] md:min-h-full transition-transform duration-300 hover:brightness-75"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />

@@ -441,7 +441,7 @@ export default function Inspect() {
                     id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+                    className="2xs:w-full md:w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
                   />
                 ) : (
                   <h2 className="font-bold text-[20px] line-clamp-1 text-ellipsis">
@@ -454,9 +454,8 @@ export default function Inspect() {
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-[550px] min-h-[34px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+                  className="2xs:w-full md:w-[550px] min-h-[68px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
                   style={{
-                    height: "34px",
                     maxHeight: "400px",
                     lineHeight: "30px",
                   }}
@@ -517,7 +516,8 @@ export default function Inspect() {
                       </div>
                     </Link>
                   ))}
-
+                </div>
+                <div className="w-full flex justify-center size-8">
                   {editing && (
                     <TagDropDown
                       initiallySelected={manga.genres}

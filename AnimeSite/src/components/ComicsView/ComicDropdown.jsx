@@ -94,7 +94,7 @@ const ComicDropdown = ({
     >
       {/* Button */}
       <div
-        className={`mr-[18px] md:w-[145px] 2xs:w-full flex items-center justify-between px-3 text-[16px] bg-quinary rounded-sm hover:bg-primary`}
+        className={`mr-[18px] md:w-[120px] lg:w-[145px] 2xs:w-full flex items-center justify-between px-3 text-[16px] bg-quinary rounded-sm hover:bg-primary`}
         onClick={toggleDropdown}
       >
         <div>{value}</div>

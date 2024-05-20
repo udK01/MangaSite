@@ -104,13 +104,13 @@ export default function Comics() {
   }
 
   return (
-    <section className="w-full md:max-w-[825px] mb-10 h-auto bg-quaternary rounded-sm font-poppins">
+    <section className="w-full md:max-w-[705px] lg:max-w-[825px] mb-10 h-auto bg-quaternary rounded-sm font-poppins">
       <div className="flex justify-between my-4 mx-4 text-white">
         Manga Lists
       </div>
       <Separator />
       {/* Button Container */}
-      <div className="flex 2xs:flex-col md:flex-row  text-white">
+      <div className="flex 2xs:flex-col xl:flex-row  text-white">
         <div className="flex md:flex-row 2xs:flex-col 2xs:space-y-3 md:space-y-0 mb-2 px-4 w-full">
           {/* Genres and Status */}
           <ComicDropdown
@@ -149,7 +149,7 @@ export default function Comics() {
           />
           {/* Reset */}
           <div
-            className={`text-[16px] flex justify-center 2xs:w-full md:w-[145px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
+            className={`text-[16px] flex justify-center 2xs:w-full md:w-[120px] lg:w-[145px] rounded-sm bg-primary hover:bg-purple-700 hover:cursor-pointer`}
             onClick={() => resetValues()}
           >
             Reset
