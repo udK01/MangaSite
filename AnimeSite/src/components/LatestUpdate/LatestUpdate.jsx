@@ -16,7 +16,7 @@ export default function LatestUpdate() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentComics = comics.slice(indexOfFirstItem, indexOfLastItem);
 
-  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
+  const aboveIpad = useMediaQuery({ minDeviceWidth: 768 });
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -33,7 +33,7 @@ export default function LatestUpdate() {
       <Separator />
       <ul>
         {currentComics.map((manga, index) =>
-          isDesktopOrLaptop ? (
+          aboveIpad ? (
             index % 2 === 0 && (
               <li key={manga.mangaID} className="flex flex-col">
                 <div className="flex justify-between">
@@ -59,9 +59,7 @@ export default function LatestUpdate() {
         <button
           onClick={() => {
             paginate(currentPage - 1);
-            isDesktopOrLaptop
-              ? window.scrollTo(0, 878)
-              : window.scrollTo(0, 1375);
+            aboveIpad ? window.scrollTo(0, 878) : window.scrollTo(0, 1375);
           }}
           className={`px-6 py-1 mb-2 bg-primary ${
             currentPage === 1 && "hidden"
@@ -72,9 +70,7 @@ export default function LatestUpdate() {
         <button
           onClick={() => {
             paginate(currentPage + 1);
-            isDesktopOrLaptop
-              ? window.scrollTo(0, 878)
-              : window.scrollTo(0, 1375);
+            aboveIpad ? window.scrollTo(0, 878) : window.scrollTo(0, 1375);
           }}
           className={`px-12 py-1 mb-2 bg-primary ${
             indexOfLastItem >= comics.length && "hidden"

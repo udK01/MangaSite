@@ -104,7 +104,7 @@ export default function MangaChapters({
                       <div className="flex justify-between items-center">
                         <div>
                           <Link
-                            to={`${currentPath}/${chapter.chapterNumber}`}
+                            to={`${currentPath}/chapters${currentSearch}&chapter=${chapter.chapterNumber}`}
                             className="text-white hover:text-primary"
                           >
                             Chapter {chapter.chapterNumber}

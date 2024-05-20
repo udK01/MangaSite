@@ -146,14 +146,14 @@ export default function InspectChapter() {
         <p>&gt;</p>
         <Link
           to={`/inspect?manga=${manga.mangaID}`}
-          className="w-full 2xs:w-[220px] line-clamp-1 hover:text-primary mx-2 transition-colors duration-300"
+          className="w-full line-clamp-1 hover:text-primary mx-2 transition-colors duration-300"
         >
           {manga.mangaTitle}
         </Link>
         <p>&gt;</p>
         <Link
           to={`${location.pathname}${location.search}`}
-          className="hover:text-primary mx-2 transition-colors duration-300"
+          className="w-full hover:text-primary mx-2 transition-colors duration-300"
         >
           Chapter {chapter.chapterNumber}
         </Link>
