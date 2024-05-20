@@ -126,7 +126,7 @@ export default function InspectChapter() {
         {manga.mangaTitle} Chapter {chapter.chapterNumber}
       </h2>
       {/* All Chapters */}
-      <p className="flex flex-row 2xs:flex-col justify-center items-center text-dimWhite text-[14px]">
+      <p className="flex flex-row 2xs:flex-col md:flex-row justify-center items-center text-dimWhite text-[14px]">
         All chapters are in
         <Link
           to={`/inspect?manga=${manga.mangaID}`}
@@ -146,14 +146,14 @@ export default function InspectChapter() {
         <p>&gt;</p>
         <Link
           to={`/inspect?manga=${manga.mangaID}`}
-          className="w-full line-clamp-1 hover:text-primary mx-2 transition-colors duration-300"
+          className="line-clamp-1 hover:text-primary mx-2 transition-colors duration-300"
         >
           {manga.mangaTitle}
         </Link>
         <p>&gt;</p>
         <Link
           to={`${location.pathname}${location.search}`}
-          className="w-full hover:text-primary mx-2 transition-colors duration-300"
+          className="md:w-auto 2xs:w-full hover:text-primary mx-2 transition-colors duration-300"
         >
           Chapter {chapter.chapterNumber}
         </Link>
