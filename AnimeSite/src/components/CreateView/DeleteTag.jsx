@@ -90,18 +90,22 @@ export default function DeleteTag({ refresh, toggleRefresh }) {
           )}
 
           <form
-            className="flex justify-center items-center pb-5"
+            className="flex flex-col justify-center items-center pb-5"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <DropDown
-              options={formatOptions()}
-              value={tag}
-              func={setTag}
-              className={"w-full max-w-[350px] lg:min-w-[350px] px-4"}
-            />
-            <button className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800">
-              Remove
-            </button>
+            <div>
+              <DropDown
+                options={formatOptions()}
+                value={tag}
+                func={setTag}
+                className={"w-[350px] px-4"}
+              />
+            </div>
+            <div className="w-full flex justify-end max-w-[350px] lg:min-w-[350px]">
+              <button className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800">
+                Remove
+              </button>
+            </div>
           </form>
         </>
       )}

@@ -91,13 +91,15 @@ export default function CreateTag({ customInputField, toggleRefresh }) {
           )}
 
           <form
-            className="flex justify-center items-center pb-5"
+            className="flex flex-col justify-center items-center pb-5"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {customInputField("text", "Tag", tag, setTag, 2)}
-            <button className="h-[30px] bg-primary ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-purple-800">
-              Create
-            </button>
+            <div>{customInputField("text", "Tag", tag, setTag, 2)}</div>
+            <div className="w-full flex justify-end max-w-[350px] lg:min-w-[350px]">
+              <button className="h-[30px] bg-primary ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-purple-800">
+                Create
+              </button>
+            </div>
           </form>
         </>
       )}
