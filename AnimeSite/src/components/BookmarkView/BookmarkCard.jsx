@@ -15,7 +15,7 @@ export default function BookmarkCard({ manga }) {
   };
 
   return (
-    <div className="w-full md:max-w-[142px] 2xs:max-w-[197px] h-full font-poppins rounded-md overflow-hidden flex flex-col ml-5 pb-5">
+    <div className="w-full md:max-w-[142px] 2xs:max-w-[187px] h-full font-poppins rounded-md overflow-hidden flex flex-col ml-5 pb-5">
       <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}
@@ -39,7 +39,9 @@ export default function BookmarkCard({ manga }) {
             <p className="text-dimWhite md:text-[12px] 2xs:text-[18px] mt-1">
               Chapter {manga.totalChapters}
             </p>
-            <StarRating rating={manga.rating} />
+            <div className="flex">
+              <StarRating rating={manga.rating} />
+            </div>
           </div>
         </div>
       </div>
