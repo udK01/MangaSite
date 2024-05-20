@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Card from "../PopularToday/PopularTodayCard";
+import Card from "./ProfileCards";
 import dateFormatter from "../InspectView/DateFormatter";
 import UserContext from "../UserContext";
 import Separator from "../Separator";
@@ -106,14 +106,17 @@ export default function Profile() {
 
   const DisplayBookmarks = () => {
     return (
-      <section className="w-full h-auto rounded-sm font-poppins text-white">
-        <div className="p-4 bg-quaternary mt-10">
+      <section className="w-full h-auto rounded-sm font-poppins my-10 text-white">
+        <div className="p-4 bg-quaternary">
           <div>Top Bookmarks</div>
           <Separator />
-          <div className="w-full flex flex-wrap">
+          <div className="flex justify-center 2xs:flex-wrap lg:flex-nowrap">
             {bookmarks.length > 0 ? (
               bookmarks.slice(0, 5).map((bookmark, index) => (
-                <div key={index} className="flex ml-[11px]">
+                <div
+                  key={index}
+                  className="flex 2xs:w-1/2 md:w-[145px] lg:w-1/3"
+                >
                   <Card manga={findManga(bookmark.mangaID)} />
                 </div>
               ))
@@ -132,7 +135,7 @@ export default function Profile() {
     return (
       <section className="w-full h-auto rounded-sm font-poppins text-white">
         {/* Route */}
-        <div className="flex justify-between md:text-[14px] 2xs:text-[24px] w-full bg-quaternary rounded-sm text-white p-2">
+        <div className="flex justify-between md:text-[14px] 2xs:text-[16px] w-full bg-quaternary rounded-sm text-white p-2">
           <div className="flex">
             <Link
               to={"/"}
@@ -204,7 +207,7 @@ export default function Profile() {
   };
 
   return (
-    <section className="w-full md:max-w-[826px] 2xs:max-w-[1100px] md:mb-0 2xs:mb-10">
+    <section className="w-full md:max-w-[826px]">
       {profileOwner && (
         <>
           {/* Basic Profile Info */}
@@ -212,7 +215,7 @@ export default function Profile() {
           {/* Bookmarks */}
           <DisplayBookmarks />
           {/* Comments */}
-          <DisplayComment />
+          {/* <DisplayComment /> */}
         </>
       )}
     </section>
