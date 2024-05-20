@@ -279,7 +279,7 @@ export default function Inspect() {
   }
 
   return (
-    <section className="w-full max-w-[826px] md:min-w-[826px] h-auto font-poppins">
+    <section className="w-full max-w-[826px] xl:min-w-[826px] h-auto font-poppins">
       {manga && (
         // Helps ensure the space is allocated already.
         <>

@@ -70,7 +70,7 @@ export default function DeleteTag({ refresh, toggleRefresh }) {
   }
 
   return (
-    <section className="w-full h-auto py-1 bg-quaternary rounded-sm mt-5">
+    <section className="w-full h-auto py-1 bg-quaternary rounded-sm my-5">
       <div className="flex justify-between my-4 mx-4 text-white items-center">
         <p>Delete Genre</p>
         <button onClick={handleToggleCollapse} className="text-white">
@@ -97,7 +97,7 @@ export default function DeleteTag({ refresh, toggleRefresh }) {
               options={formatOptions()}
               value={tag}
               func={setTag}
-              className={"w-[350px] px-4"}
+              className={"w-full max-w-[350px] lg:min-w-[350px] px-4"}
             />
             <button className="h-[30px] bg-red-600 ml-5 mt-2 px-3 rounded-md text-white text-[13px] hover:bg-red-800">
               Remove

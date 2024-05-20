@@ -161,7 +161,7 @@ export default function InspectChapter() {
       {/* Top Navigation */}
       <NavigationInterface />
       {/* Dummy "Content" */}
-      <div className="w-full h-[1500px] flex justify-center items-center bg-quaternary md:text-[516px] 2xs:text-[256px] mt-4">
+      <div className="w-full h-[1500px] flex justify-center items-center bg-quaternary xl:text-[516px] 2xs:text-[256px] mt-4">
         {chapter.chapterNumber}
       </div>
       {/* Bottom Navigation */}

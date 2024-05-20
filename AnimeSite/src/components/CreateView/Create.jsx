@@ -22,7 +22,7 @@ export default function Create() {
           func(placeholder);
         }
       },
-      className: `w-[350px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
+      className: `w-full max-w-[350px] lg:min-w-[350px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
     };
 
     return (
@@ -44,7 +44,7 @@ export default function Create() {
   }
 
   return (
-    <section className="w-full md:min-w-[826px] 2xs:max-w-[1100px] md:mb-0 2xs:mb-5 font-poppins">
+    <section className="w-full md:min-w-[826px] md:mb-0 2xs:mb-5 font-poppins">
       <AddComic customInputField={customInputField} />
       <AddChapter customInputField={customInputField} />
       <CreateTag
