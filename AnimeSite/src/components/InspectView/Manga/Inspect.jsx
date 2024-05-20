@@ -20,7 +20,7 @@ import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
 export default function Inspect() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, setLoginRequest } = useContext(UserContext);
   const { comics, setComics } = useContext(ComicsProvider);
   const [manga, setManga] = useState(null);
 
@@ -254,7 +254,7 @@ export default function Inspect() {
             }
           })
           .catch((error) => console.error(`Failed to alter bookmarks:`, error))
-      : console.log(`Add login request feature.`);
+      : setLoginRequest(true);
   }
 
   // Handles deletion of comic.

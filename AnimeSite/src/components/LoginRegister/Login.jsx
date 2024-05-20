@@ -6,7 +6,7 @@ import UserContext from "../UserContext";
 import axios from "axios";
 
 export default function Login() {
-  const { setUser } = useContext(UserContext);
+  const { setUser, setLoginRequest } = useContext(UserContext);
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
@@ -72,7 +72,7 @@ export default function Login() {
   }
 
   return (
-    <section className="w-full h-full 2xs:p-12 md:p-24 lg:p-32 flex justify-center border-2 border-primary font-poppins bg-quaternary rounded-sm">
+    <section className="w-auto h-auto min-w-[400px] min-h-[300px] max-w-[800px] max-h-[600px] flex justify-center border-2 border-primary font-poppins py-1 bg-quaternary rounded-sm">
       <div className="flex flex-col justify-center mx-4 text-white items-center">
         <div className="text-[20px]">Please login.</div>
         <div className="text-red-500 text-[14px] mt-1">{errorMessage}</div>
@@ -96,7 +96,10 @@ export default function Login() {
         <div className="w-[250px] mt-3 flex justify-between items-center text-white">
           <button
             className="flex items-center bg-quinary p-1 pr-3 rounded-md hover:bg-primary"
-            onClick={() => navigate("/register")}
+            onClick={() => {
+              navigate("/register");
+              setLoginRequest(false);
+            }}
           >
             {<FaAngleLeft />}Register
           </button>
