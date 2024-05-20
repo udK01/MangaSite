@@ -6,7 +6,7 @@ import axios from "axios";
 import UserContext from "../../UserContext";
 
 export default function InteractiveStarRating({ manga }) {
-  const { user } = useContext(UserContext);
+  const { user, setLoginRequest } = useContext(UserContext);
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
@@ -41,7 +41,7 @@ export default function InteractiveStarRating({ manga }) {
           .catch((error) => {
             console.error(`Failed to handle rating:`, error);
           })
-      : console.log(`Add login request feature`);
+      : setLoginRequest(true);
   }
 
   return (

@@ -21,7 +21,7 @@ import {
 
 export default function Comments() {
   const { comics } = useContext(ComicsContext);
-  const { user, users } = useContext(UserContext);
+  const { user, users, setLoginRequest } = useContext(UserContext);
 
   const [mangaID, setMangaID] = useState(null);
   const [chapterID, setChapterID] = useState(null);
@@ -266,7 +266,7 @@ export default function Comments() {
         icon: (
           <AiFillLike
             className={`hover:cursor-pointer hover:text-primary`}
-            onClick={() => console.log(`Add login request feature.`)}
+            onClick={() => setLoginRequest(true)}
           />
         ),
         count: comment.likes,
@@ -276,7 +276,7 @@ export default function Comments() {
         icon: (
           <AiFillDislike
             className={`hover:cursor-pointer hover:text-primary`}
-            onClick={() => console.log(`Add login request feature.`)}
+            onClick={() => setLoginRequest(true)}
           />
         ),
         count: comment.dislikes,
@@ -286,7 +286,7 @@ export default function Comments() {
         icon: (
           <MdOutlineReply
             className={`hover:cursor-pointer hover:text-primary`}
-            onClick={() => console.log(`Add login request feature.`)}
+            onClick={() => setLoginRequest(true)}
           />
         ),
         tooltip: "Reply",
@@ -295,7 +295,7 @@ export default function Comments() {
         icon: (
           <FaEdit
             className={`hover:cursor-pointer hover:text-primary`}
-            onClick={() => console.log(`Add login request feature.`)}
+            onClick={() => setLoginRequest(true)}
           />
         ),
         tooltip: "Edit",
@@ -304,7 +304,7 @@ export default function Comments() {
         icon: (
           <MdDelete
             className={`hover:cursor-pointer hover:text-primary`}
-            onClick={() => console.log(`Add login request feature.`)}
+            onClick={() => setLoginRequest(true)}
           />
         ),
         tooltip: "Delete",
@@ -488,7 +488,7 @@ export default function Comments() {
           ) : (
             <button
               className="bg-primary hover:cursor-pointer hover:bg-purple-800 px-4 rounded-md"
-              onClick={() => console.log(`Add login request feature.`)}
+              onClick={() => setLoginRequest(true)}
             >
               Post
             </button>
