@@ -4,6 +4,9 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
 export default function Register() {
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
@@ -14,6 +17,12 @@ export default function Register() {
   const [passwordError, setPasswordError] = useState("");
 
   function customInputField(type, placeholder, value, func, mt = 0) {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+
     const commonProps = {
       placeholder: placeholder,
       value: value,
@@ -28,10 +37,30 @@ export default function Register() {
           func(placeholder);
         }
       },
-      className: `w-[250px] min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
+      className: `w-full min-h-[34px] px-4 mt-${mt} rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary`,
     };
 
-    return <input {...commonProps} type={type} />;
+    return (
+      <div className="relative">
+        <input
+          {...commonProps}
+          type={type === "password" && showPassword ? "text" : type}
+        />
+        {type === "password" && (
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-transparent border-none cursor-pointer outline-none"
+          >
+            {showPassword ? (
+              <FaEye className="mt-[5px]" />
+            ) : (
+              <FaEyeSlash className="mt-[5px]" />
+            )}
+          </button>
+        )}
+      </div>
+    );
   }
 
   function validatePassword() {
