@@ -305,7 +305,8 @@ app.post("/api/bookmark", async (req, res) => {
     const action = req.body.action;
 
     await databaseFunctions.alterBookmarks(userID, mangaID, action);
-    res.status(200).send("Bookmark successfully altered!");
+    const bookmarks = await databaseFunctions.getBookmarks(userID);
+    res.status(200).json(bookmarks);
   } catch (error) {
     console.error(`Failed to alter bookmark:`, error);
     res.status(500).send("Failed to alter bookmark.");

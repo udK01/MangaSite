@@ -9,6 +9,7 @@ import UserContext from "../UserContext";
 export default function Bookmarks() {
   const { user } = useContext(UserContext);
   const { comics } = useContext(ComicsProvider);
+  const [showDelete, setShowDelete] = useState(false);
   const [bookmarks, setBookmarks] =
     user.length > 0 ? useState(user[0].bookmarks) : useState([]);
 
@@ -16,11 +17,20 @@ export default function Bookmarks() {
     return comics.find((manga) => manga.mangaID === id);
   }
 
+  function toggleDelete() {
+    setShowDelete(!showDelete);
+  }
+
   return (
     <section className="w-auto md:max-w-[825px] 2xs:max-w-[1100px] mb-10 2xs:h-auto bg-quaternary rounded-sm font-poppins">
       <div className="flex justify-between my-4 mx-4 text-white">
         <p>Bookmarks</p>
-        <button className="px-5 py-0.5 bg-red-600 rounded-md">Delete</button>
+        <button
+          className="px-5 py-0.5 bg-red-600 rounded-md"
+          onClick={toggleDelete}
+        >
+          Delete
+        </button>
       </div>
       <Separator />
       <div className="my-4 mx-4 text-dimWhite bg-quinary p-2 rounded-md text-[13px]">
@@ -36,7 +46,11 @@ export default function Bookmarks() {
         <div className="w-full flex flex-wrap">
           {bookmarks.map((bookmark, i) => (
             <div key={i}>
-              <Card manga={findManga(bookmark.mangaID)} />
+              <Card
+                manga={findManga(bookmark.mangaID)}
+                showDelete={showDelete}
+                setBookmarks={setBookmarks}
+              />
             </div>
           ))}
         </div>

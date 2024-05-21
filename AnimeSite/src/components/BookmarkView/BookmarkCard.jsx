@@ -1,10 +1,13 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import axios from "axios";
 
 import StarRating from "../StarRating";
+import UserContext from "../UserContext";
 
-export default function BookmarkCard({ manga }) {
+export default function BookmarkCard({ manga, showDelete, setBookmarks }) {
   const [hover, setHover] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleMouseEnter = () => {
     setHover(true);
@@ -14,8 +17,37 @@ export default function BookmarkCard({ manga }) {
     setHover(false);
   };
 
+  function removeBookmark() {
+    axios
+      .post(
+        `/api/bookmark`,
+        {
+          userID: user[0].userID,
+          mangaID: manga.mangaID,
+          action: "remove",
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((response) => {
+        setBookmarks(response.data);
+        user[0].bookmarks = response.data;
+        // user[0].bookmarks = response.data;
+      })
+      .catch((error) => console.error(`Failed to alter bookmarks:`, error));
+  }
+
   return (
     <div className="w-full md:max-w-[142px] 2xs:max-w-[187px] h-full font-poppins rounded-md overflow-hidden flex flex-col ml-5 pb-5">
+      {showDelete && (
+        <button
+          className="absolute px-4 py-0.5 bg-red-600 rounded-md text-white translate-x-[60px] z-20 hover:cursor-pointer hover:bg-red-800"
+          onClick={removeBookmark}
+        >
+          Delete
+        </button>
+      )}
       <Link to={`/inspect?manga=${manga.mangaID}`}>
         <img
           src={manga.mangaImage}
