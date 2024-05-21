@@ -9,8 +9,16 @@ import Card from "./ComicCard";
 import ComicsProvider from "../ComicsProvider";
 
 export default function Comics() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const itemsPerPage = 15;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   const { comics } = useContext(ComicsProvider);
   const [filteredMangas, setFilteredMangas] = useState(comics);
+  const currentComics = filteredMangas.slice(indexOfFirstItem, indexOfLastItem);
 
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -157,8 +165,8 @@ export default function Comics() {
         </div>
       </div>
       <div className="flex flex-wrap pb-6">
-        {filteredMangas.length > 0 ? (
-          filteredMangas.map((manga, index) => (
+        {currentComics.length > 0 ? (
+          currentComics.map((manga, index) => (
             <div
               key={index}
               className="2xs:w-1/2 md:w-auto flex mt-2 md:ml-[18px] 2xs:ml-0"
@@ -174,6 +182,32 @@ export default function Comics() {
             </h2>
           </>
         )}
+      </div>
+      {/* Page Buttons */}
+      <Separator />
+      <div className="flex justify-center space-x-2 mb-1 items-center text-white">
+        <button
+          onClick={() => {
+            paginate(currentPage - 1);
+            window.scrollTo(0, 0);
+          }}
+          className={`px-6 py-1 mb-2 bg-primary ${
+            currentPage === 1 && "hidden"
+          }`}
+        >
+          &lt; Previous
+        </button>
+        <button
+          onClick={() => {
+            paginate(currentPage + 1);
+            window.scrollTo(0, 0);
+          }}
+          className={`px-12 py-1 mb-2 bg-primary ${
+            indexOfLastItem >= comics.length && "hidden"
+          }`}
+        >
+          Next &gt;
+        </button>
       </div>
     </section>
   );
