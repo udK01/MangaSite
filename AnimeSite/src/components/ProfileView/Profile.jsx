@@ -112,12 +112,12 @@ export default function Profile() {
         <div className="p-4 bg-quaternary">
           <div>Top Bookmarks</div>
           <Separator />
-          <div className="flex justify-center 2xs:flex-wrap lg:flex-nowrap">
+          <div className="flex 2xs:flex-wrap lg:flex-nowrap">
             {bookmarks.length > 0 ? (
               bookmarks.slice(0, 5).map((bookmark, index) => (
                 <div
                   key={index}
-                  className="flex 2xs:w-1/2 md:w-[145px] lg:w-1/3"
+                  className="flex 2xs:w-1/2 md:w-[145px] lg:w-1/5"
                 >
                   <Card manga={findManga(bookmark.mangaID)} />
                 </div>

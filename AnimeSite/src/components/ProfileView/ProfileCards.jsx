@@ -19,7 +19,7 @@ export default function ProfileCards({ manga }) {
         <img
           src={manga.mangaImage}
           alt="popular_today_img"
-          className="w-full h-full object-cover transition-transform duration-300 hover:brightness-75"
+          className="w-full h-full min-h-[275px] object-cover transition-transform duration-300 hover:brightness-75"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
