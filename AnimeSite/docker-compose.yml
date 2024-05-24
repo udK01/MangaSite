@@ -3,7 +3,8 @@ version: "3.8"
 services:
   backend:
     build:
-      context: ./server
+      context: .
+      dockerfile: ./server/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
@@ -11,16 +12,15 @@ services:
     environment:
       MYSQL_HOST: db
       MYSQL_USER: root
-      MYSQL_PASSWORD: example
-      MYSQL_DB: mydatabase
+      MYSQL_PASSWORD: bl35ch27@A123
+      MYSQL_DB: mangadb
 
   db:
     image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: mydatabase
+      MYSQL_ROOT_PASSWORD: bl35ch27@A123
     volumes:
       - mysql-data:/var/lib/mysql
 
