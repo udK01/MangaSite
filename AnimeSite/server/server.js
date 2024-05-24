@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import cors from "cors";
 import fs from "fs";
 import * as databaseFunctions from "./database.js";
 
@@ -16,6 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.use(express.json());
+app.use(cors());
 
 /**
  * Retrieve comics.
