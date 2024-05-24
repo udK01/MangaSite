@@ -1,14 +1,20 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import dotenv from "dotenv";
 
-// https://vitejs.dev/config/
+dotenv.config({ path: "./server/.env" });
+
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: "0.0.0.0", // This makes the server accessible externally
-    port: 5173, // You can specify any port you prefer
+    host: "0.0.0.0",
+    port: 5173,
     proxy: {
-      "/api": "http://localhost:8080",
+      "/api": {
+        target: process.env.API,
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });
