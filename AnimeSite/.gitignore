@@ -25,3 +25,4 @@ dist-ssr
 
 # Ignore Environment Files
 *.env
+*.yml

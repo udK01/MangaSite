@@ -11,7 +11,6 @@ export const ComicsProvider = ({ children }) => {
     axios
       .get(`/api/mangas`)
       .then((response) => {
-        console.log(response.data);
         setComics(response.data);
         sortByUploadDate();
         setLoading(false);
