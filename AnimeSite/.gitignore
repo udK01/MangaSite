@@ -25,4 +25,6 @@ dist-ssr
 
 # Ignore Environment Files
 *.env
+
+# Ignore Docker Files.
 *.yml
