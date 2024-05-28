@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: bl35ch27@A123
+      DB_NAME: mangadb
+      DB_PORT: 3306
+
+  db:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: bl35ch27@A123
+      MYSQL_DATABASE: mangadb
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mangadb_dump.sql:/docker-entrypoint-initdb.d/mangadb_dump.sql
+
+volumes:
+  mysql-data:
