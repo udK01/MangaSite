@@ -13,16 +13,17 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`/api/users/${username}`)
-      .then((response) => {
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(`Failed to fetch user:`, error);
-        setLoading(false);
-      });
+    username &&
+      axios
+        .get(`/api/users/${username}`)
+        .then((response) => {
+          setUser(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(`Failed to fetch user:`, error);
+          setLoading(false);
+        });
 
     axios
       .get(`/api/users`)

@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Card from "./ProfileCards";
 import dateFormatter from "../InspectView/DateFormatter";
 import UserContext from "../UserContext";
 import Separator from "../Separator";
+import Card from "./ProfileCards";
+
 import axios from "axios";
 
 import ComicsProvider from "../ComicsProvider";
+
+import { FaEdit } from "react-icons/fa";
 
 export default function Profile() {
   const { user } = useContext(UserContext);
@@ -138,20 +141,52 @@ export default function Profile() {
       <section className="w-full h-auto rounded-sm font-poppins text-white">
         {/* Route */}
         <div className="flex justify-between md:text-[14px] 2xs:text-[16px] w-full bg-quaternary rounded-sm text-white p-2">
-          <div className="flex">
-            <Link
-              to={"/"}
-              className="hover:text-primary mr-2 transition-colors duration-300"
-            >
-              Home
-            </Link>
-            <p className="transition-colors duration-300">&gt;</p>
-            <Link
-              to={`/profile?user=${profileOwner.username}`}
-              className="hover:text-primary mx-2 transition-colors duration-300"
-            >
-              {profileOwner.username}
-            </Link>
+          <div className="w-full flex justify-between">
+            <div className="flex">
+              <Link
+                to={"/"}
+                className="hover:text-primary mr-2 transition-colors duration-300"
+              >
+                Home
+              </Link>
+              <p className="transition-colors duration-300">&gt;</p>
+              <Link
+                to={`/profile?user=${profileOwner.username}`}
+                className="hover:text-primary mx-2 transition-colors duration-300"
+              >
+                {profileOwner.username}
+              </Link>
+            </div>
+            <div className="flex">
+              {editing && (
+                <div
+                  className="px-2 rounded-md bg-gray-400 hover:cursor-pointer hover:bg-gray-600"
+                  onClick={() => setEditing(false)}
+                >
+                  Cancel
+                </div>
+              )}
+              {user.length > 0 && profileOwner.userID === user[0].userID && (
+                <div
+                  className={`bg-primary px-2 ${
+                    editing && "mx-2"
+                  } rounded-md hover:cursor-pointer hover:bg-purple-800`}
+                  onClick={() => setEditing(true)}
+                >
+                  Edit
+                </div>
+              )}
+              {editing && (
+                <div
+                  className="px-2 rounded-md bg-green-700 hover:cursor-pointer hover:bg-green-900"
+                  onClick={() => {
+                    setEditing(false);
+                  }}
+                >
+                  Save
+                </div>
+              )}
+            </div>
           </div>
         </div>
         {/* Body */}
