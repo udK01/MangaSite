@@ -22,6 +22,8 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [image, setImage] = useState(null);
 
+  const defaultDesc = `We don't know much about ${profileOwner.username}, but we are sure they are great!`;
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const username = searchParams.get("user");
@@ -233,10 +235,16 @@ export default function Profile() {
             <div className=" ml-4 text-white text-[32px] w-full transition-colors duration-300 hover:text-orange-400 hover:cursor-default">
               {profileOwner.username}
             </div>
-            <div className="line-clamp-4 transition-colors duration-300 hover:text-orange-400 hover:cursor-default">
-              {profileOwner.description ??
-                `We don't know much about ${profileOwner.username}, but we are sure they are great!`}
-            </div>
+            {editing ? (
+              <textarea
+                placeholder={profileOwner.description ?? defaultDesc}
+                className="2xs:w-full md:w-[527px] min-h-[68px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+              ></textarea>
+            ) : (
+              <div className="line-clamp-4 transition-colors duration-300 hover:text-orange-400 hover:cursor-default">
+                {profileOwner.description ?? defaultDesc}
+              </div>
+            )}
           </div>
         </div>
       </section>
