@@ -22,7 +22,9 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [image, setImage] = useState(null);
 
-  const defaultDesc = `We don't know much about ${profileOwner.username}, but we are sure they are great!`;
+  const defaultDesc = `We don't know much about ${
+    profileOwner && profileOwner.username
+  }, but we are sure they are great!`;
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -57,6 +59,25 @@ export default function Profile() {
 
   function findManga(id) {
     return comics.find((manga) => manga.mangaID === id);
+  }
+
+  function changeDescription() {
+    const newDesc = document.getElementById("description").value;
+
+    if (newDesc) {
+      axios
+        .post(
+          "/api/changeDescription",
+          {
+            userID: user[0].userID,
+            newDesc: newDesc,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+        .catch((error) => console.error(`Failed to change description`, error));
+    }
   }
 
   const DisplayComment = () => {
@@ -183,6 +204,7 @@ export default function Profile() {
                   className="px-2 rounded-md bg-green-700 hover:cursor-pointer hover:bg-green-900"
                   onClick={() => {
                     setEditing(false);
+                    changeDescription();
                   }}
                 >
                   Save
@@ -237,6 +259,7 @@ export default function Profile() {
             </div>
             {editing ? (
               <textarea
+                id="description"
                 placeholder={profileOwner.description ?? defaultDesc}
                 className="2xs:w-full md:w-[527px] min-h-[68px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
               ></textarea>

@@ -518,6 +518,20 @@ app.post("/api/setReaction", async (req, res) => {
   }
 });
 
+app.post("/api/changeDescription", async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const newDesc = req.body.newDesc;
+
+    databaseFunctions.changeDescription(newDesc, userID);
+
+    res.status(200).send("success");
+  } catch (error) {
+    console.error(`Failed to change description:`, error);
+    res.status(500).send("error");
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res

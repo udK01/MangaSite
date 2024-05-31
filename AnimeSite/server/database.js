@@ -228,6 +228,19 @@ export async function changeAccessLevel(username, accessLevel) {
   }
 }
 
+export async function changeDescription(description, userID) {
+  try {
+    await db.query(`UPDATE users SET description = ? WHERE userID = ?`, [
+      description,
+      userID,
+    ]);
+  } catch (error) {
+    console.error(`Failed to alter description:`, error);
+  }
+}
+
+await changeDescription("new desc", 11);
+
 /////////////
 //Bookmarks//
 /////////////
