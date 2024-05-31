@@ -228,6 +228,18 @@ export async function changeAccessLevel(username, accessLevel) {
   }
 }
 
+/**
+ *
+ * This method finds the user and alters
+ * their description.
+ *
+ * Example Usage
+ *
+ * await changeDescription("New Description!", 11);
+ *
+ * @param {string} description The description shown on the user's profile.
+ * @param {int} userID The user's unique identifier.
+ */
 export async function changeDescription(description, userID) {
   try {
     await db.query(`UPDATE users SET description = ? WHERE userID = ?`, [
