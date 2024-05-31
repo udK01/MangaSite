@@ -259,7 +259,7 @@ export default function Profile() {
             </div>
           </div>
           {/* Right */}
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <div className=" ml-4 text-white text-[32px] w-full transition-colors duration-300 hover:text-orange-400 hover:cursor-default">
               {profileOwner.username}
             </div>
@@ -267,7 +267,7 @@ export default function Profile() {
               <textarea
                 id="description"
                 placeholder={profileOwner.description ?? defaultDesc}
-                className="2xs:w-full md:w-[527px] min-h-[68px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
+                className="w-full min-h-[68px] px-4 rounded-sm border-2 border-quaternary bg-secondary text-white hover:cursor-pointer hover:text-primary"
               ></textarea>
             ) : (
               <div className="line-clamp-4 transition-colors duration-300 hover:text-orange-400 hover:cursor-default">
@@ -281,7 +281,7 @@ export default function Profile() {
   };
 
   return (
-    <section className="w-full md:max-w-[826px]">
+    <section className="w-full md:max-w-[826px] xl:min-w-[826px]">
       {profileOwner && (
         <>
           {/* Basic Profile Info */}
