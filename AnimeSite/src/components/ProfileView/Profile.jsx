@@ -18,8 +18,8 @@ export default function Profile() {
 
   const [profileOwner, setProfileOwner] = useState();
   const [bookmarks, setBookmarks] = useState([]);
-  const [comments, setComments] = useState();
   const [editing, setEditing] = useState(false);
+  const [comments, setComments] = useState();
   const [image, setImage] = useState(null);
 
   const defaultDesc = `We don't know much about ${
@@ -76,6 +76,12 @@ export default function Profile() {
             headers: { "Content-Type": "application/json" },
           }
         )
+        .then(() => {
+          setProfileOwner((prevProfileOwner) => ({
+            ...prevProfileOwner,
+            description: newDesc,
+          }));
+        })
         .catch((error) => console.error(`Failed to change description`, error));
     }
   }
