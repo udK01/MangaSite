@@ -12,4 +12,5 @@ ENV PORT=8080
 
 EXPOSE 8080
 
+# One command per file
 CMD ["node", "server.js"]
