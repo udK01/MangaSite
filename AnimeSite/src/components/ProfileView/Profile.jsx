@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import dateFormatter from "../InspectView/DateFormatter";
 import UserContext from "../UserContext";
@@ -21,6 +21,8 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [comments, setComments] = useState();
   const [image, setImage] = useState(null);
+
+  const location = useLocation();
 
   const defaultDesc = `We don't know much about ${
     profileOwner && profileOwner.username
