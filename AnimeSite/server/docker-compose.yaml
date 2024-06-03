@@ -11,16 +11,16 @@ services:
     environment:
       DB_HOST: db
       DB_USER: root
-      DB_PASSWORD: bl35ch27@A123
+      DB_PASSWORD: password
       DB_NAME: mangadb
-      DB_PORT: 3306
+      DB_PORT: 3307
 
   db:
     image: mysql:latest
     ports:
       - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: bl35ch27@A123
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: mangadb
     volumes:
       - mysql-data:/var/lib/mysql
