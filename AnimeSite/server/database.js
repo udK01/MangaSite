@@ -251,8 +251,6 @@ export async function changeDescription(description, userID) {
   }
 }
 
-await changeDescription("new desc", 11);
-
 /////////////
 //Bookmarks//
 /////////////
