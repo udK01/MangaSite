@@ -19,7 +19,3 @@ services:
       SERVICE_NAME: mysqldb
     networks:
       - manganet
-
-networks:
-  manganet:
-    driver: bridge
