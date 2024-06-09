@@ -118,6 +118,9 @@ app.get("/api/users/:username", async (req, res) => {
   }
 });
 
+/**
+ * Create user.
+ */
 app.post("/api/createUser", async (req, res) => {
   try {
     const username = req.body.username;
