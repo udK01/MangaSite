@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   mysqldb:
     image: mysql:8.0
@@ -5,17 +7,42 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     volumes:
-      - $HOME/database:/var/lib/mysql
+      - ./database_dump.sql:/docker-entrypoint-initdb.d/database_dump.sql
     ports:
-      - 3306:3306
-    expose:
-      - 3306
+      - 3307:3306 # Host port 3307 mapped to container port 3306
     environment:
-      MYSQL_DATABASE: mangadb
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysqldb
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
     networks:
       - manganet
+
+  backend:
+    build: ./
+    container_name: backendcontainer
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+      - DB_HOST=mysqldb
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=3306
+    depends_on:
+      - mysqldb
+    networks:
+      - manganet
+
+  frontend:
+    build: ../client
+    container_name: frontendcontainer
+    ports:
+      - 3000:80
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    networks:
+      - manganet
+
+networks:
+  manganet:
+    driver: bridge

@@ -11,7 +11,7 @@ const db = mysql
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
+    port: process.env.DB_PORT || 3306,
   })
   .promise();
 
@@ -49,7 +49,7 @@ export async function createUser(username, password, accessLevel = 0) {
 
     // Sql Query.
     const query = `
-      INSERT INTO Users (username, password, profilePicture, accessLevel)
+      INSERT INTO users (username, password, profilePicture, accessLevel)
       VALUES (?, ?, ?, ?)
     `;
 
