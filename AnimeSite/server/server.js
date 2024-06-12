@@ -134,6 +134,9 @@ app.post("/api/createUser", async (req, res) => {
   }
 });
 
+/**
+ * Fetches the user's data on a login request.
+ */
 app.post("/api/login", async (req, res) => {
   try {
     const username = req.body.username;
