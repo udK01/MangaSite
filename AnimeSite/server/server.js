@@ -157,6 +157,9 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+/**
+ * Creates a new chapter for a specific manga.
+ */
 app.post("/api/createChapter", async (req, res) => {
   try {
     const mangaID = req.body.mangaID;
