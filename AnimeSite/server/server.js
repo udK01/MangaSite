@@ -184,6 +184,9 @@ app.post("/api/createChapter", async (req, res) => {
   }
 });
 
+/**
+ * Deletes a chapter for a specific manga.
+ */
 app.delete("/api/deleteChapter", async (req, res) => {
   try {
     const chapterID = req.body.chapterID;
