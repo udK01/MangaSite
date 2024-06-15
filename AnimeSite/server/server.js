@@ -198,6 +198,9 @@ app.delete("/api/deleteChapter", async (req, res) => {
   }
 });
 
+/**
+ * Gets all genres.
+ */
 app.get("/api/getGenres", async (req, res) => {
   try {
     const result = await databaseFunctions.getAllGenres();
