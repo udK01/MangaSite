@@ -288,6 +288,9 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
   }
 });
 
+/**
+ * Creates a new tag.
+ */
 app.post("/api/createTag", async (req, res) => {
   try {
     const genre = req.body.genre;
