@@ -138,7 +138,8 @@ export async function getUser(username) {
 
 /**
  *
- * Fetches all existing users.
+ * Fetches all existing users' information
+ * except their password.
  *
  * Example Usage.
  *
@@ -149,7 +150,11 @@ export async function getUser(username) {
  */
 export async function getUsers() {
   try {
-    return (await db.query(`SELECT * FROM users`))[0];
+    return (
+      await db.query(
+        `SELECT userID, username, profilePicture, accessLevel, description FROM users`
+      )
+    )[0];
   } catch (error) {
     console.error(`Failed to fetch users:`, error);
   }
