@@ -94,6 +94,7 @@ export default function Login() {
                 "username",
                 JSON.stringify(response.data[0].username)
               );
+            setLoginRequest(false);
             navigate("/");
         }
       })
