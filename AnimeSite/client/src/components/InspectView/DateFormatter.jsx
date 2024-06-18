@@ -3,7 +3,11 @@ const DateFormatter = {
     const savedDateTime = new Date(uploadDate);
     const currentDateTime = new Date();
 
-    const timeDifference = (currentDateTime - savedDateTime) / 1000; // Difference in seconds
+    const savedDateTimeUTC = new Date(
+      savedDateTime.getTime() + savedDateTime.getTimezoneOffset() * 60000
+    );
+
+    const timeDifference = (currentDateTime - savedDateTimeUTC) / 1000; // Difference in seconds
 
     const units = [
       { value: Math.floor(timeDifference / 31536000), label: "year" },
