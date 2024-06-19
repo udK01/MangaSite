@@ -307,6 +307,9 @@ app.post("/api/createTag", async (req, res) => {
   }
 });
 
+/**
+ * Deletes a tag.
+ */
 app.post("/api/deleteTag", async (req, res) => {
   try {
     const genre = req.body.genre;
