@@ -321,6 +321,10 @@ app.post("/api/deleteTag", async (req, res) => {
   }
 });
 
+/**
+ * Alters the bookmark.
+ * Either adds or removes one.
+ */
 app.post("/api/bookmark", async (req, res) => {
   try {
     const userID = req.body.userID;
