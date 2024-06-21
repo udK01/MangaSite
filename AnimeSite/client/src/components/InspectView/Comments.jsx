@@ -171,7 +171,8 @@ export default function Comments() {
   }
 
   const DisplayUser = ({ comment }) => {
-    const userToDisplay = users.find((u) => u.userID === comment.userID);
+    const userToDisplay =
+      users.find((u) => u.userID === comment.userID) ?? user[0];
     return (
       <div className="flex items-center">
         <img
