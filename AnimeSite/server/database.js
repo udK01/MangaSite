@@ -1119,6 +1119,14 @@ export async function createComment(
   }
 }
 
+export async function getAllComments() {
+  try {
+    return (await db.query(`SELECT * FROM comments`))[0];
+  } catch (error) {
+    console.error(`Failed to fetch all comments:`, error);
+  }
+}
+
 export async function getComments(mangaID, chapterID = null) {
   try {
     let sql = "SELECT * FROM comments WHERE mangaID = ?";

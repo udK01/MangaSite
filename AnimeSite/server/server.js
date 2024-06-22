@@ -110,7 +110,26 @@ app.get("/api/users/:username", async (req, res) => {
     const username = req.params.username;
     const user = await databaseFunctions.getUser(username);
     user[0].bookmarks = await databaseFunctions.getBookmarks(user[0].userID);
-    user[0].comments = await databaseFunctions.getUserComments(user[0].userID);
+
+    const allComments = await databaseFunctions.getAllComments();
+    const userComments = await databaseFunctions.getUserComments(
+      user[0].userID
+    );
+    const formattedComments = [];
+
+    userComments.forEach((comment) => {
+      if (comment.parent !== null) {
+        comment.parentComment = allComments.find(
+          (c) => c.commentID === comment.parent
+        );
+        formattedComments.push(comment);
+      } else {
+        formattedComments.push(comment);
+      }
+    });
+
+    user[0].comments = formattedComments;
+
     res.status(200).json(user);
   } catch (error) {
     console.error(`Couldn't fetch user:`, error);

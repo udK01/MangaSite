@@ -43,6 +43,8 @@ export default function Profile() {
       .catch((error) => console.error(`Failed to get user:`, error));
   }, [location.search]);
 
+  useEffect(() => {}, [sort]);
+
   function handleImageChange(event) {
     const selectedImage = event.target.files[0];
     setImage(selectedImage);
@@ -95,7 +97,8 @@ export default function Profile() {
       <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
         <div className="p-4 bg-quaternary mt-10">
           <div className="flex w-full justify-between items-center px-1">
-            <div>Comments Posted</div>
+            <div>Comments</div>
+            {console.log(comments)}
             <DropDown
               options={["All", "Liked", "Disliked", "Reply"]}
               value={sort}
