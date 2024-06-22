@@ -5,6 +5,7 @@ import dateFormatter from "../InspectView/DateFormatter";
 import UserContext from "../UserContext";
 import Separator from "../Separator";
 import Card from "./ProfileCards";
+import DropDown from "../DropDown";
 
 import axios from "axios";
 
@@ -19,6 +20,7 @@ export default function Profile() {
   const [profileOwner, setProfileOwner] = useState();
   const [bookmarks, setBookmarks] = useState([]);
   const [editing, setEditing] = useState(false);
+  const [sort, setSort] = useState("All");
   const [comments, setComments] = useState();
   const [image, setImage] = useState(null);
 
@@ -92,7 +94,16 @@ export default function Profile() {
     return (
       <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
         <div className="p-4 bg-quaternary mt-10">
-          <div>Comments Posted</div>
+          <div className="flex w-full justify-between items-center px-1">
+            <div>Comments Posted</div>
+            <DropDown
+              options={["All", "Liked", "Disliked", "Reply"]}
+              value={sort}
+              func={setSort}
+              className="w-[150px] justify-between px-2 -translate-y-1"
+            />
+          </div>
+
           <Separator />
           {comments.length > 0 ? (
             <div>
