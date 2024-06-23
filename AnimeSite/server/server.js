@@ -130,8 +130,11 @@ app.get("/api/users/:username", async (req, res) => {
 
         comment.parentComment.owner = parentCommentOwner.username;
 
+        comment.type = "reply";
+
         formattedComments.push(comment);
       } else {
+        comment.type = "all";
         formattedComments.push(comment);
       }
     });

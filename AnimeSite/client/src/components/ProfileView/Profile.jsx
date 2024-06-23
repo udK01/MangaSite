@@ -92,6 +92,73 @@ export default function Profile() {
     }
   }
 
+  function displayAction(comment) {
+    switch (comment.type) {
+      case "all":
+        return commentedUnder(comment);
+      case "reply":
+        return repliedTo(comment);
+    }
+  }
+
+  function commentedUnder(comment) {
+    return (
+      <div className="flex justify-between mx-2 mt-5">
+        <div className="flex">
+          <div className="text-orange-400">{profileOwner.username}</div>
+          <div className="flex flex-shrink-0 mx-[6px]">commented under</div>
+          <Link
+            to={`/inspect?manga=${findManga(comment.mangaID).mangaID}`}
+            className="text-orange-400 hover:text-primary line-clamp-2 hover:cursor-pointer transition-colors duration-200"
+          >
+            {findManga(comment.mangaID).mangaTitle}
+          </Link>
+        </div>
+
+        <div className="flex flex-shrink-0 md:text-[16px] 2xs:text-[12px]">
+          {dateFormatter.getFormattedDate(comment.uploadDate)}
+        </div>
+      </div>
+    );
+  }
+
+  function repliedTo(comment) {
+    return (
+      <div className="flex justify-between mx-2 mt-5">
+        <div className="flex">
+          <div className="text-orange-400">{profileOwner.username}</div>
+          <div className="flex flex-shrink-0 mx-[6px]">replied to</div>
+          <Link
+            to={`/profile?user=${comment.parentComment.owner}`}
+            className="text-orange-400 hover:text-primary line-clamp-2 hover:cursor-pointer transition-colors duration-200"
+          >
+            {comment.parentComment.owner}
+          </Link>
+        </div>
+
+        <div className="flex flex-shrink-0 md:text-[16px] 2xs:text-[12px]">
+          {dateFormatter.getFormattedDate(comment.uploadDate)}
+        </div>
+      </div>
+    );
+  }
+
+  function displayContent(comment) {
+    if (comment.parent !== null) {
+      return (
+        <div>
+          {comment.parentComment.content}
+          <div className="flex items-start">
+            <div className="w-3 h-3 mx-2 border-b-2 border-l-2 border-orange-500" />
+            <div>{comment.content}</div>
+          </div>
+        </div>
+      );
+    } else {
+      return comment.content;
+    }
+  }
+
   const DisplayComment = () => {
     return (
       <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
@@ -114,33 +181,11 @@ export default function Profile() {
                 .map((comment) => (
                   <React.Fragment key={comment.commentID}>
                     <div className="border-l-2 border-primary">
-                      {console.log(comment)}
                       {/* Action */}
-                      <div className="flex justify-between mx-2 mt-5">
-                        <div className="flex">
-                          <div className="text-orange-400">
-                            {profileOwner.username}
-                          </div>
-                          <div className="flex flex-shrink-0 mx-[6px]">
-                            commented under
-                          </div>
-                          <Link
-                            to={`/inspect?manga=${
-                              findManga(comment.mangaID).mangaID
-                            }`}
-                            className="text-orange-400 hover:text-primary line-clamp-2 hover:cursor-pointer transition-colors duration-200"
-                          >
-                            {findManga(comment.mangaID).mangaTitle}
-                          </Link>
-                        </div>
-
-                        <div className="flex flex-shrink-0 md:text-[16px] 2xs:text-[12px]">
-                          {dateFormatter.getFormattedDate(comment.uploadDate)}
-                        </div>
-                      </div>
+                      {displayAction(comment)}
                       {/* Content */}
                       <div className="text-dimWhite ml-2">
-                        {comment.content}
+                        {displayContent(comment)}
                       </div>
                     </div>
                   </React.Fragment>
