@@ -98,7 +98,6 @@ export default function Profile() {
         <div className="p-4 bg-quaternary mt-10">
           <div className="flex w-full justify-between items-center px-1">
             <div>Comments</div>
-            {console.log(comments)}
             <DropDown
               options={["All", "Liked", "Disliked", "Reply"]}
               value={sort}
@@ -115,6 +114,8 @@ export default function Profile() {
                 .map((comment) => (
                   <React.Fragment key={comment.commentID}>
                     <div className="border-l-2 border-primary">
+                      {console.log(comment)}
+                      {/* Action */}
                       <div className="flex justify-between mx-2 mt-5">
                         <div className="flex">
                           <div className="text-orange-400">
@@ -137,6 +138,7 @@ export default function Profile() {
                           {dateFormatter.getFormattedDate(comment.uploadDate)}
                         </div>
                       </div>
+                      {/* Content */}
                       <div className="text-dimWhite ml-2">
                         {comment.content}
                       </div>

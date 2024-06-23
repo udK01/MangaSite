@@ -111,6 +111,7 @@ app.get("/api/users/:username", async (req, res) => {
     const user = await databaseFunctions.getUser(username);
     user[0].bookmarks = await databaseFunctions.getBookmarks(user[0].userID);
 
+    const allUsers = await databaseFunctions.getUsers();
     const allComments = await databaseFunctions.getAllComments();
     const userComments = await databaseFunctions.getUserComments(
       user[0].userID
@@ -122,6 +123,13 @@ app.get("/api/users/:username", async (req, res) => {
         comment.parentComment = allComments.find(
           (c) => c.commentID === comment.parent
         );
+
+        const parentCommentOwner = allUsers.find(
+          (u) => u.userID === comment.parentComment.userID
+        );
+
+        comment.parentComment.owner = parentCommentOwner.username;
+
         formattedComments.push(comment);
       } else {
         formattedComments.push(comment);
