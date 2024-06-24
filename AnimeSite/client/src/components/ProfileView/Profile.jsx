@@ -99,11 +99,9 @@ export default function Profile() {
       case "reply":
         return repliedTo(comment);
       case "like":
-        console.log(`Like`);
-        break;
+        return reactedTo(comment, "liked");
       case "dislike":
-        console.log(`DisLike`);
-        break;
+        return reactedTo(comment, "disliked");
     }
   }
 
@@ -149,6 +147,28 @@ export default function Profile() {
     );
   }
 
+  function reactedTo(comment, text) {
+    return (
+      <div className="flex justify-between mx-2 mt-5">
+        <div className="flex">
+          <div className="text-orange-400">{profileOwner.username}</div>
+          <div className="flex flex-shrink-0 mx-[6px]">{text}</div>
+          <Link
+            to={`/profile?user=${comment.owner}`}
+            className="flex text-orange-400 hover:text-primary line-clamp-2 hover:cursor-pointer transition-colors duration-200"
+          >
+            {comment.owner}
+            <p>'s comment.</p>
+          </Link>
+        </div>
+
+        <div className="flex flex-shrink-0 md:text-[16px] 2xs:text-[12px]">
+          {dateFormatter.getFormattedDate(comment.uploadDate)}
+        </div>
+      </div>
+    );
+  }
+
   function displayContent(comment) {
     if (comment.parent !== null) {
       return (
@@ -171,7 +191,6 @@ export default function Profile() {
         <div className="p-4 bg-quaternary mt-10">
           <div className="flex w-full justify-between items-center px-1">
             <div>Comments</div>
-            {console.log(comments)}
             <DropDown
               options={["All", "Liked", "Disliked", "Reply"]}
               value={sort}

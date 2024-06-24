@@ -155,6 +155,11 @@ app.get("/api/users/:username", async (req, res) => {
       ) {
         reactedComment.type = comment.reaction;
         reactedComment.parent = null;
+
+        reactedComment.owner = allUsers.find(
+          (u) => u.userID === reactedComment.userID
+        ).username;
+
         formattedComments.push(reactedComment);
       }
     });
