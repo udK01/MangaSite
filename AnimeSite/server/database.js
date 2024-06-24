@@ -716,6 +716,14 @@ export async function getTotalChapters(mangaID) {
   }
 }
 
+export async function getAllChapters() {
+  try {
+    return (await db.query(`SELECT * FROM chapters`))[0];
+  } catch (error) {
+    console.error(`Failed to fetch all chapters:`, error);
+  }
+}
+
 /**
  *
  * Returns all chapters related with the specified manga.

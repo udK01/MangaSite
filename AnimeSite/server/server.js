@@ -119,13 +119,14 @@ app.get("/api/users/:username", async (req, res) => {
     const userReactions = await databaseFunctions.getAllReactions(
       user[0].userID
     );
+    const allChapters = await databaseFunctions.getAllChapters();
 
     const formattedComments = [];
 
     // Determine for each comment the user posted
     // whether it was a reply or a direct comment.
-    userComments.forEach((comment) => {
-      if (comment.parent !== null) {
+    userComments.map((comment) => {
+      if (comment.parent !== null && comment.chapterID === null) {
         comment.parentComment = allComments.find(
           (c) => c.commentID === comment.parent
         );
@@ -141,6 +142,15 @@ app.get("/api/users/:username", async (req, res) => {
         formattedComments.push(comment);
       } else {
         comment.type = "all";
+
+        if (comment.chapterID !== null) {
+          const chapter = allChapters.find(
+            (c) =>
+              c.chapterID === comment.chapterID && c.mangaID === comment.mangaID
+          );
+          comment.chapter = chapter;
+        }
+
         formattedComments.push(comment);
       }
     });

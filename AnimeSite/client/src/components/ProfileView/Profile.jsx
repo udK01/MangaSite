@@ -129,12 +129,36 @@ export default function Profile() {
         <div className="flex">
           <div className="text-orange-400">{profileOwner.username}</div>
           <div className="flex flex-shrink-0 mx-[6px]">commented under</div>
-          <Link
-            to={`/inspect?manga=${findManga(comment.mangaID).mangaID}`}
-            className="text-orange-400 hover:text-primary line-clamp-2 hover:cursor-pointer transition-colors duration-200"
-          >
-            {findManga(comment.mangaID).mangaTitle}
-          </Link>
+          {/* Decide whether its under a chapter or manga */}
+          {comment.chapterID === null ? (
+            <Link
+              to={`/inspect?manga=${findManga(comment.mangaID).mangaID}`}
+              className="text-orange-400 hover:text-primary line-clamp-2 hover:cursor-pointer transition-colors duration-200"
+            >
+              {findManga(comment.mangaID).mangaTitle}
+            </Link>
+          ) : (
+            <div className="flex">
+              <Link
+                to={`/inspect?manga=${findManga(comment.mangaID).mangaID}`}
+                className="flex flex-shrink-0 text-orange-400 hover:text-primary hover:cursor-pointer transition-colors duration-200"
+              >
+                {findManga(comment.mangaID).mangaTitle}
+              </Link>
+              &nbsp;
+              <Link
+                to={`/inspect/chapters?manga=${
+                  findManga(comment.mangaID).mangaID
+                }&${comment.chapter.chapterNumber}`}
+                className="text-orange-400 line-clamp-1 hover:text-primary hover:cursor-pointer transition-colors duration-200"
+              >
+                - Chapter {comment.chapter.chapterNumber}{" "}
+                {comment.chapter.chapterTitle &&
+                  `-
+                ${comment.chapter.chapterTitle}`}
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-shrink-0 md:text-[16px] 2xs:text-[12px]">
