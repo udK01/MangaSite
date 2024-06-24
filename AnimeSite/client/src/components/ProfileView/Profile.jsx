@@ -98,6 +98,12 @@ export default function Profile() {
         return commentedUnder(comment);
       case "reply":
         return repliedTo(comment);
+      case "like":
+        console.log(`Like`);
+        break;
+      case "dislike":
+        console.log(`DisLike`);
+        break;
     }
   }
 
@@ -165,6 +171,7 @@ export default function Profile() {
         <div className="p-4 bg-quaternary mt-10">
           <div className="flex w-full justify-between items-center px-1">
             <div>Comments</div>
+            {console.log(comments)}
             <DropDown
               options={["All", "Liked", "Disliked", "Reply"]}
               value={sort}

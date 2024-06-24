@@ -1225,3 +1225,15 @@ export async function countReactions(commentID, reaction) {
     console.error(`Failed to count reactions:`, error);
   }
 }
+
+export async function getAllReactions(userID) {
+  try {
+    return (
+      await db.query(`SELECT * FROM user_likes_dislikes WHERE userID = ?`, [
+        userID,
+      ])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to fetch all reactions:`, error);
+  }
+}

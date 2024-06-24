@@ -116,8 +116,14 @@ app.get("/api/users/:username", async (req, res) => {
     const userComments = await databaseFunctions.getUserComments(
       user[0].userID
     );
+    const userReactions = await databaseFunctions.getAllReactions(
+      user[0].userID
+    );
+
     const formattedComments = [];
 
+    // Determine for each comment the user posted
+    // whether it was a reply or a direct comment.
     userComments.forEach((comment) => {
       if (comment.parent !== null) {
         comment.parentComment = allComments.find(
@@ -136,6 +142,20 @@ app.get("/api/users/:username", async (req, res) => {
       } else {
         comment.type = "all";
         formattedComments.push(comment);
+      }
+    });
+
+    userReactions.map((comment) => {
+      const reactedComment = allComments.find(
+        (c) => c.commentID === comment.commentID
+      );
+      if (
+        reactedComment.userID !== 0 &&
+        reactedComment.userID !== user[0].userID
+      ) {
+        reactedComment.type = comment.reaction;
+        reactedComment.parent = null;
+        formattedComments.push(reactedComment);
       }
     });
 
