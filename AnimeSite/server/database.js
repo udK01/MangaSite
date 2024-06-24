@@ -129,7 +129,10 @@ export async function deleteUser(username) {
 export async function getUser(username) {
   try {
     return (
-      await db.query(`SELECT * FROM users WHERE username = ?`, [username])
+      await db.query(
+        `SELECT userID, username, profilePicture, accessLevel, description FROM users WHERE username = ?`,
+        [username]
+      )
     )[0];
   } catch (error) {
     console.error(`Failed to fetch user:`, error);
