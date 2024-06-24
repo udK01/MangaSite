@@ -1182,7 +1182,6 @@ export async function reactToComment(
   reactionDate
 ) {
   try {
-    console.log(reactionDate);
     await db.query(
       `
           INSERT INTO user_likes_dislikes (userID, commentID, reaction, reactionDate)

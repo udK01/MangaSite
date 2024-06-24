@@ -21,7 +21,9 @@ export default function Profile() {
   const [bookmarks, setBookmarks] = useState([]);
   const [editing, setEditing] = useState(false);
   const [sort, setSort] = useState("All");
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([]);
+  const [filteredComments, setFilteredComments] = useState([]);
+
   const [image, setImage] = useState(null);
 
   const location = useLocation();
@@ -39,11 +41,27 @@ export default function Profile() {
         setProfileOwner(response.data[0]);
         setBookmarks(response.data[0].bookmarks);
         setComments(response.data[0].comments);
+        setFilteredComments(response.data[0].comments);
       })
       .catch((error) => console.error(`Failed to get user:`, error));
   }, [location.search]);
 
-  useEffect(() => {}, [sort]);
+  useEffect(() => {
+    switch (sort) {
+      case "All":
+        setFilteredComments(comments);
+        break;
+      case "Reply":
+        setFilteredComments(comments.filter((c) => c.type === "reply"));
+        break;
+      case "Liked":
+        setFilteredComments(comments.filter((c) => c.type === "like"));
+        break;
+      case "Disliked":
+        setFilteredComments(comments.filter((c) => c.type === "dislike"));
+        break;
+    }
+  }, [sort]);
 
   function handleImageChange(event) {
     const selectedImage = event.target.files[0];
@@ -202,7 +220,7 @@ export default function Profile() {
           <Separator />
           {comments.length > 0 ? (
             <div>
-              {comments
+              {filteredComments
                 .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
                 .map((comment) => (
                   <React.Fragment key={comment.commentID}>
