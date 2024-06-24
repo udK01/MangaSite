@@ -1175,24 +1175,22 @@ export async function editComment(commentID, content) {
   }
 }
 
-export async function reactToComment(userID, commentID, reaction) {
+export async function reactToComment(
+  userID,
+  commentID,
+  reaction,
+  reactionDate
+) {
   try {
-    switch (reaction) {
-      case "like":
-      case "dislike":
-      case "abstain":
-        await db.query(
-          `
-          INSERT INTO user_likes_dislikes (userID, commentID, reaction)
-          VALUES (?, ?, ?)
+    console.log(reactionDate);
+    await db.query(
+      `
+          INSERT INTO user_likes_dislikes (userID, commentID, reaction, reactionDate)
+          VALUES (?, ?, ?, ?)
           ON DUPLICATE KEY UPDATE reaction = VALUES(reaction)
         `,
-          [userID, commentID, reaction]
-        );
-        break;
-      default:
-        throw new Error(`Invalid reaction: ${reaction}`);
-    }
+      [userID, commentID, reaction, reactionDate]
+    );
   } catch (error) {
     console.error(`Failed to react to comment:`, error);
   }

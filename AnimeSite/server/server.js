@@ -145,20 +145,22 @@ app.get("/api/users/:username", async (req, res) => {
       }
     });
 
-    userReactions.map((comment) => {
+    userReactions.map((reaction) => {
       const reactedComment = allComments.find(
-        (c) => c.commentID === comment.commentID
+        (c) => c.commentID === reaction.commentID
       );
       if (
         reactedComment.userID !== 0 &&
         reactedComment.userID !== user[0].userID
       ) {
-        reactedComment.type = comment.reaction;
+        reactedComment.type = reaction.reaction;
         reactedComment.parent = null;
 
         reactedComment.owner = allUsers.find(
           (u) => u.userID === reactedComment.userID
         ).username;
+
+        reactedComment.uploadDate = reaction.reactionDate;
 
         formattedComments.push(reactedComment);
       }
@@ -590,7 +592,13 @@ app.post("/api/setReaction", async (req, res) => {
     const userID = req.body.userID;
     const commentID = req.body.commentID;
     const reaction = req.body.reaction;
-    await databaseFunctions.reactToComment(userID, commentID, reaction);
+    const reactionDate = req.body.reactionDate;
+    await databaseFunctions.reactToComment(
+      userID,
+      commentID,
+      reaction,
+      reactionDate
+    );
     res.status(200).send(`success`);
   } catch (error) {
     console.error(`Failed to react to comment:`, error);

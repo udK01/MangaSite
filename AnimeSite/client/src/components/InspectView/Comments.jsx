@@ -18,6 +18,7 @@ import {
   IoIosCheckmarkCircleOutline,
   IoIosCloseCircleOutline,
 } from "react-icons/io";
+import DateFormatter from "./DateFormatter";
 
 export default function Comments() {
   const { comics } = useContext(ComicsContext);
@@ -165,6 +166,7 @@ export default function Comments() {
         userID: user[0].userID,
         commentID: commentID,
         reaction: reaction,
+        reactionDate: DateFormatter.createFormattedDate(),
       })
       .then(() => toggleRefresh())
       .catch((error) => console.error(`Failed to react:`, error));
