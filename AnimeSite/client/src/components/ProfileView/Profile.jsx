@@ -126,7 +126,7 @@ export default function Profile() {
   function commentedUnder(comment) {
     return (
       <div className="flex justify-between mx-2 mt-5">
-        <div className="flex">
+        <div className="flex 2xs:flex-wrap md:flex-nowrap">
           <div className="text-orange-400">{profileOwner.username}</div>
           <div className="flex flex-shrink-0 mx-[6px]">commented under</div>
           {/* Decide whether its under a chapter or manga */}
@@ -229,7 +229,7 @@ export default function Profile() {
 
   const DisplayComment = () => {
     return (
-      <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
+      <section className="w-full mb-10 h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
         <div className="scrollbar-thumb-primary scrollbar-track-transparent">
           <div className="p-4 max-h-[775px] bg-quaternary overflow-y-auto scrollbar-thin mt-10">
             <div className="flex w-full justify-between items-center px-1">
