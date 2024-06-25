@@ -230,40 +230,44 @@ export default function Profile() {
   const DisplayComment = () => {
     return (
       <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
-        <div className="p-4 bg-quaternary mt-10">
-          <div className="flex w-full justify-between items-center px-1">
-            <div>Interactions</div>
-            <DropDown
-              options={["All", "Liked", "Disliked", "Reply"]}
-              value={sort}
-              func={setSort}
-              className="w-[150px] justify-between px-2 -translate-y-1"
-            />
-          </div>
+        <div className="scrollbar-thumb-primary scrollbar-track-transparent">
+          <div className="p-4 max-h-[775px] bg-quaternary overflow-y-auto scrollbar-thin mt-10">
+            <div className="flex w-full justify-between items-center px-1">
+              <div>Interactions</div>
+              <DropDown
+                options={["All", "Liked", "Disliked", "Reply"]}
+                value={sort}
+                func={setSort}
+                className="w-[150px] justify-between px-2 -translate-y-1"
+              />
+            </div>
 
-          <Separator />
-          {comments.length > 0 ? (
-            <div>
-              {filteredComments
-                .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
-                .map((comment) => (
-                  <React.Fragment key={comment.commentID}>
-                    <div className="border-l-2 border-primary">
-                      {/* Action */}
-                      {displayAction(comment)}
-                      {/* Content */}
-                      <div className="text-dimWhite ml-2">
-                        {displayContent(comment)}
+            <Separator />
+            {comments.length > 0 ? (
+              <div>
+                {filteredComments
+                  .sort(
+                    (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
+                  )
+                  .map((comment) => (
+                    <React.Fragment key={comment.commentID}>
+                      <div className="border-l-2 border-primary">
+                        {/* Action */}
+                        {displayAction(comment)}
+                        {/* Content */}
+                        <div className="text-dimWhite ml-2">
+                          {displayContent(comment)}
+                        </div>
                       </div>
-                    </div>
-                  </React.Fragment>
-                ))}
-            </div>
-          ) : (
-            <div className="w-full text-center text-[24px] font-bold my-4 hover:underline hover:text-primary hover:cursor-default">
-              This user has yet to comment anything. :c
-            </div>
-          )}
+                    </React.Fragment>
+                  ))}
+              </div>
+            ) : (
+              <div className="w-full text-center text-[24px] font-bold my-4 hover:underline hover:text-primary hover:cursor-default">
+                This user has yet to comment anything. :c
+              </div>
+            )}
+          </div>
         </div>
       </section>
     );
