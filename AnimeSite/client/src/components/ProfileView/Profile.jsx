@@ -232,7 +232,7 @@ export default function Profile() {
       <section className="w-full h-auto rounded-sm font-poppins text-white md:text-[16px] 2xs:text-[14px]">
         <div className="p-4 bg-quaternary mt-10">
           <div className="flex w-full justify-between items-center px-1">
-            <div>Comments</div>
+            <div>Interactions</div>
             <DropDown
               options={["All", "Liked", "Disliked", "Reply"]}
               value={sort}
