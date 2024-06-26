@@ -325,7 +325,10 @@ export default function Profile() {
               {editing && (
                 <div
                   className="px-2 rounded-md bg-gray-400 hover:cursor-pointer hover:bg-gray-600"
-                  onClick={() => setEditing(false)}
+                  onClick={() => {
+                    setEditing(false);
+                    setImage(null);
+                  }}
                 >
                   Cancel
                 </div>
@@ -346,6 +349,10 @@ export default function Profile() {
                   onClick={() => {
                     setEditing(false);
                     changeDescription();
+                    if (image !== null) {
+                      console.log(image);
+                      setImage(null);
+                    }
                   }}
                 >
                   Save
