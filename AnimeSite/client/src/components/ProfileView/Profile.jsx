@@ -350,7 +350,6 @@ export default function Profile() {
                     setEditing(false);
                     changeDescription();
                     if (image !== null) {
-                      console.log(image);
                       setImage(null);
                     }
                   }}
