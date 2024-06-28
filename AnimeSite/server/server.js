@@ -104,6 +104,8 @@ app.get("/api/users", async (req, res) => {
 
 /**
  * Retrieve user.
+ * Attach bookmarks,
+ * Attach comments.
  */
 app.get("/api/users/:username", async (req, res) => {
   try {
