@@ -349,9 +349,13 @@ export default function Profile() {
                   onClick={() => {
                     setEditing(false);
                     changeDescription();
+
+                    console.log();
                     if (image !== null) {
                       const formData = new FormData();
                       formData.append("profilePicture", image);
+                      formData.append("userID", user[0].userID);
+                      formData.append("path", image.name);
 
                       axios
                         .post("/api/pfps", formData, {
@@ -359,7 +363,10 @@ export default function Profile() {
                             "Content-Type": "multipart/form-data",
                           },
                         })
-                        .then((response) => console.log(response.data))
+                        .then(() => {
+                          profileOwner.profilePicture = "/pfps/" + image.name;
+                          console.log(profileOwner);
+                        })
                         .catch((error) =>
                           console.error(
                             "Failed to upload profile picture:",
