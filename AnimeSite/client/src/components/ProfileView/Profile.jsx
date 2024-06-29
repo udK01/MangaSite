@@ -350,6 +350,23 @@ export default function Profile() {
                     setEditing(false);
                     changeDescription();
                     if (image !== null) {
+                      const formData = new FormData();
+                      formData.append("profilePicture", image);
+
+                      axios
+                        .post("/api/pfps", formData, {
+                          headers: {
+                            "Content-Type": "multipart/form-data",
+                          },
+                        })
+                        .then((response) => console.log(response.data))
+                        .catch((error) =>
+                          console.error(
+                            "Failed to upload profile picture:",
+                            error
+                          )
+                        );
+
                       setImage(null);
                     }
                   }}

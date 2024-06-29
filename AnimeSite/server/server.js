@@ -6,15 +6,27 @@ import * as databaseFunctions from "./database.js";
 
 const PORT = 8080;
 const app = express();
-const storage = multer.diskStorage({
+
+const thumbnailStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../public/thumbnails/");
+    cb(null, "../client/public/thumbnails/");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage: storage });
+
+const pfpStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../client/public/pfps/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const uploadThumbnails = multer({ storage: thumbnailStorage });
+const uploadPfps = multer({ storage: pfpStorage });
 
 app.use(express.json());
 app.use(cors());
@@ -42,50 +54,79 @@ app.get("/api/mangas", async (req, res) => {
 /**
  * Create new comics.
  */
-app.post("/api/createComic", upload.single("mangaImage"), async (req, res) => {
-  try {
-    const {
-      mangaTitle,
-      imagePath,
-      type,
-      description,
-      author,
-      status,
-      artist,
-      postedBy,
-      postedOn,
-      released,
-      serialisation,
-      genres,
-    } = req.body;
+app.post(
+  "/api/createComic",
+  uploadThumbnails.single("mangaImage"),
+  async (req, res) => {
+    try {
+      const {
+        mangaTitle,
+        imagePath,
+        type,
+        description,
+        author,
+        status,
+        artist,
+        postedBy,
+        postedOn,
+        released,
+        serialisation,
+        genres,
+      } = req.body;
 
-    await databaseFunctions.createManga(
-      mangaTitle,
-      imagePath,
-      type,
-      description,
-      author,
-      status,
-      artist,
-      postedBy,
-      postedOn,
-      released,
-      serialisation
-    );
+      await databaseFunctions.createManga(
+        mangaTitle,
+        imagePath,
+        type,
+        description,
+        author,
+        status,
+        artist,
+        postedBy,
+        postedOn,
+        released,
+        serialisation
+      );
 
-    const mangaID = await databaseFunctions.getMangaID(mangaTitle);
+      const mangaID = await databaseFunctions.getMangaID(mangaTitle);
 
-    if (genres.length !== 0) {
-      for (const genre of genres.split(",")) {
-        const genreID = await databaseFunctions.getGenreID(genre);
-        await databaseFunctions.addGenre(mangaID, genreID[0].genreID);
+      if (genres.length !== 0) {
+        for (const genre of genres.split(",")) {
+          const genreID = await databaseFunctions.getGenreID(genre);
+          await databaseFunctions.addGenre(mangaID, genreID[0].genreID);
+        }
       }
+
+      res.status(200).json(`Comic created successfully!`);
+    } catch (error) {
+      console.error(`Couldn't create comic:`, error);
+      res.status(500).json({ error: "Error creating comic." });
+    }
+  }
+);
+
+app.post("/api/pfps", uploadPfps.single("profilePicture"), async (req, res) => {
+  try {
+    res.status(200).send("Profile picture uploaded successfully.");
+  } catch (error) {
+    console.error("Failed to upload profile picture:", error);
+    res.status(500).send("Failed to upload profile picture.");
+  }
+});
+
+app.post("/api/upload", uploadThumbnails.single("file"), async (req, res) => {
+  try {
+    // Delete the previous file if it exists
+    const previousFile = req.body.previousFileName;
+    const fileLocation = `../public/${previousFile.slice(6)}`;
+    if (fs.existsSync(fileLocation)) {
+      fs.unlinkSync(fileLocation);
     }
 
-    res.status(200).json(`Comic created successfully!`);
+    res.status(200).send("File uploaded successfully.");
   } catch (error) {
-    console.error(`Couldn't create comic:`, error);
-    res.status(500).json({ error: "Error creating comic." });
+    console.error("Failed to upload file:", error);
+    res.status(500).send("Failed to upload file.");
   }
 });
 
@@ -338,22 +379,6 @@ app.put("/api/:id", async (req, res) => {
   } catch (error) {
     console.error("Failed to update manga:", error);
     res.status(500).send("Failed to update manga");
-  }
-});
-
-app.post("/api/upload", upload.single("file"), async (req, res) => {
-  try {
-    // Delete the previous file if it exists
-    const previousFile = req.body.previousFileName;
-    const fileLocation = `../public/${previousFile.slice(6)}`;
-    if (fs.existsSync(fileLocation)) {
-      fs.unlinkSync(fileLocation);
-    }
-
-    res.status(200).send("File uploaded successfully.");
-  } catch (error) {
-    console.error("Failed to upload file:", error);
-    res.status(500).send("Failed to upload file.");
   }
 });
 
