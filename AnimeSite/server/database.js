@@ -214,6 +214,18 @@ export async function changeProfilePicture(userID, profilePicture) {
   }
 }
 
+export async function getProfilePicture(userID) {
+  try {
+    return (
+      await db.query(`SELECT profilePicture from Users WHERE userID = ?`, [
+        userID,
+      ])
+    )[0];
+  } catch (error) {
+    console.error(`Failed to fetch profile picture:`, error);
+  }
+}
+
 /**
  *
  * Alters the specified user's access level.

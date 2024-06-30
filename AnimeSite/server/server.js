@@ -7,6 +7,11 @@ import * as databaseFunctions from "./database.js";
 const PORT = 8080;
 const app = express();
 
+app.use((req, res, next) => {
+  req.timestamp = Date.now();
+  next();
+});
+
 const thumbnailStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "../client/public/thumbnails/");
@@ -21,7 +26,7 @@ const pfpStorage = multer.diskStorage({
     cb(null, "../client/public/pfps/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, `${req.timestamp}${file.originalname}`);
   },
 });
 
@@ -108,7 +113,19 @@ app.post(
 app.post("/api/pfps", uploadPfps.single("profilePicture"), async (req, res) => {
   try {
     const userID = req.body.userID;
-    const path = `/pfps/` + req.body.path;
+    const path = `${"/pfps/"}${req.timestamp}${req.body.path}`;
+
+    // Get previous image.
+    const oldPicture = (await databaseFunctions.getProfilePicture(userID))[0]
+      .profilePicture;
+    const fileLocation = `../client/public/${oldPicture}`;
+
+    // Delete previous image, unless it was the default one.
+    if (fs.existsSync(fileLocation) && !oldPicture.includes("vite.svg")) {
+      fs.unlinkSync(fileLocation);
+    }
+
+    // Change Picture.
     await databaseFunctions.changeProfilePicture(userID, path);
     res.status(200).send("Profile picture uploaded successfully.");
   } catch (error) {
@@ -121,7 +138,7 @@ app.post("/api/upload", uploadThumbnails.single("file"), async (req, res) => {
   try {
     // Delete the previous file if it exists
     const previousFile = req.body.previousFileName;
-    const fileLocation = `../public/${previousFile.slice(6)}`;
+    const fileLocation = `../client/public/${previousFile.slice(6)}`;
     if (fs.existsSync(fileLocation)) {
       fs.unlinkSync(fileLocation);
     }
