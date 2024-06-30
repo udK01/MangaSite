@@ -363,9 +363,11 @@ export default function Profile() {
                             "Content-Type": "multipart/form-data",
                           },
                         })
-                        .then(() => {
-                          profileOwner.profilePicture = "/pfps/" + image.name;
-                          console.log(profileOwner);
+                        .then((response) => {
+                          setProfileOwner((prevProfileOwner) => ({
+                            ...prevProfileOwner,
+                            profilePicture: response.data,
+                          }));
                         })
                         .catch((error) =>
                           console.error(

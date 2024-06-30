@@ -127,7 +127,7 @@ app.post("/api/pfps", uploadPfps.single("profilePicture"), async (req, res) => {
 
     // Change Picture.
     await databaseFunctions.changeProfilePicture(userID, path);
-    res.status(200).send("Profile picture uploaded successfully.");
+    res.status(200).json(path);
   } catch (error) {
     console.error("Failed to upload profile picture:", error);
     res.status(500).send("Failed to upload profile picture.");
