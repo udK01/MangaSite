@@ -3,12 +3,14 @@ import TagDropDown from "../InspectView/Manga/TagDropDown";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 
 import CalendarPopup from "./CalendarPopup";
 import Separator from "../Separator";
 import DropDown from "../DropDown";
+
+import ComicsContext from "../ComicsProvider";
 
 export default function AddComic({ customInputField }) {
   const [title, setTitle] = useState("Title");
@@ -28,6 +30,8 @@ export default function AddComic({ customInputField }) {
 
   const [image, setImage] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { setComics } = useContext(ComicsContext);
 
   function handleAddComic(event) {
     event.preventDefault();
@@ -63,7 +67,8 @@ export default function AddComic({ customInputField }) {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(() => {
+      .then((response) => {
+        setComics(response.data);
         navigate("/");
       })
       .catch((error) => {

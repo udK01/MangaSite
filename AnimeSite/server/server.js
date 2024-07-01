@@ -102,7 +102,15 @@ app.post(
         }
       }
 
-      res.status(200).json(`Comic created successfully!`);
+      const mangas = await databaseFunctions.getMangas();
+      for (const manga of mangas) {
+        manga.genres = await databaseFunctions.getGenres(manga.mangaID);
+        manga.chapters = await databaseFunctions.getChapters(manga.mangaID);
+        manga.bookmarkCount = await databaseFunctions.getBookmarkCount(
+          manga.mangaID
+        );
+      }
+      res.status(200).json(mangas);
     } catch (error) {
       console.error(`Couldn't create comic:`, error);
       res.status(500).json({ error: "Error creating comic." });
@@ -490,7 +498,7 @@ app.post("/api/deleteManga", async (req, res) => {
     const mangaID = req.body.mangaID;
 
     const manga = await databaseFunctions.getManga(mangaID);
-    const imgPath = `../public/${manga[0].mangaImage.replace(
+    const imgPath = `../client/public/${manga[0].mangaImage.replace(
       /\.\.\/\.\.\//g,
       ""
     )}`;
