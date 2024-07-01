@@ -650,11 +650,7 @@ export async function createChapter(
 
     await db.query(query, values);
   } catch (error) {
-    if (error.code === "ER_DUP_ENTRY") {
-      console.error(`Chapter "${chapterNumber}" already exists.`);
-    } else {
-      console.error(`Failed to create chapter:`, error);
-    }
+    console.error(`Failed to create chapter:`, error);
   }
 }
 

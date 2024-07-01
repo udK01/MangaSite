@@ -307,7 +307,10 @@ app.post("/api/createChapter", async (req, res) => {
       chapterContent,
       uploadDate
     );
-    res.status(200).send("success");
+
+    const updatedChapters = await databaseFunctions.getChapters(mangaID);
+
+    res.status(200).json(updatedChapters);
   } catch (error) {
     console.error(`Failed to create chapter:`, error);
     res.status(500).json({ error: `Failed to create chapter!` });

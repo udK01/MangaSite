@@ -1,7 +1,7 @@
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import dateFormatter from "../InspectView/DateFormatter";
@@ -9,13 +9,15 @@ import Separator from "../Separator";
 import DropDown from "../DropDown";
 import Feedback from "./Feedback";
 
+import ComicsProvider from "../ComicsProvider";
+
 export default function AddChapter({ customInputField }) {
   const [collapsed, setCollapsed] = useState(false);
 
+  const { comics } = useContext(ComicsProvider);
+
   const [title, setTitle] = useState("Title");
   const [chapterContent, setChapterContent] = useState("Chapter Content");
-
-  const [mangas, setMangas] = useState([]);
   const [manga, setManga] = useState("Please Select");
 
   const [color, setColor] = useState("");
@@ -23,13 +25,6 @@ export default function AddChapter({ customInputField }) {
 
   const [isTransitioned, setIsTransitioned] = useState(false);
   let timer;
-
-  useEffect(() => {
-    axios
-      .get("/api/mangas")
-      .then((response) => setMangas(response.data))
-      .catch((error) => console.error(`Failed to fetch mangas:`, error));
-  }, []);
 
   const handleTransition = () => {
     clearTimeout(timer);
@@ -69,16 +64,14 @@ export default function AddChapter({ customInputField }) {
         }
       )
       .then((response) => {
-        switch (response.data) {
-          case "success":
-            setColor(`bg-green-600`);
-            setText(`Successfully created new chapter for ${manga}!`);
-            break;
-          case "error":
-            setColor(`bg-red-600`);
-            setText(`${manga} already has a Chapter ${chapterNum}!`);
-            break;
+        {
+          const mangaIndex = comics.findIndex(
+            (manga) => manga.mangaID === getMangaID()
+          );
+          comics[mangaIndex].chapters = response.data;
         }
+        setColor(`bg-green-600`);
+        setText(`Successfully created new chapter for ${manga}!`);
         handleTransition();
       })
       .catch((error) => {
@@ -88,12 +81,12 @@ export default function AddChapter({ customInputField }) {
 
   function formatOptions() {
     let options = [];
-    mangas && mangas.map((manga) => options.push(manga.mangaTitle));
+    comics.map((manga) => options.push(manga.mangaTitle));
     return options.sort((a, b) => a.localeCompare(b));
   }
 
   function getMangaID() {
-    return mangas.find((m) => m.mangaTitle === manga).mangaID;
+    return comics.find((m) => m.mangaTitle === manga).mangaID;
   }
 
   return (
